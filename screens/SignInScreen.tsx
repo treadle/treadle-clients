@@ -1,47 +1,59 @@
-import { useEffect, useState } from 'react';
-import { Button, TextInput, View, Text, StyleSheet } from 'react-native';
+import { useState } from 'react';
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import * as nearAPI from 'near-api-js';
 
 const SignInScreen = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [privateKey, setPrivateKey] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
 
-  const handleSubmit = async () => {
-    try {
-      setLoading(true);
-      console.log('email', email);
-      console.log('password', password);
-      // await signIn(email, password);
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const fetchAccountIdFromPublicKey = async (publicKey: string) => {
+    const INDEXER_SERVICE_URL = 'https://testnet-api.kitwallet.app';
+
+    const CUSTOM_REQUEST_HEADERS = {
+      'X-requestor': 'near',
+    };
+
+    const response = await fetch(`${INDEXER_SERVICE_URL}/publicKey/${publicKey}/accounts`, {
+      headers: CUSTOM_REQUEST_HEADERS,
+    });
+
+    return response.json();
+  }
+
+  const handleSignIn = async () => {
+    const keyStore = await new nearAPI.keyStores.InMemoryKeyStore();
+    const keyPair = await new nearAPI.utils.KeyPairEd25519(privateKey.replace('ed25519:', ''));
+
+    const accountIds = await fetchAccountIdFromPublicKey(keyPair.publicKey.toString());
+    const accountId = accountIds.find((id: string) => id.includes('testnet'));
+
+    await keyStore.setKey('testnet', accountId, keyPair);
+
+    const connectionConfig = {
+      networkId: "testnet",
+      keyStore: keyStore, // first create a key store
+      nodeUrl: "https://rpc.testnet.near.org",
+      walletUrl: "https://wallet.testnet.near.org",
+      helperUrl: "https://helper.testnet.near.org",
+      explorerUrl: "https://explorer.testnet.near.org",
+    };
+
+    const nearConnection = await nearAPI.connect(connectionConfig);
+
+    const nearAccount = await nearConnection.account(accountId);
+    console.log(await nearAccount.getAccountBalance());
+  }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sign In</Text>
+      <Text style={styles.title}>Enter the private key associated with the account.</Text>
       <TextInput
         style={styles.input}
-        placeholder='Email'
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize='none'
-        autoComplete='email'
-        textContentType='emailAddress'
-        keyboardType='email-address'
+        placeholder='Private key'
+        value={privateKey}
+        onChangeText={setPrivateKey}
       />
-      <TextInput
-        style={styles.input}
-        placeholder='Password'
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <Button title='Sign In' onPress={handleSubmit} disabled={loading} />
-      {error ? <Text style={styles.error}>{error}</Text> : null}
+      <Button title='Sign In' onPress={handleSignIn} disabled={loading} />
     </View>
   );
 };
