@@ -12,40 +12,45 @@ import { ColorSchemeName } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import { RootStackParamList, RootTabParamList } from '../types';
+import { RootStackParamList, HomeTabParamList, SignInTabParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import ShopScreen from '../screens/ShopScreen';
 import GarageScreen from '../screens/GarageScreen';
 import BikeRideScreen from '../screens/BikeRideScreen';
 import SignInScreen from '../screens/SignInScreen';
+import { useAccountIdStore } from '../store/accountIdStore';
+import AccountScreen from '../screens/AccountScreen';
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
+const SignInStack = createNativeStackNavigator<SignInTabParamList>();
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+  const { accountId } = useAccountIdStore();
+
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <RootNavigator />
+      <Stack.Navigator>
+        {!!accountId
+          ? <Stack.Screen name='Home' component={BottomTabNavigator} />
+          : <Stack.Screen name='Login' component={SignInNavigator} />
+        }
+        <Stack.Screen name='NotFound' component={NotFoundScreen} options={{ title: 'Oops!' }} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
-/**
- * A root stack navigator is often used for displaying modals on top of all other content.
- * https://reactnavigation.org/docs/modal
- */
-const Stack = createNativeStackNavigator<RootStackParamList>();
-
-function RootNavigator() {
+function SignInNavigator() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name='Root' component={SignInScreen} options={{ headerShown: false }} />
-      <Stack.Screen name='NotFound' component={NotFoundScreen} options={{ title: 'Oops!' }} />
-      <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name='Modal' component={ModalScreen} />
-      </Stack.Group>
-    </Stack.Navigator>
+    <SignInStack.Navigator>
+      <SignInStack.Screen
+        name='SignIn'
+        component={SignInScreen}
+      />
+    </SignInStack.Navigator>
   );
 }
 
@@ -53,14 +58,13 @@ function RootNavigator() {
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
-const BottomTab = createBottomTabNavigator<RootTabParamList>();
+const BottomTab = createBottomTabNavigator<HomeTabParamList>();
 
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
 
   return (
     <BottomTab.Navigator
-      initialRouteName='Garage'
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
@@ -73,7 +77,7 @@ function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name='BikeRide'
+        name='Ride'
         component={BikeRideScreen}
         options={{
           title: 'Bike Ride',
@@ -82,7 +86,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name='Account'
-        component={GarageScreen}
+        component={AccountScreen}
         options={{
           title: 'Account',
           tabBarIcon: ({ color }) => <TabBarIcon name='user' color={color} />,

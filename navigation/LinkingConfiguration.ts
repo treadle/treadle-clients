@@ -9,38 +9,28 @@ import * as Linking from 'expo-linking';
 
 import { RootStackParamList } from '../types';
 
+const config = {
+  screens: {
+    Home: {
+      screens: {
+        Garage: 'garage',
+        Account: 'account',
+        Ride: 'ride',
+        Shop: 'shop',
+      }
+    },
+    Login: {
+      screens: {
+        SignIn: 'sign-in',
+      }
+    },
+    NotFound: '*',
+  }
+}
+
 const linking: LinkingOptions<RootStackParamList> = {
   prefixes: [Linking.createURL('/')],
-  config: {
-    screens: {
-      Root: {
-        screens: {
-          Shop: {
-            screens: {
-              ShopScreen: 'shop',
-            },
-          },
-          Garage: {
-            screens: {
-              GarageScreen: 'garage',
-            }
-          },
-          Account: {
-            screens: {
-              AccountScreen: 'account',
-            }
-          },
-          BikeRide: {
-            screens: {
-              BikeRideScreen: 'ride',
-            }
-          }
-        },
-      },
-      Modal: 'modal',
-      NotFound: '*',
-    },
-  },
+  config,
 };
 
 export default linking;

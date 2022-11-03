@@ -1,9 +1,16 @@
 import { View, Text, StyleSheet } from 'react-native';
+import { useAccountIdStore } from '../store/accountIdStore';
+import { Button } from 'react-native-paper';
 
 const GarageScreen = () => {
+  const { accountId, setAccountId } = useAccountIdStore();
+
   return (
     <View style={styles.screen}>
-      <Text>Garage Screen</Text>
+      <Text>Hello {accountId}!</Text>
+      <Button mode="outlined" onPress={() => setAccountId(null)}>
+        Logout
+      </Button>
     </View>
   );
 };

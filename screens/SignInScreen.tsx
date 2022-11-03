@@ -1,10 +1,15 @@
 import { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { Button, TextInput } from 'react-native-paper';
 import * as nearAPI from 'near-api-js';
+import { SignInTabScreenProps } from '../types';
+import { NearAccount } from '../types/nearAccount';
+import { useAccountIdStore } from '../store/accountIdStore';
 
-const SignInScreen = () => {
+export default function SignInScreen({}: SignInTabScreenProps<'SignIn'>) {
   const [privateKey, setPrivateKey] = useState('');
   const [loading, setLoading] = useState(false);
+  const {setAccountId} = useAccountIdStore();
 
   const fetchAccountIdFromPublicKey = async (publicKey: string) => {
     const INDEXER_SERVICE_URL = 'https://testnet-api.kitwallet.app';
@@ -18,9 +23,10 @@ const SignInScreen = () => {
     });
 
     return response.json();
-  }
+  };
 
   const handleSignIn = async () => {
+    setLoading(true);
     const keyStore = await new nearAPI.keyStores.InMemoryKeyStore();
     const keyPair = await new nearAPI.utils.KeyPairEd25519(privateKey.replace('ed25519:', ''));
 
@@ -30,55 +36,64 @@ const SignInScreen = () => {
     await keyStore.setKey('testnet', accountId, keyPair);
 
     const connectionConfig = {
-      networkId: "testnet",
+      networkId: 'testnet',
       keyStore: keyStore, // first create a key store
-      nodeUrl: "https://rpc.testnet.near.org",
-      walletUrl: "https://wallet.testnet.near.org",
-      helperUrl: "https://helper.testnet.near.org",
-      explorerUrl: "https://explorer.testnet.near.org",
+      nodeUrl: 'https://rpc.testnet.near.org',
+      walletUrl: 'https://wallet.testnet.near.org',
+      helperUrl: 'https://helper.testnet.near.org',
+      explorerUrl: 'https://explorer.testnet.near.org',
     };
 
     const nearConnection = await nearAPI.connect(connectionConfig);
 
-    const nearAccount = await nearConnection.account(accountId);
-    console.log(await nearAccount.getAccountBalance());
-  }
+    const nearAccount: NearAccount = await nearConnection.account(accountId);
+    setAccountId(accountId);
+    setLoading(false);
+  };
+
+  const privateKeyValidation = (value: string) => {
+    return value && value.startsWith('ed25519:');
+  };
 
   return (
     <View style={styles.container}>
+      <Text style={styles.logo}>Treadle</Text>
       <Text style={styles.title}>Enter the private key associated with the account.</Text>
       <TextInput
         style={styles.input}
+        mode='outlined'
+        label='Private Key'
         placeholder='Private key'
         value={privateKey}
         onChangeText={setPrivateKey}
       />
-      <Button title='Sign In' onPress={handleSignIn} disabled={loading} />
+      {/*{!privateKeyValidation(privateKey) && <Text style={styles.error}>Invalid private key</Text>}*/}
+      <Button mode='outlined' onPress={handleSignIn} disabled={!privateKeyValidation(privateKey)} loading={loading}>
+        Sign in
+      </Button>
     </View>
   );
 };
 
-export default SignInScreen;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
+  },
+  logo: {
+    fontSize: 60,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
+    marginBottom: 20,
   },
   input: {
-    height: 40,
-    width: '100%',
-    marginVertical: 10,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
+    marginBottom: 20,
   },
   error: {
     color: 'red',
