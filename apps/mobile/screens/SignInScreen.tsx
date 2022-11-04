@@ -1,15 +1,14 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import * as nearAPI from 'near-api-js';
 import { SignInTabScreenProps } from '../types';
-import { NearAccount } from '../types/nearAccount';
-import { useAccountIdStore } from '../store/accountIdStore';
+import { useAccountStore } from '../store/accountStore';
 
 export default function SignInScreen({}: SignInTabScreenProps<'SignIn'>) {
   const [privateKey, setPrivateKey] = useState('');
   const [loading, setLoading] = useState(false);
-  const {setAccountId} = useAccountIdStore();
+  const {setAccount} = useAccountStore();
 
   const fetchAccountIdFromPublicKey = async (publicKey: string) => {
     const INDEXER_SERVICE_URL = 'https://testnet-api.kitwallet.app';
@@ -25,7 +24,7 @@ export default function SignInScreen({}: SignInTabScreenProps<'SignIn'>) {
     return response.json();
   };
 
-  const handleSignIn = async () => {
+  const handleSignIn = useCallback(async () => {
     setLoading(true);
     const keyStore = await new nearAPI.keyStores.InMemoryKeyStore();
     const keyPair = await new nearAPI.utils.KeyPairEd25519(privateKey.replace('ed25519:', ''));
@@ -46,10 +45,10 @@ export default function SignInScreen({}: SignInTabScreenProps<'SignIn'>) {
 
     const nearConnection = await nearAPI.connect(connectionConfig);
 
-    const nearAccount: NearAccount = await nearConnection.account(accountId);
-    setAccountId(accountId);
+    const nearAccount: nearAPI.Account = await nearConnection.account(accountId);
+    setAccount(nearAccount);
     setLoading(false);
-  };
+  }, [privateKey]);
 
   const privateKeyValidation = (value: string) => {
     return value && value.startsWith('ed25519:');

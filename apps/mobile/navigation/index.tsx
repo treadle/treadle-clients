@@ -19,14 +19,14 @@ import ShopScreen from '../screens/ShopScreen';
 import GarageScreen from '../screens/GarageScreen';
 import BikeRideScreen from '../screens/BikeRideScreen';
 import SignInScreen from '../screens/SignInScreen';
-import { useAccountIdStore } from '../store/accountIdStore';
+import { useAccountStore } from '../store/accountStore';
 import AccountScreen from '../screens/AccountScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const SignInStack = createNativeStackNavigator<SignInTabParamList>();
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
-  const { accountId } = useAccountIdStore();
+  const { account } = useAccountStore();
 
   return (
     <NavigationContainer
@@ -37,7 +37,7 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
           headerShown: false,
         }}
       >
-        {!!accountId
+        {!!account
           ? <Stack.Screen name='Home' component={BottomTabNavigator} />
           : <Stack.Screen name='Login' component={SignInNavigator} />
         }
