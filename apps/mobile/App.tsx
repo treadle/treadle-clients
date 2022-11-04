@@ -6,8 +6,13 @@ import 'expo-dev-client';
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
 window.Buffer = window.Buffer || require("buffer").Buffer;
+
+EStyleSheet.build({
+
+});
 
 export default function App() {
   const isLoadingComplete = useCachedResources();

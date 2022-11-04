@@ -32,7 +32,11 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
     <NavigationContainer
       linking={LinkingConfiguration}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
         {!!accountId
           ? <Stack.Screen name='Home' component={BottomTabNavigator} />
           : <Stack.Screen name='Login' component={SignInNavigator} />
