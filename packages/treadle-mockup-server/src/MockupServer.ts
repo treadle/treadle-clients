@@ -1,8 +1,8 @@
 import * as nearAPI from "near-api-js";
 import BN from "bn.js";
 
-import { CONTRACT_NAME, generateConfig } from "./config";
-import { ConnectConfig, InMemorySigner } from "near-api-js";
+import { CONTRACT_NAME } from "./config";
+import { ConnectConfig } from "near-api-js";
 
 export class MockupServer {
   near: nearAPI.Near;
