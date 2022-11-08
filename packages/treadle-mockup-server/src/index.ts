@@ -1,4 +1,4 @@
-export * from "./mockupServer";
+export * from "./MockupServer";
 
 // async function main() {
 //   const server = await setupServer();
