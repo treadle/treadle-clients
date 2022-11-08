@@ -12,6 +12,5 @@ test('should fetch the bikes for owner', async () => {
     const server = await setupMockupServer();
 
     const data = await server.fetchBikesForOwner("pantemon.testnet");
-    console.log(data);
     expect(data).toBeDefined();
 });
