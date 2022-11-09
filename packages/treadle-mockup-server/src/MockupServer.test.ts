@@ -19,21 +19,3 @@ test('should fetch the bikes for owner', async () => {
     const data = await server.fetchBikesForOwner("pantemon.testnet");
     expect(data).toBeDefined();
 });
-
-
-test('should mint a new NFT with given metadata', async () => {
-    const { server, near, account } = await setupMockupServer(MASTER_PRIVATE_KEY);
-
-    const contract = new TRDLBContract(account, CONTRACT_ID);
-    
-    const metadata: TRDLBTokenMetadata = {
-        title: "City Bike",
-        description: "A simple bike for travelling across your hometown",
-        media: "https://www.thisiscolossal.com/wp-content/uploads/2014/03/120430.gif",
-        extra: "Hello, World!",
-    }; 
-
-    const response = await contract.nft_mint("pantemon.testnet", metadata);
-
-    expect(response).toBeDefined();
-});
