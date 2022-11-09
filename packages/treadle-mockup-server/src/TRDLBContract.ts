@@ -35,8 +35,8 @@ export class TRDLBContract {
       methodName: "nft_mint",
       args: {
         "token_id": tokenId,
+        "metadata": metadata,
         "receiver_id": receiverId, 
-        "token_metadata": metadata,
       },
       attachedDeposit: utils.ONE_TENTH_OF_A_NEAR(), // 0.1 NEAR
     });

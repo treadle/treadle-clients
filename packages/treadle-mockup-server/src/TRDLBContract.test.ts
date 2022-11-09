@@ -4,7 +4,7 @@ import { expect, test } from "@jest/globals";
 import { TRDLBContract, TRDLBTokenMetadata } from "./TRDLBContract";
 
 const PRIVATE_KEY = 'jNpUvccrCML6r4SRYkrVXfyiRDf61pyXh4UP6jwaEjYhVJbM6kWXZn86mt3w6hB4uhr3Xrhw2wmseUVA6Jetd9E'
-const CONTRACT_ID = "dev-1667496392664-49420136288326";
+const CONTRACT_ID = 'dev-1668032831399-31216196638798';
 
 test('should mint a new NFT with given metadata', async () => {
     const { server, near, account } = await setupMockupServer(PRIVATE_KEY);
