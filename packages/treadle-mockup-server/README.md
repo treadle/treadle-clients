@@ -10,6 +10,7 @@ Implemented NEP-171 standart.
 Implemented the following methods:
 - [] `nft_metadata_edit(...)`
 - [] `nft_burn(...)`
+- [] `modified nft_mint(...)`
 
 ### X.Y.Z ???
 TRDLB Contract allows to craft TRDL Bikes NFT from TRDL Components NFT using $SCRW fungible token in a fully decentralised manner.
