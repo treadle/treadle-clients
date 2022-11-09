@@ -1,6 +1,10 @@
 # TRDLB Contract
 This smart contracts is used to issue TRDL Bikes. It is based on the NEP-171 and has its specific additional methods e.g. `burn_nft(...)` and `nft_metadata_edit(...)`.
 
+#Environment variables
+- `MASTER_PRIVATE_KEY` - your private key
+- `TRDLB_CONTRACT_ID` - contract id
+
 ## Versions
 
 ### 0.1.0 ✅
