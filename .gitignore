@@ -6,6 +6,9 @@ packages/*/build
 # Turborepo
 .turbo
 
+# Yarn
+yarn.lock
+
 # Expo
 .expo
 __generated__
