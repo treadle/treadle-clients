@@ -1,8 +1,9 @@
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import type { FC } from 'react';
 import { Text, View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TouchableRipple } from 'react-native-paper';
+
+import { RobotoMediumText } from './StyledText';
 
 const BottomNavigationBar: FC<BottomTabBarProps> = ({ state, descriptors, navigation }) => {
   return (
@@ -55,9 +56,11 @@ const BottomNavigationBar: FC<BottomTabBarProps> = ({ state, descriptors, naviga
                 {options.tabBarIcon && options.tabBarIcon({ focused: isFocused, color: '#E8DEF8', size: 16 })}
               </TouchableRipple>
             </View>
-            <Text className='font-medium font-roboto text-[12px] text-[#E6E1E5]'>
-              {label}
-            </Text>
+            <RobotoMediumText>
+              <Text className='text-[12px] text-[#E6E1E5]'>
+                {label}
+              </Text>
+            </RobotoMediumText>
           </View>
         );
       })}

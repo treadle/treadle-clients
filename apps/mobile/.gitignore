@@ -16,4 +16,6 @@ web-build/
 # JetBrains
 ../../.idea/
 
+# Yarn
+yarn-error.log
 yarn.lock
