@@ -55,7 +55,7 @@ const BottomNavigationBar: FC<BottomTabBarProps> = ({ state, descriptors, naviga
                 {options.tabBarIcon && options.tabBarIcon({ focused: isFocused, color: '#E8DEF8', size: 16 })}
               </TouchableRipple>
             </View>
-            <Text className='font-medium text-[12px] text-[#E6E1E5]'>
+            <Text className='font-medium font-roboto text-[12px] text-[#E6E1E5]'>
               {label}
             </Text>
           </View>
