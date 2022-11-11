@@ -4,11 +4,10 @@
  *
  */
 import { FontAwesome } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
+import { BottomTabBar, BottomTabBarProps, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName } from 'react-native';
 
 import NavigationBar from '../components/NavigationBar';
 import Colors from '../constants/Colors';
@@ -20,19 +19,19 @@ import NotFoundScreen from '../screens/NotFoundScreen';
 import ShopScreen from '../screens/ShopScreen';
 import SignInScreen from '../screens/SignInScreen';
 import { useAccountStore } from '../store/accountStore';
-import { RootStackParamList, HomeTabParamList, SignInTabParamList } from '../types';
+import { HomeTabParamList, RootStackParamList, SignInTabParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import BottomNavigationBar from '../components/BottomNavigationBar';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const SignInStack = createNativeStackNavigator<SignInTabParamList>();
 
-export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+export default function Navigation() {
   const { account } = useAccountStore();
 
   return (
     <NavigationContainer
-      linking={LinkingConfiguration}
-      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      linking={LinkingConfiguration}>
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
@@ -65,14 +64,13 @@ function SignInNavigator() {
 const BottomTab = createBottomTabNavigator<HomeTabParamList>();
 
 function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
-
   return (
     <BottomTab.Navigator
       screenOptions={{
         header: (props) => <NavigationBar {...props} />,
-        tabBarActiveTintColor: Colors[colorScheme].tint,
-      }}>
+      }}
+      tabBar={(props) => <BottomNavigationBar {...props} />}
+    >
       <BottomTab.Screen
         name='Garage'
         component={GarageScreen}
@@ -116,5 +114,5 @@ function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;
 }) {
-  return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
+  return <FontAwesome size={16} {...props} />;
 }
