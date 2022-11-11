@@ -8,7 +8,6 @@ const CONTRACT_ID = 'dev-1668032831399-31216196638798';
 
 test('should mint a new NFT with given metadata', async () => {
     const { server, near, account } = await setupMockupServer(PRIVATE_KEY);
-
     const contract = new TRDLBContract(account, CONTRACT_ID);
     
     const metadata: TRDLBTokenMetadata = {

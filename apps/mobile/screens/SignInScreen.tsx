@@ -8,7 +8,7 @@ import { useAccountStore } from '../store/accountStore';
 export default function SignInScreen({}: SignInTabScreenProps<'SignIn'>) {
   const [privateKey, setPrivateKey] = useState('');
   const [loading, setLoading] = useState(false);
-  const {setAccount} = useAccountStore();
+  const { setAccount } = useAccountStore();
 
   const fetchAccountIdFromPublicKey = async (publicKey: string) => {
     const INDEXER_SERVICE_URL = 'https://testnet-api.kitwallet.app';
@@ -36,7 +36,7 @@ export default function SignInScreen({}: SignInTabScreenProps<'SignIn'>) {
 
     const connectionConfig = {
       networkId: 'testnet',
-      keyStore: keyStore, // first create a key store
+      keyStore,
       nodeUrl: 'https://rpc.testnet.near.org',
       walletUrl: 'https://wallet.testnet.near.org',
       helperUrl: 'https://helper.testnet.near.org',
@@ -66,9 +66,8 @@ export default function SignInScreen({}: SignInTabScreenProps<'SignIn'>) {
         value={privateKey}
         onChangeText={setPrivateKey}
       />
-      {/*{!privateKeyValidation(privateKey) && <Text style={styles.error}>Invalid private key</Text>}*/}
       <Button mode='outlined' onPress={handleSignIn} disabled={!privateKeyValidation(privateKey)} loading={loading}>
-        Sign in
+        Import Wallet
       </Button>
     </View>
   );

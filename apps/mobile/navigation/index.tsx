@@ -10,17 +10,18 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
 
+import NavigationBar from '../components/NavigationBar';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import NotFoundScreen from '../screens/NotFoundScreen';
-import { RootStackParamList, HomeTabParamList, SignInTabParamList } from '../types';
-import LinkingConfiguration from './LinkingConfiguration';
-import ShopScreen from '../screens/ShopScreen';
-import GarageScreen from '../screens/GarageScreen';
+import AccountScreen from '../screens/AccountScreen';
 import BikeRideScreen from '../screens/BikeRideScreen';
+import GarageScreen from '../screens/GarageScreen';
+import NotFoundScreen from '../screens/NotFoundScreen';
+import ShopScreen from '../screens/ShopScreen';
 import SignInScreen from '../screens/SignInScreen';
 import { useAccountStore } from '../store/accountStore';
-import AccountScreen from '../screens/AccountScreen';
+import { RootStackParamList, HomeTabParamList, SignInTabParamList } from '../types';
+import LinkingConfiguration from './LinkingConfiguration';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const SignInStack = createNativeStackNavigator<SignInTabParamList>();
@@ -35,8 +36,7 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
-        }}
-      >
+        }}>
         {!!account
           ? <Stack.Screen name='Home' component={BottomTabNavigator} />
           : <Stack.Screen name='Login' component={SignInNavigator} />
@@ -49,11 +49,11 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 
 function SignInNavigator() {
   return (
-    <SignInStack.Navigator>
-      <SignInStack.Screen
-        name='SignIn'
-        component={SignInScreen}
-      />
+    <SignInStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <SignInStack.Screen name='SignIn' component={SignInScreen} />
     </SignInStack.Navigator>
   );
 }
@@ -70,6 +70,7 @@ function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       screenOptions={{
+        header: (props) => <NavigationBar {...props} />,
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
