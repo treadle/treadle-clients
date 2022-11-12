@@ -3,11 +3,12 @@ import type { FC } from 'react';
 import { View } from 'react-native';
 import { TouchableRipple } from 'react-native-paper';
 
+import Colors from '../constants/Colors';
 import { RobotoMediumText } from './StyledText';
 
 const BottomNavigationBar: FC<BottomTabBarProps> = ({ state, descriptors, navigation }) => {
   return (
-    <View className='justify-center flex-row items-center bg-[#1C1B1F] py-[12px] gap-x-2'>
+    <View className='justify-center flex-row items-center bg-md3-surface py-[12px] gap-x-2'>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
@@ -49,12 +50,17 @@ const BottomNavigationBar: FC<BottomTabBarProps> = ({ state, descriptors, naviga
                 onPress={onPress}
                 onLongPress={onLongPress}
                 borderless
-                className={`py-[10px] px-[26px] rounded-[16px] hover:bg-[#492532] overflow-hidden ${isFocused ? 'bg-[#4A4458]' : ''}`}
+                className={`py-[10px] px-[26px] rounded-[16px] overflow-hidden ${isFocused ? 'bg-md3-secondary-container' : ''}`}
               >
-                {options.tabBarIcon && options.tabBarIcon({ focused: isFocused, color: '#E8DEF8', size: 16 })}
+                {options.tabBarIcon &&
+                  options.tabBarIcon({
+                    focused: isFocused,
+                    color: isFocused ? Colors.dark.tabIconSelected : Colors.dark.tabIconDefault,
+                    size: 16,
+                  })}
               </TouchableRipple>
             </View>
-            <RobotoMediumText className='text-[12px] text-[#E6E1E5]'>
+            <RobotoMediumText className='text-[12px] text-md3-on-bg'>
               {label}
             </RobotoMediumText>
           </View>

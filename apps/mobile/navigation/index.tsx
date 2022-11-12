@@ -21,6 +21,7 @@ import SignInScreen from '../screens/SignInScreen';
 import WalletScreen from '../screens/WalletScreen';
 import { useAccountStore } from '../store/accountStore';
 import LinkingConfiguration from './LinkingConfiguration';
+import TabBarIcon from '../components/TabBarIcon';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const SignInStack = createNativeStackNavigator<SignInTabParamList>();
@@ -102,14 +103,4 @@ function BottomTabNavigator() {
       />
     </BottomTab.Navigator>
   );
-}
-
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof MaterialCommunityIcons>['name'];
-  color: string;
-}) {
-  return <MaterialCommunityIcons size={16} {...props} />;
 }
