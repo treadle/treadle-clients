@@ -35,9 +35,9 @@ export type SignInTabParamList = {
 
 export type HomeTabParamList = {
   Garage: undefined;
-  Shop: undefined;
+  Marketplace: undefined;
   Ride: undefined;
-  Account: undefined;
+  Wallet: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof HomeTabParamList> = CompositeScreenProps<BottomTabScreenProps<HomeTabParamList, Screen>,

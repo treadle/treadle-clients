@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import ShopItem from '../components/ShopItem';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
-const ShopScreen = () => {
+const MarketplaceScreen = () => {
 
   return (
 
@@ -14,7 +14,7 @@ const ShopScreen = () => {
   );
 };
 
-export default ShopScreen;
+export default MarketplaceScreen;
 
 const styles = EStyleSheet.create({
   screen: {

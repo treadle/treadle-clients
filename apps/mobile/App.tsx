@@ -20,7 +20,7 @@ window.Buffer = window.Buffer || require('buffer').Buffer;
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
-  const { setMockupServer } = useMockupServerStore();
+  // const { setMockupServer } = useMockupServerStore();
 
   const [fontsLoaded] = useFonts({
     'Roboto': require('./assets/fonts/Roboto-Regular.ttf'),
@@ -28,10 +28,10 @@ export default function App() {
     'Roboto-Bold': require('./assets/fonts/Roboto-Bold.ttf'),
   });
 
-  const createMockupServer = useCallback(async () => {
-    const mockupServer = await setupMockupServer();
-    setMockupServer(mockupServer);
-  }, []);
+  // const createMockupServer = useCallback(async () => {
+  //   const mockupServer = await setupMockupServer();
+  //   setMockupServer(mockupServer);
+  // }, []);
 
   useEffect(() => {
     async function prepare() {
@@ -40,7 +40,7 @@ export default function App() {
       } catch (e) {
         console.warn(e);
       } finally {
-        createMockupServer();
+        // createMockupServer();
       }
     }
 

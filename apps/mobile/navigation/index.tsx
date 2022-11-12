@@ -3,25 +3,24 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { FontAwesome } from '@expo/vector-icons';
-import { BottomTabBar, BottomTabBarProps, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import type { HomeTabParamList, RootStackParamList, SignInTabParamList } from '../types';
+
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import * as React from 'react';
 
-import NavigationBar from '../components/NavigationBar';
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
-import AccountScreen from '../screens/AccountScreen';
-import BikeRideScreen from '../screens/BikeRideScreen';
-import GarageScreen from '../screens/GarageScreen';
-import NotFoundScreen from '../screens/NotFoundScreen';
-import ShopScreen from '../screens/ShopScreen';
-import SignInScreen from '../screens/SignInScreen';
-import { useAccountStore } from '../store/accountStore';
-import { HomeTabParamList, RootStackParamList, SignInTabParamList } from '../types';
-import LinkingConfiguration from './LinkingConfiguration';
 import BottomNavigationBar from '../components/BottomNavigationBar';
+import NavigationBar from '../components/NavigationBar';
+import BikeRideScreen from '../screens/BikeRideScreen';
+import MarketplaceScreen from '../screens/MarketplaceScreen';
+import NotFoundScreen from '../screens/NotFoundScreen';
+import SignInScreen from '../screens/SignInScreen';
+import WalletScreen from '../screens/WalletScreen';
+import { useAccountStore } from '../store/accountStore';
+import LinkingConfiguration from './LinkingConfiguration';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const SignInStack = createNativeStackNavigator<SignInTabParamList>();
@@ -30,8 +29,7 @@ export default function Navigation() {
   const { account } = useAccountStore();
 
   return (
-    <NavigationContainer
-      linking={LinkingConfiguration}>
+    <NavigationContainer linking={LinkingConfiguration}>
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
@@ -69,14 +67,21 @@ function BottomTabNavigator() {
       screenOptions={{
         header: (props) => <NavigationBar {...props} />,
       }}
-      tabBar={(props) => <BottomNavigationBar {...props} />}
-    >
+      tabBar={(props) => <BottomNavigationBar {...props} />}>
+      {/*<BottomTab.Screen*/}
+      {/*  name='Garage'*/}
+      {/*  component={GarageScreen}*/}
+      {/*  options={{*/}
+      {/*    title: 'Garage',*/}
+      {/*    tabBarIcon: ({ color }) => <TabBarIcon name='link' color={color} />,*/}
+      {/*  }}*/}
+      {/*/>*/}
       <BottomTab.Screen
-        name='Garage'
-        component={GarageScreen}
+        name='Wallet'
+        component={WalletScreen}
         options={{
-          title: 'Garage',
-          tabBarIcon: ({ color }) => <TabBarIcon name='user' color={color} />,
+          title: 'Wallet',
+          tabBarIcon: ({ color }) => <TabBarIcon name='wallet' color={color} />,
         }}
       />
       <BottomTab.Screen
@@ -84,23 +89,15 @@ function BottomTabNavigator() {
         component={BikeRideScreen}
         options={{
           title: 'Bike Ride',
-          tabBarIcon: ({ color }) => <TabBarIcon name='user' color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name='bike' color={color} />,
         }}
       />
       <BottomTab.Screen
-        name='Account'
-        component={AccountScreen}
+        name='Marketplace'
+        component={MarketplaceScreen}
         options={{
-          title: 'Account',
-          tabBarIcon: ({ color }) => <TabBarIcon name='user' color={color} />,
-        }}
-      />
-      <BottomTab.Screen
-        name='Shop'
-        component={ShopScreen}
-        options={{
-          title: 'Shop',
-          tabBarIcon: ({ color }) => <TabBarIcon name='shopping-cart' color={color} />,
+          title: 'Marketplace',
+          tabBarIcon: ({ color }) => <TabBarIcon name='shopping' color={color} />,
         }}
       />
     </BottomTab.Navigator>
@@ -111,8 +108,8 @@ function BottomTabNavigator() {
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
+  name: React.ComponentProps<typeof MaterialCommunityIcons>['name'];
   color: string;
 }) {
-  return <FontAwesome size={16} {...props} />;
+  return <MaterialCommunityIcons size={16} {...props} />;
 }

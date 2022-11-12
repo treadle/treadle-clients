@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native';
 
-const AccountScreen = () => {
+const WalletScreen = () => {
   return (
     <View style={styles.screen}>
       <Text>Account Screen</Text>
@@ -8,7 +8,7 @@ const AccountScreen = () => {
   );
 };
 
-export default AccountScreen;
+export default WalletScreen;
 
 const styles = StyleSheet.create({
   screen: {
