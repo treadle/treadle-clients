@@ -22,6 +22,7 @@ import WalletScreen from '../screens/WalletScreen';
 import { useAccountStore } from '../store/accountStore';
 import LinkingConfiguration from './LinkingConfiguration';
 import TabBarIcon from '../components/TabBarIcon';
+import GarageScreen from '../screens/GarageScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const SignInStack = createNativeStackNavigator<SignInTabParamList>();
@@ -69,12 +70,28 @@ function BottomTabNavigator() {
         header: (props) => <NavigationBar {...props} />,
       }}
       tabBar={(props) => <BottomNavigationBar {...props} />}>
+      <BottomTab.Screen
+        name='Marketplace'
+        component={MarketplaceScreen}
+        options={{
+          title: 'Marketplace',
+          tabBarIcon: ({ color }) => <TabBarIcon name='shopping' color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name='Garage'
+        component={GarageScreen}
+        options={{
+          title: 'Garage',
+          tabBarIcon: ({ color }) => <TabBarIcon name='garage' color={color} />,
+        }}
+      />
       {/*<BottomTab.Screen*/}
-      {/*  name='Garage'*/}
-      {/*  component={GarageScreen}*/}
+      {/*  name='Ride'*/}
+      {/*  component={BikeRideScreen}*/}
       {/*  options={{*/}
-      {/*    title: 'Garage',*/}
-      {/*    tabBarIcon: ({ color }) => <TabBarIcon name='link' color={color} />,*/}
+      {/*    title: 'Bike Ride',*/}
+      {/*    tabBarIcon: ({ color }) => <TabBarIcon name='bike' color={color} />,*/}
       {/*  }}*/}
       {/*/>*/}
       <BottomTab.Screen
@@ -83,22 +100,6 @@ function BottomTabNavigator() {
         options={{
           title: 'Wallet',
           tabBarIcon: ({ color }) => <TabBarIcon name='wallet' color={color} />,
-        }}
-      />
-      <BottomTab.Screen
-        name='Ride'
-        component={BikeRideScreen}
-        options={{
-          title: 'Bike Ride',
-          tabBarIcon: ({ color }) => <TabBarIcon name='bike' color={color} />,
-        }}
-      />
-      <BottomTab.Screen
-        name='Marketplace'
-        component={MarketplaceScreen}
-        options={{
-          title: 'Marketplace',
-          tabBarIcon: ({ color }) => <TabBarIcon name='shopping' color={color} />,
         }}
       />
     </BottomTab.Navigator>

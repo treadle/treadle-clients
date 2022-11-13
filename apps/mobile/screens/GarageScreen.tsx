@@ -7,42 +7,34 @@ import GarageItem from '../components/GarageItem';
 import { useCounterStore } from '../store/counterStore';
 
 const GarageScreen = () => {
-  const { account, setAccount } = useAccountStore();
-  const { mockupServer } = useMockupServerStore();
-  const [bikes, setBikes] = useState<any>([]);
-  const { counter } = useCounterStore();
+  // const { account, setAccount } = useAccountStore();
+  // const { mockupServer } = useMockupServerStore();
+  // const [bikes, setBikes] = useState<any>([]);
+  // const { counter } = useCounterStore();
 
-  const fetchBikes = async () => {
-    if (mockupServer && account) {
-      const response = await mockupServer.fetchBikesForOwner(account.accountId);
-      setBikes(response);
-    }
-  };
-
-  useEffect(() => {
-    fetchBikes();
-  }, [counter]);
+  // const fetchBikes = async () => {
+  //   if (mockupServer && account) {
+  //     const response = await mockupServer.fetchBikesForOwner(account.accountId);
+  //     setBikes(response);
+  //   }
+  // };
+  //
+  // useEffect(() => {
+  //   fetchBikes();
+  // }, [counter]);
 
   return (
-    <View style={styles.screen}>
-      <ScrollView>
-        {bikes.map((bike: any) => (
-          <GarageItem key={bike.token_id} bike={bike} />
-        ))}
-      </ScrollView>
-      <Button mode='outlined' onPress={() => setAccount(null)}>
-        Logout
-      </Button>
+    <View>
+      {/*<ScrollView>*/}
+      {/*  {bikes.map((bike: any) => (*/}
+      {/*    <GarageItem key={bike.token_id} bike={bike} />*/}
+      {/*  ))}*/}
+      {/*</ScrollView>*/}
+      {/*<Button mode='outlined' onPress={() => setAccount(null)}>*/}
+      {/*  Logout*/}
+      {/*</Button>*/}
     </View>
   );
 };
 
 export default GarageScreen;
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
