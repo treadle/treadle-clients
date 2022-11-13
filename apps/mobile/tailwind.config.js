@@ -19,8 +19,15 @@ module.exports = {
         'md3-primary': '#D0BCFF',
         'md3-secondary': '#CCC2DC',
         'md3-on-bg': '#E6E1E5',
+        'md3-on-primary': '#381E72',
         'md3-on-secondary-container': '#E8DEF8',
+        'md3-on-surface': '#E6E1E5',
+        'md3-on-surface-variant': '#CAC4D0',
       },
+      borderColor: {
+        'md3-outline': '#938F99',
+        'md3-outline-variant': '#4A4458',
+      }
     },
   },
   plugins: [],
