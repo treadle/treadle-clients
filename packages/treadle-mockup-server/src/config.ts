@@ -1,34 +1,4 @@
-
-
-// export const CONTRACT_NAME = "dev-1667937803383-86710269890914";
-
-// export function generateConfig(environment: string) {
-//   switch (environment) {
-//     case "production":
-//     case "mainnet":
-//       return {
-//         networkId: "mainnet",
-//         nodeUrl: "https://rpc.mainnet.near.org",
-//         contractName: CONTRACT_NAME,
-//         walletUrl: "https://wallet.near.org",
-//         helperUrl: "https://helper.mainnet.near.org",
-//         explorerUrl: "https://explorer.mainnet.near.org",
-//       };
-//     case "development":
-//     case "testnet":
-//       return {
-//         networkId: "testnet",
-//         nodeUrl: "https://rpc.testnet.near.org",
-//         contractName: CONTRACT_NAME,
-//         walletUrl: "https://wallet.testnet.near.org",
-//         helperUrl: "https://helper.testnet.near.org",
-//         explorerUrl: "https://explorer.testnet.near.org",
-//       }; 
-//     default:
-//       throw Error(
-//         `Unconfigured environment '${environment}'. Can be configured in src/config.js.`
-//       );
-//   }
-// }
-
-
+export default {
+  PRIVATE_KEY: 'jNpUvccrCML6r4SRYkrVXfyiRDf61pyXh4UP6jwaEjYhVJbM6kWXZn86mt3w6hB4uhr3Xrhw2wmseUVA6Jetd9E',
+  CONTRACT_ID: 'dev-1668356929794-27884840521869'
+};
