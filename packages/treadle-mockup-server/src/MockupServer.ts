@@ -1,8 +1,6 @@
 import * as nearAPI from "near-api-js";
 import BN from "bn.js";
 
-import { CONTRACT_NAME } from "./config";
-
 export class MockupServer {
   near: nearAPI.Near;
   masterAccount: nearAPI.Account;
@@ -24,37 +22,37 @@ export class MockupServer {
 
   // }
 
-  async fetchBikesForOwner(accountId: string) {
-    const masterAccount = this.masterAccount;
+  // async fetchBikesForOwner(accountId: string) {
+  //   const masterAccount = this.masterAccount;
 
-    return await masterAccount.viewFunctionV2({ 
-      contractId: CONTRACT_NAME, 
-      methodName: "nft_tokens_for_owner", 
-      args: { 
-        "account_id": accountId 
-      } 
-    });
-  }
+  //   return await masterAccount.viewFunctionV2({ 
+  //     contractId: CONTRACT_NAME, 
+  //     methodName: "nft_tokens_for_owner", 
+  //     args: { 
+  //       "account_id": accountId 
+  //     } 
+  //   });
+  // }
 
-  async mintBike(receiverId: string) {
-    const masterAccount = this.masterAccount;
+  // async mintBike(receiverId: string) {
+  //   const masterAccount = this.masterAccount;
 
-    return await masterAccount.functionCall({
-      contractId: CONTRACT_NAME, 
-      methodName: "nft_mint",
-      args: {
-        "token_id": (Date.now() + Math.floor(Math.random() * 1e6)).toString(),
-        "receiver_id": receiverId, 
-        "token_metadata": { 
-          "title": "Yeah Bitch", 
-          "description": "oaoaoaoa", 
-          "media": "https://ipfs.io/ipfs/QmQqzMTavQgT4f4T5v6PWBp7XNKtoPmC9jvn12WPT3gkSE", 
-          "copies": 1
-        }
-      },
-      attachedDeposit: new BN("1000000000000000000000000")
-    });
-  }
+  //   return await masterAccount.functionCall({
+  //     contractId: CONTRACT_NAME, 
+  //     methodName: "nft_mint",
+  //     args: {
+  //       "token_id": (Date.now() + Math.floor(Math.random() * 1e6)).toString(),
+  //       "receiver_id": receiverId, 
+  //       "token_metadata": { 
+  //         "title": "Yeah Bitch", 
+  //         "description": "oaoaoaoa", 
+  //         "media": "https://ipfs.io/ipfs/QmQqzMTavQgT4f4T5v6PWBp7XNKtoPmC9jvn12WPT3gkSE", 
+  //         "copies": 1
+  //       }
+  //     },
+  //     attachedDeposit: new BN("1000000000000000000000000")
+  //   });
+  // }
 }
 
 // Initialize contract & set global variables
