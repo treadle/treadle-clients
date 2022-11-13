@@ -10,6 +10,7 @@ module.exports = {
       backgroundColor: {
         'md3-surface': '#1C1B1F',
         'md3-secondary-container': '#4A4458',
+        'md3-on-surface': '#E6E1E5',
       },
       backgroundImage: {
         'md3-surface-2':
