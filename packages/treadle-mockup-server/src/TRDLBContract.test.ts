@@ -142,7 +142,7 @@ test('should edit given NFT\'s token metadata', async () => {
             metadata: expect.objectContaining({
                 title: "Sexy Bike",
                 description: "The sexiest bike in the whole world!",
-                media: "https://media.giphy.com/media/pI2paNxecnUNW/giphy.gif",
+                media: "https://i.seadn.io/gae/_srVI-l12c77xK10awKamnDZkjenyvKakh0FxbRx67PY4KNU69kfknyAAEmzvlhXdXsNBsSyCopa5u95VRjaOXX67oWm5sbXGcZVvw?auto=format&w=1000",
                 media_hash: null,
                 copies: null,
                 issued_at: null,
