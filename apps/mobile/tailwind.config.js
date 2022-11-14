@@ -11,6 +11,8 @@ module.exports = {
         'md3-surface': '#1C1B1F',
         'md3-secondary-container': '#4A4458',
         'md3-on-surface': '#E6E1E5',
+        'md3-primary-container': '#4F378B',
+        'md3-primary': '#D0BCFF',
       },
       backgroundImage: {
         'md3-surface-2':
@@ -21,6 +23,7 @@ module.exports = {
         'md3-secondary': '#CCC2DC',
         'md3-on-bg': '#E6E1E5',
         'md3-on-primary': '#381E72',
+        'md3-on-primary-container': '#EADDFF',
         'md3-on-secondary-container': '#E8DEF8',
         'md3-on-surface': '#E6E1E5',
         'md3-on-surface-variant': '#CAC4D0',

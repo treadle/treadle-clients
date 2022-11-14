@@ -1,22 +1,24 @@
 import type { TRDLBJsonToken, TRDLBNftTokensForOwnerOptions } from 'treadle-mockup-server';
-import type { HomeTabScreenProps } from '../types/navigation-types';
+import type { RootStackScreenProps } from '../types/navigation-types';
 import type { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { TRDLBContract } from 'treadle-mockup-server';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { Dimensions, View, Button } from 'react-native';
-import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import Carousel from 'react-native-reanimated-carousel';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Dimensions, View } from 'react-native';
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import BikeCard from '../components/BikeCard';
 import { BN } from 'bn.js';
 import { useCounterStore } from '../store/counterStore';
 import { useAccountStore } from '../store/useAccountStore';
+import { TouchableRipple } from 'react-native-paper';
+import { RobotoRegularText } from '../components/StyledText';
 
-const GarageScreen = ({ navigation }: HomeTabScreenProps<'Garage'>) => {
+const GarageScreen = ({ navigation }: RootStackScreenProps<'BikeRide'>) => {
   const PAGE_WIDTH = Dimensions.get('window').width;
   const r = useRef<ICarouselInstance | null>(null);
   const { account } = useAccountStore();
   const [bikes, setBikes] = useState<TRDLBJsonToken[]>([]);
-  const [userBike, setUserBike] = useState(0);
+  const [userBike, setUserBike] = useState<TRDLBJsonToken>();
   const { counter } = useCounterStore();
 
   const fetchAllNFTs = useCallback(async () => {
@@ -34,12 +36,21 @@ const GarageScreen = ({ navigation }: HomeTabScreenProps<'Garage'>) => {
     }
   }, []);
 
+  const handleBikeChange = (index: number) => {
+    setUserBike(bikes[index]);
+  };
+
+  const handleBikePress = () => {
+    console.warn(navigation);
+    navigation.navigate('BikeRide', { selectedBike: userBike });
+  };
+
   useEffect(() => {
     fetchAllNFTs();
   }, [counter]);
   return (
     <View className='bg-md3-surface flex-1'>
-      <View className='w-full flex-1'>
+      <View className='flex-1 p-0 m-0'>
         <Carousel
           defaultIndex={0}
           ref={r}
@@ -49,10 +60,19 @@ const GarageScreen = ({ navigation }: HomeTabScreenProps<'Garage'>) => {
           windowSize={3}
           loop={false}
           renderItem={({ item }) => <BikeCard bikeMetadata={item.metadata} />}
-          onSnapToItem={(index) => setUserBike(index)}
+          onSnapToItem={handleBikeChange}
         />
       </View>
-      <Button title={"Ride"} onPress={() => navigation.navigate('BikeRide', { bicycle: bikes[userBike]})} />
+      <View className="w-24 h-24 mx-auto mb-16 rounded-full overflow-hidden items-center justify-center bg-md3-primary-container">
+        <TouchableRipple
+          borderless
+          className='w-full h-full items-center justify-center'
+          onPress={handleBikePress}>
+          <RobotoRegularText className='text-md3-on-primary-container'>
+            Race
+          </RobotoRegularText>
+        </TouchableRipple>
+      </View>
     </View>
   );
 };

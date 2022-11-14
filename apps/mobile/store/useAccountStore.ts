@@ -5,15 +5,12 @@ import { persist, StateStorage } from 'zustand/middleware';
 
 export const storage: StateStorage = {
   getItem: async (name: string): Promise<string | null> => {
-    console.log('storage.getItem', name);
     return (await getItemAsync(name)) || null;
   },
   setItem: async (name: string, value: string): Promise<void> => {
-    console.log('storage.setItem', name, value);
     await setItemAsync(name, value);
   },
   removeItem: async (name: string): Promise<void> => {
-    console.log('storage.removeItem', name);
     await deleteItemAsync(name);
   },
 };
