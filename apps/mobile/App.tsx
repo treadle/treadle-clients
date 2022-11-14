@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { MD3DarkTheme, Provider as PaperProvider } from 'react-native-paper';
+import * as SecureStore from "expo-secure-store";
 import useCachedResources from './hooks/useCachedResources';
 import Navigation from './navigation';
 
@@ -14,6 +15,7 @@ import { useAccountStore } from './store/useAccountStore';
 import { useHydration } from './hooks/useStoreHydration';
 import { setupMockupServer } from 'treadle-mockup-server';
 import { connect, keyStores, utils } from 'near-api-js';
+import { useEnergyTokensStore } from './store/useEnergyTokensStore';
 
 window.Buffer = window.Buffer || require('buffer').Buffer;
 
@@ -21,6 +23,7 @@ export default function App() {
   const isLoadingComplete = useCachedResources();
   const { account, setAccount, privateKey, setMasterAccount } = useAccountStore();
   const hydrated = useHydration();
+  const {energy, tokens, setEnergy, setTokens } = useEnergyTokensStore();
 
   const [fontsLoaded] = useFonts({
     'Roboto': require('./assets/fonts/Roboto-Regular.ttf'),
@@ -63,6 +66,19 @@ export default function App() {
   }, [privateKey]);
 
   const prepare = async () => {
+    if (await SecureStore.isAvailableAsync()) {
+      const energy = await SecureStore.getItemAsync('energy');
+      const tokens = await SecureStore.getItemAsync('tokens');
+
+      if (!energy) {
+        setEnergy(10)
+      }
+
+      if (!tokens) {
+        setTokens(0)
+      }
+    }
+
     try {
       await SplashScreen.preventAutoHideAsync();
     } catch (e) {

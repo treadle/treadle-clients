@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Dimensions, Text, View } from 'react-native';
+import { Dimensions, Text, View, Button } from 'react-native';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
-import { Button } from 'react-native-paper';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import BikeCard from '../components/BikeCard';
 import { TRDLBContract, TRDLBJsonToken, TRDLBNftTokensForOwnerOptions } from 'treadle-mockup-server';
@@ -10,11 +9,14 @@ import { BN } from 'bn.js';
 import { useCounterStore } from '../store/counterStore';
 import { useAccountStore } from '../store/useAccountStore';
 
-const GarageScreen = () => {
+import { RootStackScreenProps } from '../types';
+
+const GarageScreen = ({ navigation }: RootStackScreenProps<'BikeRide'>) => {
   const PAGE_WIDTH = Dimensions.get('window').width;
   const r = useRef<ICarouselInstance | null>(null);
   const { account } = useAccountStore();
   const [bikes, setBikes] = useState<TRDLBJsonToken[]>([]);
+  const [userBike, setUserBike] = useState(0);
   const { counter } = useCounterStore();
 
   const fetchAllNFTs = useCallback(async () => {
@@ -28,7 +30,6 @@ const GarageScreen = () => {
       };
 
       const nfts: TRDLBJsonToken[] = await contract.nft_tokens_for_owner(options);
-
       setBikes(nfts);
     }
   }, []);
@@ -36,10 +37,9 @@ const GarageScreen = () => {
   useEffect(() => {
     fetchAllNFTs();
   }, [counter]);
-
   return (
     <View className='bg-md3-surface flex-1'>
-      <View className='w-full'>
+      <View className='w-full flex-1'>
         <Carousel
           defaultIndex={0}
           ref={r}
@@ -49,21 +49,10 @@ const GarageScreen = () => {
           windowSize={3}
           loop={false}
           renderItem={({ item }) => <BikeCard bikeMetadata={item.metadata} />}
+          onSnapToItem={(index) => setUserBike(index)}
         />
       </View>
-      <View
-        style={{
-          marginTop: 24,
-          flexDirection: 'row',
-          justifyContent: 'space-evenly',
-        }}>
-        <Button mode='contained' onPress={() => r.current?.prev()}>
-          <Text>Prev</Text>
-        </Button>
-        <Button mode='contained' onPress={() => r.current?.next()}>
-          <Text>Next</Text>
-        </Button>
-      </View>
+      <Button title={userBike.toString()} onPress={() => navigation.navigate('BikeRide')}/>
     </View>
   );
 };

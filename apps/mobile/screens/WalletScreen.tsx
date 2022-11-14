@@ -43,10 +43,10 @@ function WalletScreen({ navigation }: HomeTabScreenProps<'Wallet'>) {
 
   const renderItem = ({ item }: { item: TRDLBJsonToken }) => {
     return (
-      <View>
+      <View className='m-5'>
         <Pressable onPress={() => NftCardHandler(item)}>
           <View>
-            {item.metadata.media && <Image className='w-[100px] h-[100px]' source={{ uri: item.metadata.media }} />}
+            {item.metadata.media && <Image className='w-[140px] h-[140px]' source={{ uri: item.metadata.media }} />}
           </View>
         </Pressable>
       </View>
@@ -54,8 +54,8 @@ function WalletScreen({ navigation }: HomeTabScreenProps<'Wallet'>) {
   };
 
   return (
-    <View className='px-4 bg-md3-surface flex-1'>
-      <FlatList data={nfts} renderItem={renderItem} />
+    <View className='px-4 bg-md3-surface flex-1 items-center'>
+      <FlatList data={nfts} renderItem={renderItem} numColumns={2} />
       <Button title={'Sign Out'} onPress={() => setAccount(null)} />
     </View>
   );

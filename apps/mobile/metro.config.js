@@ -18,6 +18,8 @@ config.resolver.nodeModulesPaths = [
   path.resolve(workspaceRoot, 'node_modules'),
 ];
 
+config.resolver.assetExts.push('bin', 'json');
+
 // Use turborepo to restore the cache when possible
 config.cacheStores = [
   new FileStore({ root: path.join(projectRoot, 'node_modules', '.cache', 'metro') }),

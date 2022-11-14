@@ -3,7 +3,7 @@ import type * as nearAPI from 'near-api-js';
 import create from 'zustand';
 import { persist, StateStorage } from 'zustand/middleware';
 
-const storage: StateStorage = {
+export const storage: StateStorage = {
   getItem: async (name: string): Promise<string | null> => {
     return (await getItemAsync(name)) || null;
   },

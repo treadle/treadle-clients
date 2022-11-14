@@ -7,6 +7,9 @@ import type { HomeTabParamList, RootStackParamList, SignInTabParamList } from '.
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useState, useEffect } from "react";
+
+import * as SecureStore from "expo-secure-store"
 
 import BottomNavigationBar from '../components/BottomNavigationBar';
 import NavigationBar from '../components/NavigationBar';
@@ -14,6 +17,7 @@ import MarketplaceScreen from '../screens/MarketplaceScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import SignInScreen from '../screens/SignInScreen';
 import WalletScreen from '../screens/WalletScreen';
+import BikeRideScreen from '../screens/BikeRideScreen';
 import LinkingConfiguration from './LinkingConfiguration';
 import TabBarIcon from '../components/TabBarIcon';
 import GarageScreen from '../screens/GarageScreen';
@@ -38,7 +42,7 @@ export default function Navigation() {
         }
         <Stack.Screen name='NotFound' component={NotFoundScreen} options={{ title: 'Oops!' }} />
         {/*<Stack.Group screenOptions={{ presentation: 'modal' }}>*/}
-        {/*  <Stack.Screen name='BikeRide' component={BikeRideScreen} />*/}
+        <Stack.Screen name='BikeRide' component={BikeRideScreen} />
         {/*</Stack.Group>*/}
         <Stack.Group screenOptions={{ presentation: 'modal' }}>
           <Stack.Screen name='NftDetails' component={NftDetailsScreen} />
