@@ -17,6 +17,9 @@ import executeModel from '../utils/executeModel';
 import loadModel from '../utils/loadModel';
 import processScanData from '../utils/processScanData';
 
+// Race State Manager
+import { RaceStateManager, RaceStateManagerConstructorOptions } from 'treadle-mockup-server';
+
 // Constants for GPS correction
 const UPDATE_DISTANCE = 10;
 const MOMENTARY_DISTANCE_TRESHOLD = 100;
@@ -25,9 +28,9 @@ const SPEED_LOWER_THRESHOLD = 0;
 
 // Inference correction
 const UPPER_LOSS_LIMIT = 1;
-const LOWER_LOSS_LIMIT = 0.2;
+const LOWER_LOSS_LIMIT = 0.1;
 
-export default function Ride({ route, navigation }) {
+export default function BikeRideScreen({ route, navigation }) {
     // Is app ready?
     const [isReady, setIsReady] = useState(false);
 
@@ -43,6 +46,7 @@ export default function Ride({ route, navigation }) {
 
     // Economy
     const [energy, setEnergy] = useState(10);
+    const [durability, setDurability] = useState(100);
     const [isEnded, setIsEnded] = useState(false);
 
     // Subscriptions
@@ -57,6 +61,8 @@ export default function Ride({ route, navigation }) {
     const model = useRef(null);
 
     const [isBicycle, setIsBicycle] = useState(true);
+
+    const bicycle = JSON.parse(route.params.bicycle.metadata.extra);
 
     const [devMotion, setDevMotion] = useState({
         acc_z: 0,
@@ -87,8 +93,6 @@ export default function Ride({ route, navigation }) {
     });
 
     const [scanData, setScanData] = useState([]);
-
-    const bicycle = route.params.bicycle;
 
     // Exiting the ride
     const endRide = async () => {
@@ -171,7 +175,7 @@ export default function Ride({ route, navigation }) {
                 const endOnLeaveApp = async () => {
                     setIsEnded(true);
                     console.log('background');
-                    navigation.navigate('Home');
+                    navigation.navigate('SummaryScreen', { distance: travelledDistance });
                 };
 
                 endOnLeaveApp();
@@ -186,8 +190,8 @@ export default function Ride({ route, navigation }) {
             // Load the AI model
             model.current = await loadModel();
             // Get energy level
-            const energy = await SecureStore.getItemAsync('energy');
-            setEnergy(Number(energy));
+            //const energy = await SecureStore.getItemAsync('energy');
+            //setEnergy(Number(energy));
 
             // Subscription to geolocation updates
             locationWatcher.current = await Location.watchPositionAsync(
@@ -324,15 +328,16 @@ export default function Ride({ route, navigation }) {
     }, [travelledDistance]);
 
     useEffect(() => {
-        setEnergy((prev) => prev - bicycle.comfort);
+      if (travelledKm !== 0)
+        setEnergy((prev) => prev - bicycle.comfort / 100);
     }, [travelledKm]);
 
     useEffect(() => {
         const updateEnergy = async () => {
-            if (energy < bicycle.comfort) {
+            if (energy < bicycle.comfort / 100) {
                 setIsEnded(true);
                 await SecureStore.setItemAsync('energy', energy.toString());
-                navigation.navigate('Home');
+                navigation.navigate('SummaryScreen', { distance: travelledDistance });
             }
         };
 
@@ -387,6 +392,20 @@ export default function Ride({ route, navigation }) {
                         </View>
                         <View style={{ alignItems: 'center' }}>
                             <Text style={styles.statLabel}>
+                                Left until update (km):
+                            </Text>
+                            <Text style={styles.stat}>
+                                {`${Math.floor(
+                                    (1000 - travelledDistance % 1000) / 1000
+                                )}`.padStart(2, '0') +
+                                    '.' +
+                                    `${
+                                      Math.floor((1000 - travelledDistance % 1000) / 10) % 100
+                                    }`.padStart(2, '0')}
+                            </Text>
+                        </View>
+                        <View style={{ alignItems: 'center' }}>
+                            <Text style={styles.statLabel}>
                                 Current Speed (km/h):
                             </Text>
                             <Text style={styles.stat}>{currentSpeed}</Text>
@@ -398,7 +417,7 @@ export default function Ride({ route, navigation }) {
                         <Button
                             title="END!"
                             onPress={() => {
-                                navigation.navigate('Home');
+                                navigation.navigate('SummaryScreen', { distance: travelledDistance });
                             }}
                         />
                     </View>
@@ -428,3 +447,22 @@ const styles = StyleSheet.create({
         fontWeight: '500',
     },
 });
+
+// import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar"
+// import { useEffect } from "react"
+// import { View, Text } from "react-native"
+
+// export default function BikeRideScreen({navigation, route}) {
+
+//   const bicycle = JSON.parse(route.params.bicycle.metadata.extra);
+
+//   useEffect(() => {
+//     console.log("dick")
+//   })
+
+//   return (
+//     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+//       <Text>{JSON.stringify(bicycle)}</Text>
+//     </View>
+//   )
+// }

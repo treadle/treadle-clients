@@ -22,6 +22,7 @@ import LinkingConfiguration from './LinkingConfiguration';
 import TabBarIcon from '../components/TabBarIcon';
 import GarageScreen from '../screens/GarageScreen';
 import NftDetailsScreen from '../screens/NftDetailsScreen';
+import SummaryScreen from '../screens/SummaryScreen';
 import { useAccountStore } from '../store/useAccountStore';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -44,6 +45,7 @@ export default function Navigation() {
         <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
         {/*<Stack.Group screenOptions={{ presentation: 'modal' }}>*/}
         <Stack.Screen name="BikeRide" component={BikeRideScreen} />
+        <Stack.Screen name="SummaryScreen" component={SummaryScreen} />
         {/*</Stack.Group>*/}
         <Stack.Group screenOptions={{ presentation: 'modal' }}>
           <Stack.Screen name="NftDetails" component={NftDetailsScreen} />

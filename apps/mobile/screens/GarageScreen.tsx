@@ -52,7 +52,7 @@ const GarageScreen = ({ navigation }: HomeTabScreenProps<'Garage'>) => {
           onSnapToItem={(index) => setUserBike(index)}
         />
       </View>
-      <Button title={userBike.toString()} onPress={() => navigation.navigate('BikeRide')} />
+      <Button title={"Ride"} onPress={() => navigation.navigate('BikeRide', { bicycle: bikes[userBike]})} />
     </View>
   );
 };
