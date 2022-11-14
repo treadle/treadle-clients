@@ -1,7 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { MD3DarkTheme, Provider as PaperProvider } from 'react-native-paper';
-import * as SecureStore from 'expo-secure-store';
 import useCachedResources from './hooks/useCachedResources';
 import Navigation from './navigation';
 
@@ -60,18 +59,8 @@ export default function App() {
   }, [privateKey]);
 
   const prepare = async () => {
-    if (await SecureStore.isAvailableAsync()) {
-      const energy = await SecureStore.getItemAsync('energy');
-      const tokens = await SecureStore.getItemAsync('tokens');
-
-      if (!energy) {
-        setEnergy(10);
-      }
-
-      if (!tokens) {
-        setTokens(0);
-      }
-    }
+    if (!energy) setEnergy(10);
+    if (!tokens) setTokens(0);
 
     try {
       await SplashScreen.preventAutoHideAsync();
@@ -104,7 +93,7 @@ export default function App() {
     <SafeAreaProvider onLayout={onLayoutRootView}>
       <PaperProvider theme={MD3DarkTheme}>
         <Navigation />
-        <StatusBar style="light" />
+        <StatusBar style='light' />
       </PaperProvider>
     </SafeAreaProvider>
   );
