@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { MD3DarkTheme, Provider as PaperProvider } from 'react-native-paper';
-import * as SecureStore from "expo-secure-store";
+import * as SecureStore from 'expo-secure-store';
 import useCachedResources from './hooks/useCachedResources';
 import Navigation from './navigation';
 
@@ -23,10 +23,10 @@ export default function App() {
   const isLoadingComplete = useCachedResources();
   const { account, setAccount, privateKey, setMasterAccount } = useAccountStore();
   const hydrated = useHydration();
-  const {energy, tokens, setEnergy, setTokens } = useEnergyTokensStore();
+  const { energy, tokens, setEnergy, setTokens } = useEnergyTokensStore();
 
   const [fontsLoaded] = useFonts({
-    'Roboto': require('./assets/fonts/Roboto-Regular.ttf'),
+    Roboto: require('./assets/fonts/Roboto-Regular.ttf'),
     'Roboto-Medium': require('./assets/fonts/Roboto-Medium.ttf'),
     'Roboto-Bold': require('./assets/fonts/Roboto-Bold.ttf'),
   });
@@ -54,12 +54,6 @@ export default function App() {
         'jNpUvccrCML6r4SRYkrVXfyiRDf61pyXh4UP6jwaEjYhVJbM6kWXZn86mt3w6hB4uhr3Xrhw2wmseUVA6Jetd9E';
       const { account: masterAccount } = await setupMockupServer(pantemonPrivateKey);
 
-      console.log(
-        'createFunctionalAccount',
-        nearAccount.viewFunctionV2,
-        masterAccount.viewFunctionV2
-      );
-
       setMasterAccount(masterAccount);
       setAccount(nearAccount);
     }
@@ -71,11 +65,11 @@ export default function App() {
       const tokens = await SecureStore.getItemAsync('tokens');
 
       if (!energy) {
-        setEnergy(10)
+        setEnergy(10);
       }
 
       if (!tokens) {
-        setTokens(0)
+        setTokens(0);
       }
     }
 
@@ -110,7 +104,7 @@ export default function App() {
     <SafeAreaProvider onLayout={onLayoutRootView}>
       <PaperProvider theme={MD3DarkTheme}>
         <Navigation />
-        <StatusBar style='light' />
+        <StatusBar style="light" />
       </PaperProvider>
     </SafeAreaProvider>
   );

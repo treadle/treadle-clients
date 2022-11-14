@@ -3,13 +3,13 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import type { HomeTabParamList, RootStackParamList, SignInTabParamList } from '../types';
+import type { HomeTabParamList, RootStackParamList, SignInTabParamList } from '../types/navigation-types';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
-import * as SecureStore from "expo-secure-store"
+import * as SecureStore from 'expo-secure-store';
 
 import BottomNavigationBar from '../components/BottomNavigationBar';
 import NavigationBar from '../components/NavigationBar';
@@ -36,16 +36,17 @@ export default function Navigation() {
         screenOptions={{
           headerShown: false,
         }}>
-        {!!account
-          ? <Stack.Screen name='Home' component={BottomTabNavigator} />
-          : <Stack.Screen name='Login' component={SignInNavigator} />
-        }
-        <Stack.Screen name='NotFound' component={NotFoundScreen} options={{ title: 'Oops!' }} />
+        {!!account ? (
+          <Stack.Screen name="Home" component={BottomTabNavigator} />
+        ) : (
+          <Stack.Screen name="Login" component={SignInNavigator} />
+        )}
+        <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
         {/*<Stack.Group screenOptions={{ presentation: 'modal' }}>*/}
-        <Stack.Screen name='BikeRide' component={BikeRideScreen} />
+        <Stack.Screen name="BikeRide" component={BikeRideScreen} />
         {/*</Stack.Group>*/}
         <Stack.Group screenOptions={{ presentation: 'modal' }}>
-          <Stack.Screen name='NftDetails' component={NftDetailsScreen} />
+          <Stack.Screen name="NftDetails" component={NftDetailsScreen} />
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
@@ -58,7 +59,7 @@ function SignInNavigator() {
       screenOptions={{
         headerShown: false,
       }}>
-      <SignInStack.Screen name='SignIn' component={SignInScreen} />
+      <SignInStack.Screen name="SignIn" component={SignInScreen} />
     </SignInStack.Navigator>
   );
 }
@@ -77,19 +78,19 @@ function BottomTabNavigator() {
       }}
       tabBar={(props) => <BottomNavigationBar {...props} />}>
       <BottomTab.Screen
-        name='Marketplace'
+        name="Marketplace"
         component={MarketplaceScreen}
         options={{
           title: 'Marketplace',
-          tabBarIcon: ({ color }) => <TabBarIcon name='shopping' color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="shopping" color={color} />,
         }}
       />
       <BottomTab.Screen
-        name='Garage'
+        name="Garage"
         component={GarageScreen}
         options={{
           title: 'Garage',
-          tabBarIcon: ({ color }) => <TabBarIcon name='garage' color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="garage" color={color} />,
         }}
       />
       {/*<BottomTab.Screen*/}
@@ -101,11 +102,11 @@ function BottomTabNavigator() {
       {/*  }}*/}
       {/*/>*/}
       <BottomTab.Screen
-        name='Wallet'
+        name="Wallet"
         component={WalletScreen}
         options={{
           title: 'Wallet',
-          tabBarIcon: ({ color }) => <TabBarIcon name='wallet' color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="wallet" color={color} />,
         }}
       />
     </BottomTab.Navigator>

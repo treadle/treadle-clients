@@ -3,8 +3,7 @@ import { FC } from 'react';
 
 const GarageItem: FC<{
   bike: any;
-}> = ({bike}) => {
-
+}> = ({ bike }) => {
   console.log('bike', bike);
 
   return (
@@ -47,5 +46,5 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 16,
     marginBottom: 10,
-  }
+  },
 });

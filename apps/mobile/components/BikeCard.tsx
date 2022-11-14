@@ -9,16 +9,20 @@ interface CardProps {
 
 const BikeCard: FC<CardProps> = ({ bikeMetadata }) => {
   return (
-    <View className='bg-md3-surface flex-1 items-center rounded-[12px] overflow-hidden border border-md3-outline-variant'>
-      {bikeMetadata.media && (<Image source={{ uri: bikeMetadata.media }} className='w-full h-[188px]' />)}
-      <View className='p-4'>
-        <View className='flex-row mb-[32px]'>
-          <RobotoRegularText className='text-md3-on-bg text-[22px] tracking-[0.5px]'>
+    <View className="bg-md3-surface flex-1 items-center rounded-[12px] overflow-hidden border border-md3-outline-variant">
+      {bikeMetadata.media && (
+        <Image source={{ uri: bikeMetadata.media }} className="w-full h-[188px]" />
+      )}
+      <View className="p-4">
+        <View className="flex-row mb-[32px]">
+          <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">
             {bikeMetadata.title}
           </RobotoRegularText>
         </View>
-        <View className='flex flex-row items-center'>
-          <RobotoRegularText className='text-[16px] text-md3-on-surface px-[2px] leading-[20px]'>{bikeMetadata.extra}</RobotoRegularText>
+        <View className="flex flex-row items-center">
+          <RobotoRegularText className="text-[16px] text-md3-on-surface px-[2px] leading-[20px]">
+            {bikeMetadata.extra}
+          </RobotoRegularText>
         </View>
       </View>
     </View>

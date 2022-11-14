@@ -7,7 +7,9 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "lint": "eslint .",
+    "prettier": "prettier --write ."
   },
   "jest": {
     "preset": "jest-expo"
@@ -56,6 +58,7 @@
   "devDependencies": {
     "@babel/core": "^7.20.2",
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
+    "@types/haversine": "^1.1.5",
     "@types/react": "~18.0.25",
     "@types/react-native": "~0.70.6",
     "@typescript-eslint/eslint-plugin": "^5.42.1",

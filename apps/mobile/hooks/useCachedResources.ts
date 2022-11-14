@@ -15,7 +15,7 @@ export default function useCachedResources() {
         // Load fonts
         await Font.loadAsync({
           ...MaterialCommunityIcons.font,
-          'Roboto': require('../assets/fonts/Roboto-Regular.ttf'),
+          Roboto: require('../assets/fonts/Roboto-Regular.ttf'),
           'Roboto-medium': require('../assets/fonts/Roboto-Medium.ttf'),
           'Roboto-bold': require('../assets/fonts/Roboto-Bold.ttf'),
         });

@@ -73,7 +73,7 @@ const MarketplaceScreen: FC = () => {
   );
 
   return (
-    <View className='bg-md3-surface flex-1 px-4'>
+    <View className="bg-md3-surface flex-1 px-4">
       <FlatList data={metadata} renderItem={renderItem} />
     </View>
   );

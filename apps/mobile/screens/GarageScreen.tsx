@@ -1,17 +1,17 @@
-import * as React from 'react';
+import type { TRDLBJsonToken, TRDLBNftTokensForOwnerOptions } from 'treadle-mockup-server';
+import type { HomeTabScreenProps } from '../types/navigation-types';
+import type { ICarouselInstance } from 'react-native-reanimated-carousel';
+import { TRDLBContract } from 'treadle-mockup-server';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Dimensions, Text, View, Button } from 'react-native';
+import { Dimensions, View, Button } from 'react-native';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
-import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
+import Carousel from 'react-native-reanimated-carousel';
 import BikeCard from '../components/BikeCard';
-import { TRDLBContract, TRDLBJsonToken, TRDLBNftTokensForOwnerOptions } from 'treadle-mockup-server';
 import { BN } from 'bn.js';
 import { useCounterStore } from '../store/counterStore';
 import { useAccountStore } from '../store/useAccountStore';
 
-import { RootStackScreenProps } from '../types';
-
-const GarageScreen = ({ navigation }: RootStackScreenProps<'BikeRide'>) => {
+const GarageScreen = ({ navigation }: HomeTabScreenProps<'Garage'>) => {
   const PAGE_WIDTH = Dimensions.get('window').width;
   const r = useRef<ICarouselInstance | null>(null);
   const { account } = useAccountStore();
@@ -52,7 +52,7 @@ const GarageScreen = ({ navigation }: RootStackScreenProps<'BikeRide'>) => {
           onSnapToItem={(index) => setUserBike(index)}
         />
       </View>
-      <Button title={userBike.toString()} onPress={() => navigation.navigate('BikeRide')}/>
+      <Button title={userBike.toString()} onPress={() => navigation.navigate('BikeRide')} />
     </View>
   );
 };

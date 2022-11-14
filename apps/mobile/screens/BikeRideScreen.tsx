@@ -12,11 +12,11 @@ import calcDist from '../logic/calcDist';
 import calcTimeDiffMs from '../logic/calcTimeDiffMs';
 
 //inference
-import calcQuaternions from '../inference/calcQuaternions';
-import executeModel from '../inference/executeModel';
-import loadModel from '../inference/loadModel';
-import processScanData from '../inference/processScanData';
-import calcLoss from '../inference/calcLoss';
+import calcQuaternions from '../utils/calcQuaternions';
+import executeModel from '../utils/executeModel';
+import loadModel from '../utils/loadModel';
+import processScanData from '../utils/processScanData';
+import calcLoss from '../utils/calcLoss';
 
 // Constants for GPS correction
 const UPDATE_DISTANCE = 10;
@@ -29,7 +29,6 @@ const UPPER_LOSS_LIMIT = 0.6;
 const LOWER_LOSS_LIMIT = 0.2;
 
 const BikeRideScreen = () => {
-
   // Is app ready?
   const [isReady, setIsReady] = useState(false);
 
@@ -61,38 +60,38 @@ const BikeRideScreen = () => {
   const [isBicycle, setIsBicycle] = useState(true);
 
   const [devMotion, setDevMotion] = useState({
-      acc_z: 0,
-      acc_y: 0,
-      acc_x: 0,
-      gra_z: 0,
-      gra_y: 0,
-      gra_x: 0,
-      ori_qz: 0,
-      ori_qy: 0,
-      ori_qx: 0,
-      ori_qw: 0,
-      ori_roll: 0,
-      ori_pitch: 0,
-      ori_yaw: 0,
+    acc_z: 0,
+    acc_y: 0,
+    acc_x: 0,
+    gra_z: 0,
+    gra_y: 0,
+    gra_x: 0,
+    ori_qz: 0,
+    ori_qy: 0,
+    ori_qx: 0,
+    ori_qw: 0,
+    ori_roll: 0,
+    ori_pitch: 0,
+    ori_yaw: 0,
   });
 
   const [gyr, setGyr] = useState({
-      gyr_z: 0,
-      gyr_y: 0,
-      gyr_x: 0,
+    gyr_z: 0,
+    gyr_y: 0,
+    gyr_x: 0,
   });
 
   const [mag, setMag] = useState({
-      mag_z: 0,
-      mag_y: 0,
-      mag_x: 0,
+    mag_z: 0,
+    mag_y: 0,
+    mag_x: 0,
   });
 
   const [scanData, setScanData] = useState([]);
 
   useEffect(() => {
-    console.log(25)
-  }, [])
+    console.log(25);
+  }, []);
 
   return (
     <View style={styles.screen}>

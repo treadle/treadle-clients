@@ -28,7 +28,7 @@ module.exports = {
       borderColor: {
         'md3-outline': '#938F99',
         'md3-outline-variant': '#4A4458',
-      }
+      },
     },
   },
   plugins: [],

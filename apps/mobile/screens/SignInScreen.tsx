@@ -1,5 +1,5 @@
 import type { Account } from 'near-api-js';
-import type { SignInTabScreenProps } from '../types';
+import type { SignInTabScreenProps } from '../types/navigation-types';
 import { useCallback, useState } from 'react';
 import { View } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
@@ -50,7 +50,8 @@ export default function SignInScreen({}: SignInTabScreenProps<'SignIn'>) {
 
     const nearAccount: Account = await nearConnection.account(accountId);
 
-    const pantemonPrivateKey = 'jNpUvccrCML6r4SRYkrVXfyiRDf61pyXh4UP6jwaEjYhVJbM6kWXZn86mt3w6hB4uhr3Xrhw2wmseUVA6Jetd9E';
+    const pantemonPrivateKey =
+      'jNpUvccrCML6r4SRYkrVXfyiRDf61pyXh4UP6jwaEjYhVJbM6kWXZn86mt3w6hB4uhr3Xrhw2wmseUVA6Jetd9E';
     const { account } = await setupMockupServer(pantemonPrivateKey);
 
     setMasterAccount(account);
@@ -65,23 +66,26 @@ export default function SignInScreen({}: SignInTabScreenProps<'SignIn'>) {
   };
 
   return (
-    <View className='flex-1 bg-md3-surface justify-center px-4'>
-      <RobotoBoldText className='text-md3-on-bg text-[60px] leading-[64px] text-center mb-4'>Treadle</RobotoBoldText>
-      <RobotoRegularText className='text-[22px] text-md3-on-bg text-center leading-[28px] mb-4'>Enter the private key associated with the account.</RobotoRegularText>
+    <View className="flex-1 bg-md3-surface justify-center px-4">
+      <RobotoBoldText className="text-md3-on-bg text-[60px] leading-[64px] text-center mb-4">
+        Treadle
+      </RobotoBoldText>
+      <RobotoRegularText className="text-[22px] text-md3-on-bg text-center leading-[28px] mb-4">
+        Enter the private key associated with the account.
+      </RobotoRegularText>
       <TextInput
-        className='mb-4'
-        mode='outlined'
-        label='Private Key'
-        placeholder='Private key'
+        className="mb-4"
+        mode="outlined"
+        label="Private Key"
+        placeholder="Private key"
         value={localPrivateKey}
         onChangeText={setLocalPrivateKey}
       />
       <Button
-        mode='outlined'
+        mode="outlined"
         onPress={handleSignIn}
         disabled={!privateKeyValidation(localPrivateKey) || loading}
-        loading={loading}
-      >
+        loading={loading}>
         Import Wallet
       </Button>
     </View>

@@ -14,16 +14,14 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.dreamqip.Treadle"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/adaptive-icon.png"
       },
       "package": "com.dreamqip.Treadle"
     },

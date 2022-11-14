@@ -9,8 +9,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 declare global {
   namespace ReactNavigation {
-    interface RootParamList extends RootStackParamList {
-    }
+    interface RootParamList extends RootStackParamList {}
   }
 }
 
@@ -22,18 +21,24 @@ export type RootStackParamList = {
   NftDetails: undefined;
 };
 
-export type HomeTabScreenProps<Screen extends keyof HomeTabParamList> = NativeStackScreenProps<HomeTabParamList,
-  Screen>;
+export type HomeTabScreenProps<Screen extends keyof HomeTabParamList> = NativeStackScreenProps<
+  HomeTabParamList,
+  Screen
+>;
 
-export type SignInTabScreenProps<Screen extends keyof SignInTabParamList> = NativeStackScreenProps<SignInTabParamList,
-  Screen>;
+export type SignInTabScreenProps<Screen extends keyof SignInTabParamList> = NativeStackScreenProps<
+  SignInTabParamList,
+  Screen
+>;
 
-export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<RootStackParamList,
-  Screen>;
+export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
+  RootStackParamList,
+  Screen
+>;
 
 export type SignInTabParamList = {
   SignIn: undefined;
-}
+};
 
 export type HomeTabParamList = {
   Garage: undefined;
@@ -42,5 +47,7 @@ export type HomeTabParamList = {
   Wallet: undefined;
 };
 
-export type RootTabScreenProps<Screen extends keyof HomeTabParamList> = CompositeScreenProps<BottomTabScreenProps<HomeTabParamList, Screen>,
-  NativeStackScreenProps<RootStackParamList>>;
+export type RootTabScreenProps<Screen extends keyof HomeTabParamList> = CompositeScreenProps<
+  BottomTabScreenProps<HomeTabParamList, Screen>,
+  NativeStackScreenProps<RootStackParamList>
+>;
