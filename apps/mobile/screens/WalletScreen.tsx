@@ -1,19 +1,64 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { Button, FlatList, Image, Pressable, View } from 'react-native';
+import { useAccountStore } from '../store/useAccountStore';
+import { useCallback, useEffect, useState } from 'react';
+import { TRDLBContract, TRDLBJsonToken, TRDLBNftTokensForOwnerOptions } from 'treadle-mockup-server';
+import { BN } from 'bn.js';
+import { useCounterStore } from '../store/counterStore';
+import { useNftDetailsStore } from '../store/useNftDetailsStore';
+import { HomeTabScreenProps } from '../types';
 
-const WalletScreen = () => {
+function WalletScreen({ navigation }: HomeTabScreenProps<'Wallet'>) {
+  const { setAccount, account } = useAccountStore();
+  const { counter } = useCounterStore();
+  const { setNftDetails } = useNftDetailsStore();
+  const [nfts, setNfts] = useState<TRDLBJsonToken[]>([]);
+
+  const fetchAllNFTs = useCallback(async () => {
+    if (account) {
+      const contract = new TRDLBContract(account, 'dev-1668356929794-27884840521869');
+
+      const options: TRDLBNftTokensForOwnerOptions = {
+        account_id: account.accountId,
+        from_index: new BN(0),
+        limit: 5,
+      };
+
+      const nfts: TRDLBJsonToken[] = await contract.nft_tokens_for_owner(options);
+
+      setNfts(nfts);
+      console.log(nfts.length);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchAllNFTs();
+  }, [counter]);
+
+  const NftCardHandler = (item: TRDLBJsonToken) => {
+    setNftDetails(item);
+
+    // @ts-ignore
+    navigation.navigate('NftDetails');
+  };
+
+  const renderItem = ({ item }: { item: TRDLBJsonToken }) => {
+    return (
+      <View>
+        <Pressable onPress={() => NftCardHandler(item)}>
+          <View>
+            {item.metadata.media && <Image className='w-[100px] h-[100px]' source={{ uri: item.metadata.media }} />}
+          </View>
+        </Pressable>
+      </View>
+    );
+  };
+
   return (
-    <View style={styles.screen}>
-      <Text>Account Screen</Text>
+    <View className='px-4 bg-md3-surface flex-1'>
+      <FlatList data={nfts} renderItem={renderItem} />
+      <Button title={'Sign Out'} onPress={() => setAccount(null)} />
     </View>
   );
 };
 
 export default WalletScreen;
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});

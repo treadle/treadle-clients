@@ -9,7 +9,7 @@ module.exports = function(api) {
     ],
     env: {
       production: {
-        plugins: ['react-mobile-paper/babel'],
+        plugins: ['react-mobile-paper/babel', 'transform-remove-console'],
       },
     },
   };

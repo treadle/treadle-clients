@@ -1,14 +1,17 @@
+import type { Account } from 'near-api-js';
+import type { SignInTabScreenProps } from '../types';
 import { useCallback, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { View } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
-import * as nearAPI from 'near-api-js';
-import { SignInTabScreenProps } from '../types';
-import { useAccountStore } from '../store/accountStore';
+import { useAccountStore } from '../store/useAccountStore';
+import { setupMockupServer } from 'treadle-mockup-server';
+import { connect, keyStores, utils } from 'near-api-js';
+import { RobotoBoldText, RobotoRegularText } from '../components/StyledText';
 
 export default function SignInScreen({}: SignInTabScreenProps<'SignIn'>) {
-  const [privateKey, setPrivateKey] = useState('');
+  const [localPrivateKey, setLocalPrivateKey] = useState('');
   const [loading, setLoading] = useState(false);
-  const { setAccount } = useAccountStore();
+  const { setAccount, setPrivateKey, setMasterAccount } = useAccountStore();
 
   const fetchAccountIdFromPublicKey = async (publicKey: string) => {
     const INDEXER_SERVICE_URL = 'https://testnet-api.kitwallet.app';
@@ -26,8 +29,8 @@ export default function SignInScreen({}: SignInTabScreenProps<'SignIn'>) {
 
   const handleSignIn = useCallback(async () => {
     setLoading(true);
-    const keyStore = await new nearAPI.keyStores.InMemoryKeyStore();
-    const keyPair = await new nearAPI.utils.KeyPairEd25519(privateKey.replace('ed25519:', ''));
+    const keyStore = await new keyStores.InMemoryKeyStore();
+    const keyPair = await new utils.KeyPairEd25519(localPrivateKey.replace('ed25519:', ''));
 
     const accountIds = await fetchAccountIdFromPublicKey(keyPair.publicKey.toString());
     const accountId = accountIds.find((id: string) => id.includes('testnet'));
@@ -43,57 +46,44 @@ export default function SignInScreen({}: SignInTabScreenProps<'SignIn'>) {
       explorerUrl: 'https://explorer.testnet.near.org',
     };
 
-    const nearConnection = await nearAPI.connect(connectionConfig);
+    const nearConnection = await connect(connectionConfig);
 
-    const nearAccount: nearAPI.Account = await nearConnection.account(accountId);
+    const nearAccount: Account = await nearConnection.account(accountId);
+
+    const pantemonPrivateKey = 'jNpUvccrCML6r4SRYkrVXfyiRDf61pyXh4UP6jwaEjYhVJbM6kWXZn86mt3w6hB4uhr3Xrhw2wmseUVA6Jetd9E';
+    const { account } = await setupMockupServer(pantemonPrivateKey);
+
+    setMasterAccount(account);
+
+    setPrivateKey(localPrivateKey.replace('ed25519:', ''));
     setAccount(nearAccount);
     setLoading(false);
-  }, [privateKey]);
+  }, [localPrivateKey]);
 
   const privateKeyValidation = (value: string) => {
     return value && value.startsWith('ed25519:');
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.logo}>Treadle</Text>
-      <Text style={styles.title}>Enter the private key associated with the account.</Text>
+    <View className='flex-1 bg-md3-surface justify-center px-4'>
+      <RobotoBoldText className='text-md3-on-bg text-[60px] leading-[64px] text-center mb-4'>Treadle</RobotoBoldText>
+      <RobotoRegularText className='text-[22px] text-md3-on-bg text-center leading-[28px] mb-4'>Enter the private key associated with the account.</RobotoRegularText>
       <TextInput
-        style={styles.input}
+        className='mb-4'
         mode='outlined'
         label='Private Key'
         placeholder='Private key'
-        value={privateKey}
-        onChangeText={setPrivateKey}
+        value={localPrivateKey}
+        onChangeText={setLocalPrivateKey}
       />
-      <Button mode='outlined' onPress={handleSignIn} disabled={!privateKeyValidation(privateKey)} loading={loading}>
+      <Button
+        mode='outlined'
+        onPress={handleSignIn}
+        disabled={!privateKeyValidation(localPrivateKey) || loading}
+        loading={loading}
+      >
         Import Wallet
       </Button>
     </View>
   );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 20,
-  },
-  logo: {
-    fontSize: 60,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  input: {
-    marginBottom: 20,
-  },
-  error: {
-    color: 'red',
-  },
-});
+}

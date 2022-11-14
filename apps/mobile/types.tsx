@@ -18,6 +18,7 @@ export type RootStackParamList = {
   Home: NavigatorScreenParams<HomeTabParamList> | undefined;
   Login: NavigatorScreenParams<SignInTabParamList> | undefined;
   NotFound: undefined;
+  NftDetails: undefined;
 };
 
 export type HomeTabScreenProps<Screen extends keyof HomeTabParamList> = NativeStackScreenProps<HomeTabParamList,
