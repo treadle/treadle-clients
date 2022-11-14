@@ -43,7 +43,7 @@ function WalletScreen({ navigation }: HomeTabScreenProps<'Wallet'>) {
 
   const renderItem = ({ item }: { item: TRDLBJsonToken }) => {
     return (
-      <View className='p-4 m-1 border border-md3-outline-variant rounded-[12px]'>
+      <View className='m-4 border-2 border-md3-outline-variant rounded-[12px] overflow-hidden'>
         <Pressable onPress={() => NftCardHandler(item)}>
           <View>
             {item.metadata.media && (

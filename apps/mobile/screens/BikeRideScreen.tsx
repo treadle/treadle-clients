@@ -6,6 +6,7 @@ import { Magnetometer, Gyroscope, DeviceMotion } from 'expo-sensors';
 import * as Location from 'expo-location';
 import * as SecureStore from 'expo-secure-store';
 import * as tf from '@tensorflow/tfjs';
+import { RootStackScreenProps } from '../types/navigation-types';
 
 // Logic
 import calcDist from '../utils/calcDist';
@@ -27,7 +28,7 @@ const SPEED_LOWER_THRESHOLD = 0;
 const UPPER_LOSS_LIMIT = 1;
 const LOWER_LOSS_LIMIT = 0.2;
 
-export default function Ride({ route, navigation }) {
+export default function Ride({ navigation, route }: RootStackScreenProps<'BikeRide'>) {
     // Is app ready?
     const [isReady, setIsReady] = useState(false);
 

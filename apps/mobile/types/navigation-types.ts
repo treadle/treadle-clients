@@ -3,9 +3,10 @@
  * https://reactnavigation.org/docs/typescript/
  */
 
-import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import type { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { TRDLBJsonToken } from 'treadle-mockup-server';
 
 declare global {
   namespace ReactNavigation {
@@ -16,7 +17,7 @@ declare global {
 export type RootStackParamList = {
   Home: NavigatorScreenParams<HomeTabParamList> | undefined;
   Login: NavigatorScreenParams<SignInTabParamList> | undefined;
-  BikeRide: undefined;
+  BikeRide: { selectedBike: TRDLBJsonToken | undefined };
   NotFound: undefined;
   NftDetails: undefined;
 };

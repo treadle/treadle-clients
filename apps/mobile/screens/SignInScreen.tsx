@@ -8,7 +8,7 @@ import { setupMockupServer } from 'treadle-mockup-server';
 import { connect, keyStores, utils } from 'near-api-js';
 import { RobotoBoldText, RobotoRegularText } from '../components/StyledText';
 
-export default function SignInScreen({}: SignInTabScreenProps<'SignIn'>) {
+export default function SignInScreen() {
   const [localPrivateKey, setLocalPrivateKey] = useState('');
   const [loading, setLoading] = useState(false);
   const { setAccount, setPrivateKey, setMasterAccount } = useAccountStore();
