@@ -16,6 +16,7 @@ import { setupMockupServer } from 'treadle-mockup-server';
 import { connect, keyStores, utils } from 'near-api-js';
 import { useEnergyTokensStore } from './store/useEnergyTokensStore';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
+import { requestForegroundPermissionsAsync } from "expo-location"
 
 window.Buffer = window.Buffer || require('buffer').Buffer;
 
@@ -69,6 +70,7 @@ const App = () => {
 
     try {
       await SplashScreen.preventAutoHideAsync();
+      await requestForegroundPermissionsAsync();
     } catch (e) {
       console.warn(e);
     }

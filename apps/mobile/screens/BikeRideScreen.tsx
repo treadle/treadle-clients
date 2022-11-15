@@ -2,7 +2,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { View, StyleSheet, Text, Alert, Button, AppState } from 'react-native';
 import { ActivityIndicator, TouchableRipple } from 'react-native-paper';
-import { RobotoRegularText } from '../components/StyledText';
+import { RobotoRegularText, RobotoMediumText } from '../components/StyledText';
 import { MD3DarkTheme } from 'react-native-paper';
 import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 import { Magnetometer, Gyroscope, DeviceMotion } from 'expo-sensors';
@@ -367,8 +367,13 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
   return (
     <View style={styles.container}>
       {isReady ? (
-        <View style={{flex: 1, justifyContent: 'space-evenly'}}>
+        <View style={{flex: 1, justifyContent: 'space-evenly', alignItems: 'center'}}>
+          <View className="flex-row justify-center items-center">
+            <MaterialIcons name="radio-button-checked" size={18} color={isBicycle ? "#30D615" : "#AD0000"} />
+            <RobotoMediumText className="text-[18px] m-1" style={{color: isBicycle ? "#30D615" : "#AD0000"}}>{isBicycle ? "RIDING" : "NOT RIDING"}</RobotoMediumText>
+          </View>
             <View className='w-full flex-row justify-evenly'>
+                
                 <View className='flex-col items-center justify-between h-14'>
                     <MaterialIcons name="timer" size={32} color='white'/>
                     <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">{
@@ -389,15 +394,16 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
                     <RobotoRegularText className="text-md3-on-bg text-[16px] tracking-[0.5px]">km</RobotoRegularText>
                 </View>
             </View>
-            <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">{energy}</RobotoRegularText>
-            <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">{durability}</RobotoRegularText>
-            <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">{earnedTokens}</RobotoRegularText>
+            <View>
+              <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">Earned: {earnedTokens}</RobotoRegularText>
+              <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">Energy left: {energy}/10</RobotoRegularText>
+            </View>
           <View className="w-24 h-24 mx-auto mb-16 rounded-full overflow-hidden items-center justify-center bg-md3-primary-container">
             <TouchableRipple
               borderless
               className="w-full h-full items-center justify-center"
               onPress={handleEndRide}>
-              <RobotoRegularText className="text-md3-on-primary-container">End</RobotoRegularText>
+              <RobotoMediumText className="text-md3-on-primary-container text-[17px]">End</RobotoMediumText>
             </TouchableRipple>
           </View>
         </View>
