@@ -4,7 +4,7 @@ import type { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { TRDLBContract } from 'treadle-mockup-server';
 import Carousel from 'react-native-reanimated-carousel';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Dimensions, View } from 'react-native';
+import { Dimensions, View, Alert } from 'react-native';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import BikeCard from '../components/BikeCard';
 import { BN } from 'bn.js';
@@ -12,6 +12,7 @@ import { useCounterStore } from '../store/counterStore';
 import { useAccountStore } from '../store/useAccountStore';
 import { TouchableRipple } from 'react-native-paper';
 import { RobotoRegularText } from '../components/StyledText';
+import { useEnergyTokensStore } from '../store/useEnergyTokensStore';
 
 const GarageScreen = ({ navigation }: RootStackScreenProps<'BikeRide'>) => {
   const PAGE_WIDTH = Dimensions.get('window').width;
@@ -20,6 +21,7 @@ const GarageScreen = ({ navigation }: RootStackScreenProps<'BikeRide'>) => {
   const [bikes, setBikes] = useState<TRDLBJsonToken[]>([]);
   const [userBike, setUserBike] = useState<TRDLBJsonToken>();
   const { counter } = useCounterStore();
+  const { energy, setEnergy } = useEnergyTokensStore();
 
   const fetchAllNFTs = useCallback(async () => {
     if (account) {
@@ -42,7 +44,12 @@ const GarageScreen = ({ navigation }: RootStackScreenProps<'BikeRide'>) => {
 
   const handleBikePress = () => {
     console.warn(navigation);
-    navigation.navigate('BikeRide', { selectedBike: userBike });
+    const metadata = JSON.parse(userBike?.metadata?.extra || bikes[0].metadata.extra)
+    if (energy < metadata.comfort / 100) {
+      Alert.alert("Can't start the ride", "You don't have enough energy to ride this bike!");
+    } else {
+      navigation.navigate('BikeRide', { selectedBike: userBike || bikes[0] });
+    }
   };
 
   useEffect(() => {
