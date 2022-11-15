@@ -1,9 +1,9 @@
 import type { RootStackScreenProps } from '../types/navigation-types';
 import { View } from 'react-native';
-import { RobotoMediumText, RobotoBoldText, RobotoRegularText } from '../components/StyledText';
+import { RobotoBoldText, RobotoMediumText, RobotoRegularText } from '../components/StyledText';
 import { TouchableRipple } from 'react-native-paper';
 
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import ConfettiCannon from 'react-native-confetti-cannon';
 
 export default function SummaryScreen({ navigation, route }: RootStackScreenProps<'Summary'>) {
@@ -18,7 +18,7 @@ export default function SummaryScreen({ navigation, route }: RootStackScreenProp
       <View className="flex-1 justify-center items-center">
         <View className="w-full flex-row justify-evenly">
           <View className="flex-col items-center justify-between h-14">
-            <MaterialIcons name="timer" size={32} color="white" />
+            <MaterialCommunityIcons name="timer-outline" size={32} color="white" />
             <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">
               {`${Math.floor(route.params.time / 60) % 60}`.padStart(2, '0') +
                 ':' +
@@ -29,7 +29,7 @@ export default function SummaryScreen({ navigation, route }: RootStackScreenProp
             </RobotoRegularText>
           </View>
           <View className="flex-col items-center justify-between h-14">
-            <MaterialIcons name="monetization-on" size={32} color="white" />
+            <MaterialCommunityIcons name="hand-coin" size={32} color="white" />
             <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">
               {route.params.earned}
             </RobotoRegularText>
@@ -38,7 +38,7 @@ export default function SummaryScreen({ navigation, route }: RootStackScreenProp
             </RobotoRegularText>
           </View>
           <View className="flex-col items-center justify-between h-14">
-            <MaterialIcons name="directions-bike" size={32} color="white" />
+            <MaterialCommunityIcons name="bike" size={32} color="white" />
             <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">
               {`${Math.floor(route.params.distance / 1000)}`.padStart(2, '0') +
                 '.' +

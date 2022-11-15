@@ -20,10 +20,6 @@ import { requestForegroundPermissionsAsync } from 'expo-location';
 
 window.Buffer = window.Buffer || require('buffer').Buffer;
 
-import { Logs } from 'expo';
-
-Logs.enableExpoCliLogging();
-
 const App = () => {
   const isLoadingComplete = useCachedResources();
   const { account, setAccount, privateKey, setMasterAccount } = useAccountStore();

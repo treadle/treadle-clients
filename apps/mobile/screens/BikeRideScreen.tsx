@@ -1,4 +1,5 @@
 // Libraries
+import type { RootStackScreenProps } from '../types/navigation-types';
 import { useEffect, useRef, useState } from 'react';
 import { Alert, AppState, View } from 'react-native';
 import { ActivityIndicator, MD3DarkTheme, TouchableRipple } from 'react-native-paper';
@@ -7,8 +8,7 @@ import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 import { DeviceMotion, Gyroscope, Magnetometer } from 'expo-sensors';
 import * as Location from 'expo-location';
 import * as tf from '@tensorflow/tfjs';
-import { RootStackScreenProps } from '../types/navigation-types';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 // Logic
 import calcDist from '../utils/calcDist';
@@ -367,8 +367,8 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
       {isReady ? (
         <View className="flex-1 justify-evenly items-center">
           <View className="flex-row justify-center items-center">
-            <MaterialIcons
-              name="radio-button-checked"
+            <MaterialCommunityIcons
+              name="radiobox-marked"
               size={18}
               color={isBicycle ? '#30D615' : '#F2B8B5'}
             />
@@ -379,7 +379,7 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
           </View>
           <View className="w-full flex-row justify-evenly">
             <View className="flex-col items-center justify-between h-14">
-              <MaterialIcons name="timer" size={32} color="white" />
+              <MaterialCommunityIcons name="timer-outline" size={32} color="white" />
               <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">
                 {`${Math.floor(seconds / 60) % 60}`.padStart(2, '0') +
                   ':' +
@@ -390,7 +390,7 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
               </RobotoRegularText>
             </View>
             <View className="flex-col items-center justify-between h-14">
-              <MaterialIcons name="speed" size={32} color="white" />
+              <MaterialCommunityIcons name="speedometer" size={32} color="white" />
               <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">
                 {currentSpeed}
               </RobotoRegularText>
@@ -399,7 +399,7 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
               </RobotoRegularText>
             </View>
             <View className="flex-col items-center justify-between h-14">
-              <MaterialIcons name="directions-bike" size={32} color="white" />
+              <MaterialCommunityIcons name="bike" size={32} color="white" />
               <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">
                 {`${Math.floor(travelledDistance / 1000)}`.padStart(2, '0') +
                   '.' +
@@ -413,7 +413,7 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
           </View>
           <View className="w-full flex-row justify-evenly">
             <View className="flex-col items-center justify-between h-14">
-              <MaterialIcons name="bolt" size={32} color="white" />
+              <MaterialCommunityIcons name="lightning-bolt" size={32} color="white" />
               <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">
                 {energy}/10
               </RobotoRegularText>
@@ -422,7 +422,7 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
               </RobotoRegularText>
             </View>
             <View className="flex-col items-center justify-between h-14">
-              <MaterialIcons name="monetization-on" size={32} color="white" />
+              <MaterialCommunityIcons name="hand-coin" size={32} color="white" />
               <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">
                 {earnedTokens}
               </RobotoRegularText>
