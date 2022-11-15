@@ -1,5 +1,5 @@
 import type { RootStackScreenProps } from '../types/navigation-types';
-import { View, Button } from 'react-native';
+import { View } from 'react-native';
 import { RobotoMediumText, RobotoBoldText, RobotoRegularText } from '../components/StyledText';
 import { TouchableRipple } from 'react-native-paper';
 
@@ -11,7 +11,7 @@ export default function SummaryScreen({ navigation, route }: RootStackScreenProp
     <View className="flex-1">
       <ConfettiCannon count={200} origin={{ x: -10, y: 0 }} fadeOut={true} />
       <View className="flex-1 justify-center items-center">
-        <RobotoBoldText className="text-md3-on-bg text-[22px] tracking-[0.5px]">
+        <RobotoBoldText className="text-md3-on-bg text-[40px] tracking-[0.5px]">
           Congratulations!
         </RobotoBoldText>
       </View>
