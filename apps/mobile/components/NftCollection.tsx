@@ -1,18 +1,15 @@
 import type { FC } from 'react';
-import { useCallback, useEffect, useState } from 'react';
+import type { TRDLBJsonToken, TRDLBNftTokensForOwnerOptions } from 'treadle-mockup-server';
+import type { RootStackScreenProps } from '../types/navigation-types';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { FlatList, Pressable, View } from 'react-native';
 import { Button } from 'react-native-paper';
 import { RobotoRegularText } from './StyledText';
 import { useAccountStore } from '../store/useAccountStore';
 import { useCounterStore } from '../store/counterStore';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
-import {
-  TRDLBContract,
-  TRDLBJsonToken,
-  TRDLBNftTokensForOwnerOptions,
-} from 'treadle-mockup-server';
+import { TRDLBContract } from 'treadle-mockup-server';
 import { BN } from 'bn.js';
-import { RootStackScreenProps } from '../types/navigation-types';
 import FastImage from 'react-native-fast-image';
 
 const NftCollection: FC = () => {
@@ -94,4 +91,4 @@ const NftCollection: FC = () => {
   );
 };
 
-export default NftCollection;
+export default memo(NftCollection);
