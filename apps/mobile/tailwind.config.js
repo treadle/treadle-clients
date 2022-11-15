@@ -13,6 +13,7 @@ module.exports = {
         'md3-on-surface': '#E6E1E5',
         'md3-primary-container': '#4F378B',
         'md3-primary': '#D0BCFF',
+        'md3-error': '#F2B8B5',
       },
       backgroundImage: {
         'md3-surface-2':
@@ -27,6 +28,8 @@ module.exports = {
         'md3-on-secondary-container': '#E8DEF8',
         'md3-on-surface': '#E6E1E5',
         'md3-on-surface-variant': '#CAC4D0',
+        'md3-error': '#F2B8B5',
+        'md3-success': '#30D615',
       },
       borderColor: {
         'md3-outline': '#938F99',

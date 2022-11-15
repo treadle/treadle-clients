@@ -10,23 +10,23 @@ import { BN } from 'bn.js';
 import { useCounterStore } from '../store/counterStore';
 import { useAccountStore } from '../store/useAccountStore';
 import { ActivityIndicator, MD3DarkTheme, Snackbar, TouchableRipple } from 'react-native-paper';
-import { RobotoBoldText, RobotoMediumText, RobotoRegularText } from '../components/StyledText';
+import { RobotoMediumText } from '../components/StyledText';
 import { useEnergyTokensStore } from '../store/useEnergyTokensStore';
-import { getForegroundPermissionsAsync, getProviderStatusAsync, hasServicesEnabledAsync } from 'expo-location';
+import { getForegroundPermissionsAsync, hasServicesEnabledAsync } from 'expo-location';
 
 const errors = [
   "You don't have enough energy to ride this bike!",
   "You didn't allow GPS-Tracking or GPS-Services are inaccessible!",
-  "GPS-Precision is too low!",
-  "Not enough durability!"
-]
+  'GPS-Precision is too low!',
+  'Not enough durability!',
+];
 
 const GarageScreen = ({ navigation }: HomeTabScreenProps<'Garage'>) => {
   const [bikes, setBikes] = useState<TRDLBJsonToken[]>([]);
   const [userBike, setUserBike] = useState<TRDLBJsonToken>();
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("no error");
+  const [error, setError] = useState('no error');
   const r = useRef<ICarouselInstance | null>(null);
   const { account } = useAccountStore();
   const { counter } = useCounterStore();
@@ -62,38 +62,35 @@ const GarageScreen = ({ navigation }: HomeTabScreenProps<'Garage'>) => {
   };
 
   const handleBikePress = async () => {
+    const locationStatus = await getForegroundPermissionsAsync();
+    const providerStatus = await hasServicesEnabledAsync();
 
-      const locationStatus = await getForegroundPermissionsAsync();
-      const providerStatus = await hasServicesEnabledAsync();
+    const metadata = JSON.parse((userBike?.metadata?.extra || bikes[0].metadata.extra) as string);
 
-      const metadata = JSON.parse((userBike?.metadata?.extra || bikes[0].metadata.extra) as string);
-
-      console.log(locationStatus)
-      console.log(providerStatus)
-
-      if (!locationStatus.granted || !providerStatus) {
-        setError(errors[1])
-        onToggleSnackBar();
-      } else if ((locationStatus.android?.accuracy && locationStatus.android?.accuracy !== "fine") || (locationStatus.ios?.scope && locationStatus.ios?.scope !== "whenInUse")) {
-        setError(errors[2])
-        onToggleSnackBar();
-      } else if (energy < metadata.comfort / 100) {
-        setError(errors[0])
-        onToggleSnackBar();
-      } else if (metadata.durability < metadata.ware) {
-        setError(errors[3])
-        onToggleSnackBar();
-      } else {
-        navigation.navigate<any>('BikeRide', { selectedBike: userBike || bikes[0] });
-      }
-
-      console.log(error);
+    if (!locationStatus.granted || !providerStatus) {
+      setError(errors[1]);
+      onToggleSnackBar();
+    } else if (
+      (locationStatus.android?.accuracy && locationStatus.android?.accuracy !== 'fine') ||
+      (locationStatus.ios?.scope && locationStatus.ios?.scope !== 'whenInUse')
+    ) {
+      setError(errors[2]);
+      onToggleSnackBar();
+    } else if (energy < metadata.comfort / 100) {
+      setError(errors[0]);
+      onToggleSnackBar();
+    } else if (metadata.durability < metadata.ware) {
+      setError(errors[3]);
+      onToggleSnackBar();
+    } else {
+      navigation.navigate<any>('BikeRide', { selectedBike: userBike || bikes[0] });
+    }
   };
 
   return (
     <View className="bg-md3-surface flex-1 justify-center items-center">
       {loading ? (
-        <ActivityIndicator animating color={MD3DarkTheme.colors.onSurface} size='large' />
+        <ActivityIndicator animating color={MD3DarkTheme.colors.onSurface} size="large" />
       ) : (
         <>
           <View className="flex-1">
@@ -114,7 +111,7 @@ const GarageScreen = ({ navigation }: HomeTabScreenProps<'Garage'>) => {
               borderless
               className="w-full h-full items-center justify-center"
               onPress={handleBikePress}>
-              <RobotoMediumText className="text-md3-on-primary-container text-[17px]">Race</RobotoMediumText>
+              <RobotoMediumText className="text-md3-on-primary text-[17px]">Race</RobotoMediumText>
             </TouchableRipple>
           </View>
         </>

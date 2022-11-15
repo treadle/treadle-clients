@@ -42,17 +42,17 @@ export default function Navigation() {
           headerShown: false,
         }}>
         {!!account ? (
-          <Stack.Screen name='Home' component={BottomTabNavigator} />
+          <Stack.Screen name="Home" component={BottomTabNavigator} />
         ) : (
-          <Stack.Screen name='Login' component={SignInNavigator} />
+          <Stack.Screen name="Login" component={SignInNavigator} />
         )}
-        <Stack.Screen name='NotFound' component={NotFoundScreen} options={{ title: 'Oops!' }} />
+        <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
         <Stack.Group screenOptions={{ presentation: 'modal' }}>
-          <Stack.Screen name='BikeRide' component={BikeRideScreen} />
-          <Stack.Screen name='Summary' component={SummaryScreen} />
+          <Stack.Screen name="BikeRide" component={BikeRideScreen} />
+          <Stack.Screen name="Summary" component={SummaryScreen} />
         </Stack.Group>
         <Stack.Group screenOptions={{ presentation: 'modal' }}>
-          <Stack.Screen name='NftDetails' component={NftDetailsScreen} />
+          <Stack.Screen name="NftDetails" component={NftDetailsScreen} />
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
@@ -65,7 +65,7 @@ function SignInNavigator() {
       screenOptions={{
         headerShown: false,
       }}>
-      <SignInStack.Screen name='SignIn' component={SignInScreen} />
+      <SignInStack.Screen name="SignIn" component={SignInScreen} />
     </SignInStack.Navigator>
   );
 }
@@ -84,27 +84,27 @@ function BottomTabNavigator() {
       }}
       tabBar={(props) => <BottomNavigationBar {...props} />}>
       <BottomTab.Screen
-        name='Marketplace'
+        name="Marketplace"
         component={MarketplaceScreen}
         options={{
           title: 'Marketplace',
-          tabBarIcon: ({ color }) => <TabBarIcon name='shopping' color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="shopping" color={color} />,
         }}
       />
       <BottomTab.Screen
-        name='Garage'
+        name="Garage"
         component={GarageScreen}
         options={{
           title: 'Garage',
-          tabBarIcon: ({ color }) => <TabBarIcon name='garage' color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="garage" color={color} />,
         }}
       />
       <BottomTab.Screen
-        name='Wallet'
+        name="Wallet"
         component={WalletScreen}
         options={{
           title: 'Wallet',
-          tabBarIcon: ({ color }) => <TabBarIcon name='wallet' color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="wallet" color={color} />,
         }}
       />
     </BottomTab.Navigator>

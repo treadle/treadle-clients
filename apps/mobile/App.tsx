@@ -16,13 +16,13 @@ import { setupMockupServer } from 'treadle-mockup-server';
 import { connect, keyStores, utils } from 'near-api-js';
 import { useEnergyTokensStore } from './store/useEnergyTokensStore';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
-import { requestForegroundPermissionsAsync } from "expo-location"
+import { requestForegroundPermissionsAsync } from 'expo-location';
 
 window.Buffer = window.Buffer || require('buffer').Buffer;
 
-import { Logs } from 'expo'
+import { Logs } from 'expo';
 
-Logs.enableExpoCliLogging()
+Logs.enableExpoCliLogging();
 
 const App = () => {
   const isLoadingComplete = useCachedResources();
@@ -100,7 +100,7 @@ const App = () => {
     <SafeAreaProvider onLayout={onLayoutRootView}>
       <PaperProvider theme={MD3DarkTheme}>
         <Navigation />
-        <StatusBar style='light' />
+        <StatusBar style="light" />
       </PaperProvider>
     </SafeAreaProvider>
   );

@@ -18,28 +18,28 @@ const NftDetailsScreen = ({ navigation, route }: RootStackScreenProps<'NftDetail
   };
 
   return (
-    <View className='flex-1 bg-md3-surface px-4'>
+    <View className="flex-1 bg-md3-surface px-4">
       <Appbar.Header>
         <Appbar.BackAction onPress={handleBackPress} />
         <Appbar.Content title={nftDetails.metadata.title} />
       </Appbar.Header>
       {nftDetails?.metadata.media && (
         <FastImage
-          className='w-full h-[200px] rounded-[12px] mb-4'
+          className="w-full h-[200px] rounded-[12px] mb-4"
           source={{ uri: nftDetails.metadata.media }}
           resizeMode={FastImage.resizeMode.cover}
         />
       )}
-      <RobotoRegularText className='text-md3-on-bg text-[22px] tracking-[0.5px]'>
+      <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">
         {nftDetails?.metadata.title}
       </RobotoRegularText>
       {Object.keys(parsedNftExtraData).map((key) => {
         return (
-          <View key={key} className='mt-4'>
-            <RobotoRegularText className='text-md3-on-bg text-[16px] tracking-[0.5px]'>
+          <View key={key} className="mt-4">
+            <RobotoRegularText className="text-md3-on-bg text-[16px] tracking-[0.5px]">
               {key}
             </RobotoRegularText>
-            <RobotoRegularText className='text-md3-on-bg text-[16px] tracking-[0.5px]'>
+            <RobotoRegularText className="text-md3-on-bg text-[16px] tracking-[0.5px]">
               {parsedNftExtraData[key]}
             </RobotoRegularText>
           </View>

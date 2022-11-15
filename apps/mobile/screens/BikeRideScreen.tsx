@@ -1,13 +1,11 @@
 // Libraries
-import { useEffect, useState, useRef } from 'react';
-import { View, StyleSheet, Text, Alert, Button, AppState } from 'react-native';
-import { ActivityIndicator, TouchableRipple } from 'react-native-paper';
-import { RobotoRegularText, RobotoMediumText } from '../components/StyledText';
-import { MD3DarkTheme } from 'react-native-paper';
+import { useEffect, useRef, useState } from 'react';
+import { Alert, AppState, View } from 'react-native';
+import { ActivityIndicator, MD3DarkTheme, TouchableRipple } from 'react-native-paper';
+import { RobotoMediumText, RobotoRegularText } from '../components/StyledText';
 import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
-import { Magnetometer, Gyroscope, DeviceMotion } from 'expo-sensors';
+import { DeviceMotion, Gyroscope, Magnetometer } from 'expo-sensors';
 import * as Location from 'expo-location';
-import * as SecureStore from 'expo-secure-store';
 import * as tf from '@tensorflow/tfjs';
 import { RootStackScreenProps } from '../types/navigation-types';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -358,71 +356,88 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
 
   const handleEndRide = () => {
     navigation.replace<any>('Summary', {
-        distance: travelledDistance,
-        time: seconds,
-        earned: earnedTokens,
-      });
-  }
+      distance: travelledDistance,
+      time: seconds,
+      earned: earnedTokens,
+    });
+  };
 
   return (
-    <View style={styles.container}>
+    <View className="flex-1 justify-center items-center px-4">
       {isReady ? (
-        <View style={{flex: 1, justifyContent: 'space-evenly', alignItems: 'center'}}>
+        <View className="flex-1 justify-evenly items-center">
           <View className="flex-row justify-center items-center">
-            <MaterialIcons name="radio-button-checked" size={18} color={isBicycle ? "#30D615" : "#AD0000"} />
-            <RobotoMediumText className="text-[18px] m-1" style={{color: isBicycle ? "#30D615" : "#AD0000"}}>{isBicycle ? "RIDING" : "NOT RIDING"}</RobotoMediumText>
+            <MaterialIcons
+              name="radio-button-checked"
+              size={18}
+              color={isBicycle ? '#30D615' : '#F2B8B5'}
+            />
+            <RobotoMediumText
+              className={`text-[18px] m-1 ${isBicycle ? 'text-md3-success' : 'text-md3-error'}`}>
+              {isBicycle ? 'RIDING' : 'NOT RIDING'}
+            </RobotoMediumText>
           </View>
-            <View className='w-full flex-row justify-evenly'>
-                
-                <View className='flex-col items-center justify-between h-14'>
-                    <MaterialIcons name="timer" size={32} color='white'/>
-                    <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">{
-                    `${Math.floor(seconds / 60) % 60}`.padStart(2, '0') + ':' + `${seconds % 60}`.padStart(2, '0')
-                    }</RobotoRegularText>
-                    <RobotoRegularText className="text-md3-on-bg text-[16px] tracking-[0.5px]">min</RobotoRegularText>
-                </View>
-                <View className='flex-col items-center justify-between h-14'>
-                    <MaterialIcons name="speed" size={32} color='white'/>
-                    <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">{currentSpeed}</RobotoRegularText>
-                    <RobotoRegularText className="text-md3-on-bg text-[16px] tracking-[0.5px]">km/h</RobotoRegularText>
-                </View>
-                <View className='flex-col items-center justify-between h-14'>
-                    <MaterialIcons name="directions-bike" size={32} color='white'/>
-                    <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">{
-                        `${Math.floor(travelledDistance / 1000)}`.padStart(2, '0') + '.' + `${Math.floor(travelledDistance / 10) % 100}`.padStart(2, '0')
-                    }</RobotoRegularText>
-                    
-                    <RobotoRegularText className="text-md3-on-bg text-[16px] tracking-[0.5px]">km</RobotoRegularText>
-                </View>
+          <View className="w-full flex-row justify-evenly">
+            <View className="flex-col items-center justify-between h-14">
+              <MaterialIcons name="timer" size={32} color="white" />
+              <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">
+                {`${Math.floor(seconds / 60) % 60}`.padStart(2, '0') +
+                  ':' +
+                  `${seconds % 60}`.padStart(2, '0')}
+              </RobotoRegularText>
+              <RobotoRegularText className="text-md3-on-bg text-[16px] tracking-[0.5px]">
+                min
+              </RobotoRegularText>
             </View>
-            <RobotoRegularText className="text-md3-on-bg text-[16px] tracking-[0.5px]">Left to update: {
-                        `${Math.floor((1000 - travelledDistance % 1000) / 1000)}`.padStart(2, '0') + '.' + `${Math.ceil((1000 - travelledDistance % 1000) / 10) % 100}`.padStart(2, '0')
-                    } km</RobotoRegularText>
-            <View>
-              <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">Earned: {earnedTokens}</RobotoRegularText>
-              <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">Energy left: {energy}/10</RobotoRegularText>
+            <View className="flex-col items-center justify-between h-14">
+              <MaterialIcons name="speed" size={32} color="white" />
+              <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">
+                {currentSpeed}
+              </RobotoRegularText>
+              <RobotoRegularText className="text-md3-on-bg text-[16px] tracking-[0.5px]">
+                km/h
+              </RobotoRegularText>
             </View>
-          <View className="w-24 h-24 mx-auto mb-16 rounded-full overflow-hidden items-center justify-center bg-md3-primary-container">
+            <View className="flex-col items-center justify-between h-14">
+              <MaterialIcons name="directions-bike" size={32} color="white" />
+              <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">
+                {`${Math.floor(travelledDistance / 1000)}`.padStart(2, '0') +
+                  '.' +
+                  `${Math.floor(travelledDistance / 10) % 100}`.padStart(2, '0')}
+              </RobotoRegularText>
+
+              <RobotoRegularText className="text-md3-on-bg text-[16px] tracking-[0.5px]">
+                km
+              </RobotoRegularText>
+            </View>
+          </View>
+          <RobotoRegularText className="text-md3-on-bg text-[16px] tracking-[0.5px]">
+            Left to update:{' '}
+            {`${Math.floor((1000 - (travelledDistance % 1000)) / 1000)}`.padStart(2, '0') +
+              '.' +
+              `${Math.ceil((1000 - (travelledDistance % 1000)) / 10) % 100}`.padStart(2, '0')}{' '}
+            km
+          </RobotoRegularText>
+          <View>
+            <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">
+              Earned: {earnedTokens}
+            </RobotoRegularText>
+            <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">
+              Energy left: {energy}/10
+            </RobotoRegularText>
+          </View>
+          <View className="w-24 h-24 mx-auto mb-16 rounded-full overflow-hidden items-center justify-center bg-md3-primary">
             <TouchableRipple
               borderless
               className="w-full h-full items-center justify-center"
               onPress={handleEndRide}>
-              <RobotoMediumText className="text-md3-on-primary-container text-[17px]">End</RobotoMediumText>
+              <RobotoMediumText className="text-md3-on-primary text-[17px]">End</RobotoMediumText>
             </TouchableRipple>
           </View>
         </View>
       ) : (
-        <ActivityIndicator animating color={MD3DarkTheme.colors.onSurface} size='large' />
+        <ActivityIndicator animating color={MD3DarkTheme.colors.onSurface} size="large" />
       )}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 14,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
