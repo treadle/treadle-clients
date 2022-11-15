@@ -391,9 +391,13 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
                     <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">{
                         `${Math.floor(travelledDistance / 1000)}`.padStart(2, '0') + '.' + `${Math.floor(travelledDistance / 10) % 100}`.padStart(2, '0')
                     }</RobotoRegularText>
+                    
                     <RobotoRegularText className="text-md3-on-bg text-[16px] tracking-[0.5px]">km</RobotoRegularText>
                 </View>
             </View>
+            <RobotoRegularText className="text-md3-on-bg text-[16px] tracking-[0.5px]">Left to update: {
+                        `${Math.floor((1000 - travelledDistance % 1000) / 1000)}`.padStart(2, '0') + '.' + `${Math.ceil((1000 - travelledDistance % 1000) / 10) % 100}`.padStart(2, '0')
+                    } km</RobotoRegularText>
             <View>
               <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">Earned: {earnedTokens}</RobotoRegularText>
               <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">Energy left: {energy}/10</RobotoRegularText>
