@@ -411,20 +411,25 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
               </RobotoRegularText>
             </View>
           </View>
-          <RobotoRegularText className="text-md3-on-bg text-[16px] tracking-[0.5px]">
-            Left to update:{' '}
-            {`${Math.floor((1000 - (travelledDistance % 1000)) / 1000)}`.padStart(2, '0') +
-              '.' +
-              `${Math.ceil((1000 - (travelledDistance % 1000)) / 10) % 100}`.padStart(2, '0')}{' '}
-            km
-          </RobotoRegularText>
-          <View>
-            <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">
-              Earned: {earnedTokens}
-            </RobotoRegularText>
-            <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">
-              Energy left: {energy}/10
-            </RobotoRegularText>
+          <View className="w-full flex-row justify-evenly">
+            <View className="flex-col items-center justify-between h-14">
+              <MaterialIcons name="bolt" size={32} color="white" />
+              <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">
+                {energy}/10
+              </RobotoRegularText>
+              <RobotoRegularText className="text-md3-on-bg text-[16px] tracking-[0.5px]">
+                energy
+              </RobotoRegularText>
+            </View>
+            <View className="flex-col items-center justify-between h-14">
+              <MaterialIcons name="monetization-on" size={32} color="white" />
+              <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">
+                {earnedTokens}
+              </RobotoRegularText>
+              <RobotoRegularText className="text-md3-on-bg text-[16px] tracking-[0.5px]">
+                earned
+              </RobotoRegularText>
+            </View>
           </View>
           <View className="w-24 h-24 mx-auto mb-16 rounded-full overflow-hidden items-center justify-center bg-md3-primary">
             <TouchableRipple
