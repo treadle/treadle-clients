@@ -1,13 +1,26 @@
 import type { RootStackScreenProps } from '../types/navigation-types';
-import { View, Text, Button } from 'react-native';
+import { View, Button } from 'react-native';
+import { RobotoMediumText } from '../components/StyledText';
+import { TouchableRipple } from 'react-native-paper';
 
 export default function SummaryScreen({ navigation, route }: RootStackScreenProps<'Summary'>) {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Distance: {route.params.distance}</Text>
-      <Text>Time: {route.params.time}</Text>
-      <Text>Earned tokens: {route.params.earned}</Text>
-      <Button title="Home" onPress={() => navigation.navigate('Home')} />
+    <View className='flex-1'>
+      <View className='flex-1 justify-evenly items-center'>
+        <RobotoMediumText className="text-md3-on-bg text-[17px]">Distance you've travelled is {`${Math.floor(route.params.distance / 1000)}`.padStart(2, '0') + '.' + `${Math.floor(route.params.distance / 10) % 100}`.padStart(2, '0')}</RobotoMediumText>
+        <RobotoMediumText className="text-md3-on-bg text-[17px]">Time you've been riding for is {`${Math.floor(route.params.time / 60) % 60}`.padStart(2, '0') + ':' + `${route.params.time % 60}`.padStart(2, '0')}</RobotoMediumText>
+        <RobotoMediumText className="text-md3-on-bg text-[17px]">You've earned {route.params.earned} tokens</RobotoMediumText>
+      </View>
+      <View className='flex-1 justify-center items-center'>
+        <View className="w-24 h-24 mx-auto mb-16 rounded-full overflow-hidden items-center justify-center bg-md3-primary-container">
+            <TouchableRipple
+              borderless
+              className="w-full h-full items-center justify-center"
+              onPress={() => navigation.navigate('Home')}>
+            <RobotoMediumText className="text-md3-on-primary-container text-[17px]">Home</RobotoMediumText>
+          </TouchableRipple>
+        </View>
+      </View>
     </View>
   );
 }
