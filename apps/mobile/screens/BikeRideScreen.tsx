@@ -191,6 +191,7 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
             // Load the AI model
             model.current = await loadModel();
             setEnergy(energyStore);
+            setDurability(bicycle.durability / 100)
 
             // Subscription to geolocation updates
             locationWatcher.current = await Location.watchPositionAsync(
@@ -329,7 +330,8 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
     useEffect(() => {
       if (travelledKm !== 0) {
         setEnergy((prev) => prev - bicycle.comfort / 100);
-        setEarnedTokens(prev => prev + bicycle.efficiency / 100)
+        setDurability((prev) => prev - bicycle.ware / 100)
+        setEarnedTokens(prev => prev + bicycle.efficiency / 100);
       }
     }, [travelledKm]);
 
@@ -338,16 +340,17 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
     }, [earnedTokens])
 
     useEffect(() => {
-        const updateEnergy = async () => {
+        if (durability < bicycle.ware / 100) {
+            setIsEnded(true);
+        }
+    }, [durability]);
 
-            setEnergyStore(energy);
+    useEffect(() => {
+        setEnergyStore(energy);
 
-            if (energy < bicycle.comfort / 100) {
-                setIsEnded(true);
-            }
-        };
-
-        updateEnergy();
+        if (energy < bicycle.comfort / 100) {
+            setIsEnded(true);
+        }
     }, [energy]);
 
     useEffect(() => {
@@ -425,6 +428,10 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
                         <View style={{ alignItems: 'center' }}>
                             <Text style={styles.statLabel}>Energy left:</Text>
                             <Text style={styles.stat}>{energy}/10</Text>
+                        </View>
+                        <View style={{ alignItems: 'center' }}>
+                            <Text style={styles.statLabel}>Durability:</Text>
+                            <Text style={styles.stat}>{durability}</Text>
                         </View>
                         <Button
                             title="END!"
