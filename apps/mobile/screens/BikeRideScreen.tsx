@@ -1,12 +1,16 @@
 // Libraries
 import { useEffect, useState, useRef } from 'react';
 import { View, StyleSheet, Text, Alert, Button, AppState } from 'react-native';
+import { ActivityIndicator, TouchableRipple } from 'react-native-paper';
+import { RobotoRegularText } from '../components/StyledText';
+import { MD3DarkTheme } from 'react-native-paper';
 import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 import { Magnetometer, Gyroscope, DeviceMotion } from 'expo-sensors';
 import * as Location from 'expo-location';
 import * as SecureStore from 'expo-secure-store';
 import * as tf from '@tensorflow/tfjs';
 import { RootStackScreenProps } from '../types/navigation-types';
+import { MaterialIcons } from '@expo/vector-icons';
 
 // Logic
 import calcDist from '../utils/calcDist';
@@ -352,73 +356,53 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
     }
   }, [isEnded]);
 
+  const handleEndRide = () => {
+    navigation.replace<any>('Summary', {
+        distance: travelledDistance,
+        time: seconds,
+        earned: earnedTokens,
+      });
+  }
+
   return (
     <View style={styles.container}>
       {isReady ? (
-        <View>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'space-evenly',
-              alignItems: 'center',
-            }}>
-            <Text
-              style={{
-                color: isBicycle ? 'green' : 'red',
-                fontSize: 18,
-              }}>
-              {isBicycle ? 'Bicycle' : 'Not bicycle'}
-            </Text>
-            <View style={{ alignItems: 'center' }}>
-              <Text style={styles.statLabel}>Time Elapsed (mm:ss):</Text>
-              <Text style={styles.stat}>
-                {`${Math.floor(seconds / 60) % 60}`.padStart(2, '0') +
-                  ':' +
-                  `${seconds % 60}`.padStart(2, '0')}
-              </Text>
+        <View style={{flex: 1, justifyContent: 'space-evenly'}}>
+            <View className='w-full flex-row justify-evenly'>
+                <View className='flex-col items-center justify-between h-14'>
+                    <MaterialIcons name="timer" size={32} color='white'/>
+                    <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">{
+                    `${Math.floor(seconds / 60) % 60}`.padStart(2, '0') + ':' + `${seconds % 60}`.padStart(2, '0')
+                    }</RobotoRegularText>
+                    <RobotoRegularText className="text-md3-on-bg text-[16px] tracking-[0.5px]">min</RobotoRegularText>
+                </View>
+                <View className='flex-col items-center justify-between h-14'>
+                    <MaterialIcons name="speed" size={32} color='white'/>
+                    <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">{currentSpeed}</RobotoRegularText>
+                    <RobotoRegularText className="text-md3-on-bg text-[16px] tracking-[0.5px]">km/h</RobotoRegularText>
+                </View>
+                <View className='flex-col items-center justify-between h-14'>
+                    <MaterialIcons name="directions-bike" size={32} color='white'/>
+                    <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">{
+                        `${Math.floor(travelledDistance / 1000)}`.padStart(2, '0') + '.' + `${Math.floor(travelledDistance / 10) % 100}`.padStart(2, '0')
+                    }</RobotoRegularText>
+                    <RobotoRegularText className="text-md3-on-bg text-[16px] tracking-[0.5px]">km</RobotoRegularText>
+                </View>
             </View>
-            <View style={{ alignItems: 'center' }}>
-              <Text style={styles.statLabel}>Travelled Distance (km):</Text>
-              <Text style={styles.stat}>
-                {`${Math.floor(travelledDistance / 1000)}`.padStart(2, '0') +
-                  '.' +
-                  `${Math.floor(travelledDistance / 10) % 100}`.padStart(2, '0')}
-              </Text>
-            </View>
-            <View style={{ alignItems: 'center' }}>
-              <Text style={styles.statLabel}>Left until update (km):</Text>
-              <Text style={styles.stat}>
-                {`${Math.floor((1000 - (travelledDistance % 1000)) / 1000)}`.padStart(2, '0') +
-                  '.' +
-                  `${Math.floor((1000 - (travelledDistance % 1000)) / 10) % 100}`.padStart(2, '0')}
-              </Text>
-            </View>
-            <View style={{ alignItems: 'center' }}>
-              <Text style={styles.statLabel}>Current Speed (km/h):</Text>
-              <Text style={styles.stat}>{currentSpeed}</Text>
-            </View>
-            <View style={{ alignItems: 'center' }}>
-              <Text style={styles.statLabel}>Energy left:</Text>
-              <Text style={styles.stat}>{energy}/10</Text>
-            </View>
-            <View style={{ alignItems: 'center' }}>
-              <Text style={styles.statLabel}>Durability:</Text>
-              <Text style={styles.stat}>{durability}</Text>
-            </View>
-            <Button
-              title="END!"
-              onPress={() => {
-                navigation.replace<any>('Summary', {
-                  distance: travelledDistance,
-                  time: seconds,
-                  earned: earnedTokens,
-                });
-              }}
-            />
+            <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">{energy}</RobotoRegularText>
+            <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">{durability}</RobotoRegularText>
+            <RobotoRegularText className="text-md3-on-bg text-[22px] tracking-[0.5px]">{earnedTokens}</RobotoRegularText>
+          <View className="w-24 h-24 mx-auto mb-16 rounded-full overflow-hidden items-center justify-center bg-md3-primary-container">
+            <TouchableRipple
+              borderless
+              className="w-full h-full items-center justify-center"
+              onPress={handleEndRide}>
+              <RobotoRegularText className="text-md3-on-primary-container">End</RobotoRegularText>
+            </TouchableRipple>
           </View>
         </View>
       ) : (
-        <Text>Loading...</Text>
+        <ActivityIndicator animating color={MD3DarkTheme.colors.onSurface} size='large' />
       )}
     </View>
   );
@@ -430,15 +414,5 @@ const styles = StyleSheet.create({
     padding: 14,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-
-  statLabel: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-
-  stat: {
-    fontSize: 18,
-    fontWeight: '500',
   },
 });
