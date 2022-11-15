@@ -15,10 +15,15 @@ import { useHydration } from './hooks/useStoreHydration';
 import { setupMockupServer } from 'treadle-mockup-server';
 import { connect, keyStores, utils } from 'near-api-js';
 import { useEnergyTokensStore } from './store/useEnergyTokensStore';
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 
 window.Buffer = window.Buffer || require('buffer').Buffer;
 
-export default function App() {
+import { Logs } from 'expo'
+
+Logs.enableExpoCliLogging()
+
+const App = () => {
   const isLoadingComplete = useCachedResources();
   const { account, setAccount, privateKey, setMasterAccount } = useAccountStore();
   const hydrated = useHydration();
@@ -97,4 +102,6 @@ export default function App() {
       </PaperProvider>
     </SafeAreaProvider>
   );
-}
+};
+
+export default gestureHandlerRootHOC(App);

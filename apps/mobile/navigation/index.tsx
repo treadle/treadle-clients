@@ -3,13 +3,14 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import type { HomeTabParamList, RootStackParamList, SignInTabParamList } from '../types/navigation-types';
+import type {
+  HomeTabParamList,
+  RootStackParamList,
+  SignInTabParamList,
+} from '../types/navigation-types';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DarkTheme as NavigationDarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useState, useEffect } from 'react';
-
-import * as SecureStore from 'expo-secure-store';
 
 import BottomNavigationBar from '../components/BottomNavigationBar';
 import NavigationBar from '../components/NavigationBar';
@@ -24,15 +25,18 @@ import GarageScreen from '../screens/GarageScreen';
 import NftDetailsScreen from '../screens/NftDetailsScreen';
 import SummaryScreen from '../screens/SummaryScreen';
 import { useAccountStore } from '../store/useAccountStore';
+import { adaptNavigationTheme } from 'react-native-paper';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const SignInStack = createNativeStackNavigator<SignInTabParamList>();
+
+const { DarkTheme } = adaptNavigationTheme({ dark: NavigationDarkTheme });
 
 export default function Navigation() {
   const { account } = useAccountStore();
 
   return (
-    <NavigationContainer linking={LinkingConfiguration}>
+    <NavigationContainer theme={DarkTheme} linking={LinkingConfiguration}>
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
@@ -45,7 +49,7 @@ export default function Navigation() {
         <Stack.Screen name='NotFound' component={NotFoundScreen} options={{ title: 'Oops!' }} />
         <Stack.Group screenOptions={{ presentation: 'modal' }}>
           <Stack.Screen name='BikeRide' component={BikeRideScreen} />
-        <Stack.Screen name="SummaryScreen" component={SummaryScreen} />
+          <Stack.Screen name='Summary' component={SummaryScreen} />
         </Stack.Group>
         <Stack.Group screenOptions={{ presentation: 'modal' }}>
           <Stack.Screen name='NftDetails' component={NftDetailsScreen} />
@@ -95,21 +99,12 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <TabBarIcon name='garage' color={color} />,
         }}
       />
-      {/*<BottomTab.Screen*/}
-      {/*  name='Ride'*/}
-      {/*  component={BikeRideScreen}*/}
-      {/*  options={{*/}
-      {/*    title: 'Bike Ride',*/}
-      {/*    tabBarIcon: ({ color }) => <TabBarIcon name='bike' color={color} />,*/}
-      {/*  }}*/}
-      {/*/>*/}
       <BottomTab.Screen
         name='Wallet'
         component={WalletScreen}
         options={{
           title: 'Wallet',
           tabBarIcon: ({ color }) => <TabBarIcon name='wallet' color={color} />,
-
         }}
       />
     </BottomTab.Navigator>

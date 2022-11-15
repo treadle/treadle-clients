@@ -1,17 +1,18 @@
 import type { TRDLBJsonToken, TRDLBNftTokensForOwnerOptions } from 'treadle-mockup-server';
-import type { HomeTabScreenProps } from '../types/navigation-types';
-import { Button, FlatList, Image, Pressable, View } from 'react-native';
+import type { HomeTabScreenProps, RootStackScreenProps } from '../types/navigation-types';
+import { FlatList, Image, Pressable, View } from 'react-native';
 import { useAccountStore } from '../store/useAccountStore';
 import { useCallback, useEffect, useState } from 'react';
 import { TRDLBContract } from 'treadle-mockup-server';
 import { BN } from 'bn.js';
 import { useCounterStore } from '../store/counterStore';
-import { useNftDetailsStore } from '../store/useNftDetailsStore';
+import { Button } from 'react-native-paper';
+import { RobotoRegularText } from '../components/StyledText';
 
 function WalletScreen({ navigation }: HomeTabScreenProps<'Wallet'>) {
   const { setAccount, account } = useAccountStore();
   const { counter } = useCounterStore();
-  const { setNftDetails } = useNftDetailsStore();
+  const [index, setIndex] = useState(0);
   const [nfts, setNfts] = useState<TRDLBJsonToken[]>([]);
 
   const fetchAllNFTs = useCallback(async () => {
@@ -20,34 +21,35 @@ function WalletScreen({ navigation }: HomeTabScreenProps<'Wallet'>) {
 
       const options: TRDLBNftTokensForOwnerOptions = {
         account_id: account.accountId,
-        from_index: new BN(0),
-        limit: 5,
+        from_index: new BN(index),
+        limit: 10,
       };
 
       const nfts: TRDLBJsonToken[] = await contract.nft_tokens_for_owner(options);
 
       setNfts(nfts);
     }
-  }, []);
+  }, [index]);
 
   useEffect(() => {
     fetchAllNFTs();
-  }, [counter]);
+  }, [counter, index]);
 
   const NftCardHandler = (item: TRDLBJsonToken) => {
-    setNftDetails(item);
+    navigation.navigate<RootStackScreenProps<'NftDetails'> | any>('NftDetails', {nft: item});
+  };
 
-    // @ts-ignore
-    navigation.navigate('NftDetails');
+  const loadMoreHandler = () => {
+    setIndex((prev) => prev + 10);
   };
 
   const renderItem = ({ item }: { item: TRDLBJsonToken }) => {
     return (
-      <View className='m-4 border-2 border-md3-outline-variant rounded-[12px] overflow-hidden'>
+      <View className="m-4 border-2 border-md3-outline-variant rounded-[12px] overflow-hidden">
         <Pressable onPress={() => NftCardHandler(item)}>
           <View>
             {item.metadata.media && (
-              <Image className='w-[140px] h-[140px]' source={{ uri: item.metadata.media }} />
+              <Image className="w-[140px] h-[140px]" source={{ uri: item.metadata.media }} />
             )}
           </View>
         </Pressable>
@@ -56,15 +58,16 @@ function WalletScreen({ navigation }: HomeTabScreenProps<'Wallet'>) {
   };
 
   return (
-    <View className='px-4 bg-md3-surface flex-1 items-center'>
+    <View className="px-4 bg-md3-surface flex-1 items-center">
       <FlatList
         data={nfts}
         renderItem={renderItem}
         keyExtractor={(item) => item.token_id}
         numColumns={2}
-        // ItemSeparatorComponent={() => <View className='h-4' />}
       />
-      <Button title={'Sign Out'} onPress={() => setAccount(null)} />
+      <Button className='bg-md3-primary-container' onPress={loadMoreHandler}>
+        <RobotoRegularText className='text-md3-on-primary-container'>Load More</RobotoRegularText>
+      </Button>
     </View>
   );
 }

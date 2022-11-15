@@ -1,16 +1,32 @@
-import { Image } from 'react-native';
-import { useNftDetailsStore } from '../store/useNftDetailsStore';
+import type { TRDLBTokenMetadataExtra } from 'treadle-mockup-server';
+import { Image, View } from 'react-native';
 import { RobotoRegularText } from '../components/StyledText';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Appbar } from 'react-native-paper';
+import { RootStackScreenProps } from '../types/navigation-types';
 
-const NftDetailsScreen = () => {
-  const { nftDetails } = useNftDetailsStore();
+interface ExtraDataIndex extends TRDLBTokenMetadataExtra {
+  [key: string]: number;
+}
+
+const NftDetailsScreen = ({ navigation, route }: RootStackScreenProps<'NftDetails'>) => {
+  const { nft: nftDetails } = route.params;
+  const parsedNftExtraData: ExtraDataIndex = JSON.parse(
+    nftDetails?.metadata.extra || '{}'
+  );
+
+  const handleBackPress = () => {
+    navigation.goBack();
+  };
 
   return (
-    <SafeAreaView className='flex-1 bg-md3-surface px-4'>
+    <View className='flex-1 bg-md3-surface px-4'>
+      <Appbar.Header>
+        <Appbar.BackAction onPress={handleBackPress} />
+        <Appbar.Content title={nftDetails.metadata.title} />
+      </Appbar.Header>
       {nftDetails?.metadata.media && (
         <Image
-          className='w-full h-[200px]'
+          className='w-full h-[200px] rounded-[12px] mb-4'
           source={{ uri: nftDetails.metadata.media }}
           resizeMode='contain'
         />
@@ -18,7 +34,19 @@ const NftDetailsScreen = () => {
       <RobotoRegularText className='text-md3-on-bg text-[22px] tracking-[0.5px]'>
         {nftDetails?.metadata.title}
       </RobotoRegularText>
-    </SafeAreaView>
+      {Object.keys(parsedNftExtraData).map((key) => {
+        return (
+          <View key={key} className='mt-4'>
+            <RobotoRegularText className='text-md3-on-bg text-[16px] tracking-[0.5px]'>
+              {key}
+            </RobotoRegularText>
+            <RobotoRegularText className='text-md3-on-bg text-[16px] tracking-[0.5px]'>
+              {parsedNftExtraData[key]}
+            </RobotoRegularText>
+          </View>
+        );
+      })}
+    </View>
   );
 };
 

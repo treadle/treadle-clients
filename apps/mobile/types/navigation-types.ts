@@ -18,8 +18,13 @@ export type RootStackParamList = {
   Home: NavigatorScreenParams<HomeTabParamList> | undefined;
   Login: NavigatorScreenParams<SignInTabParamList> | undefined;
   BikeRide: { selectedBike: TRDLBJsonToken | undefined };
+  Summary: {
+    distance: number;
+    time: number;
+    earned: number;
+  };
   NotFound: undefined;
-  NftDetails: undefined;
+  NftDetails: { nft: TRDLBJsonToken };
 };
 
 export type HomeTabScreenProps<Screen extends keyof HomeTabParamList> = NativeStackScreenProps<
