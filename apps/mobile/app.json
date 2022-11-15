@@ -23,6 +23,7 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png"
       },
+      "permissions": ["HIGH_SAMPLING_RATE_SENSORS"],
       "package": "com.dreamqip.Treadle"
     },
     "web": {
