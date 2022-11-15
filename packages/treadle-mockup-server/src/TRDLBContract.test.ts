@@ -56,7 +56,7 @@ test('should return a list of NFTs on given account', async () => {
     
     const options: TRDLBNftTokensForOwnerOptions = {
         account_id: "pantemon.testnet",
-        from_index: new BN(0),
+        from_index: (new BN(0)).toString(),
         limit: 5,
     };
 
