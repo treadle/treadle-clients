@@ -1,8 +1,9 @@
 import type { FC } from 'react';
 import { useState } from 'react';
-import { Button, MD3DarkTheme } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import { RobotoMediumText, RobotoRegularText } from './StyledText';
-import { Image, View } from 'react-native';
+import FastImage from 'react-native-fast-image';
+import { View } from 'react-native';
 import { TRDLBJsonTokenMetadata } from 'treadle-mockup-server';
 import { useCounterStore } from '../store/counterStore';
 
@@ -24,7 +25,7 @@ const MarketplaceCard: FC<CardProps> = ({ bikeMetadata, mintBike }) => {
   return (
     <View className="bg-md3-surface rounded-[12px] overflow-hidden border border-md3-outline-variant mb-4">
       {bikeMetadata.media && (
-        <Image source={{ uri: bikeMetadata.media }} className="w-full h-[188px]" />
+        <FastImage source={{ uri: bikeMetadata.media }} className="w-full h-[188px]" />
       )}
       <View className="p-4">
         <View className="flex-row mb-[32px]">
@@ -48,7 +49,6 @@ const MarketplaceCard: FC<CardProps> = ({ bikeMetadata, mintBike }) => {
             disabled={prevCounter === counter}
             loading={prevCounter === counter}
             mode="contained"
-            theme={MD3DarkTheme}
             className="w-full">
             <RobotoMediumText
               className={`text-[14px] tracking-[0.1px] ${

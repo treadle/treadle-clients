@@ -81,8 +81,8 @@ function WalletScreen({ navigation }: HomeTabScreenProps<'Wallet'>) {
         className='mb-2'
       />
       {lastNftsRetrievedLength === 10 && (
-        <Button className='bg-md3-primary-container' onPress={loadMoreHandler}>
-          <RobotoRegularText className='text-md3-on-primary-container'>Load More</RobotoRegularText>
+        <Button className='bg-md3-primary' onPress={loadMoreHandler}>
+          <RobotoRegularText className='text-md3-on-primary'>Load More</RobotoRegularText>
         </Button>
       )}
     </View>

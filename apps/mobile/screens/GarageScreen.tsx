@@ -1,9 +1,9 @@
 import type { TRDLBJsonToken, TRDLBNftTokensForOwnerOptions } from 'treadle-mockup-server';
-import type { HomeTabScreenProps, RootStackScreenProps } from '../types/navigation-types';
-import type { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { TRDLBContract } from 'treadle-mockup-server';
+import type { HomeTabScreenProps } from '../types/navigation-types';
+import type { ICarouselInstance } from 'react-native-reanimated-carousel';
 import Carousel from 'react-native-reanimated-carousel';
-import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Dimensions, View } from 'react-native';
 import BikeCard from '../components/BikeCard';
 import { BN } from 'bn.js';
@@ -66,7 +66,7 @@ const GarageScreen = ({ navigation }: HomeTabScreenProps<'Garage'>) => {
       {loading ? (
         <ActivityIndicator animating color={MD3DarkTheme.colors.onSurface} size='large' />
       ) : (
-        <Fragment>
+        <>
           <View className="flex-1">
             <Carousel
               defaultIndex={0}
@@ -80,15 +80,15 @@ const GarageScreen = ({ navigation }: HomeTabScreenProps<'Garage'>) => {
               onSnapToItem={handleBikeChange}
             />
           </View>
-          <View className="w-24 h-24 mx-auto mb-16 rounded-full overflow-hidden items-center justify-center bg-md3-primary-container">
+          <View className="w-24 h-24 mx-auto mb-16 rounded-full overflow-hidden items-center justify-center bg-md3-primary">
             <TouchableRipple
               borderless
               className="w-full h-full items-center justify-center"
               onPress={handleBikePress}>
-              <RobotoRegularText className="text-md3-on-primary-container">Race</RobotoRegularText>
+              <RobotoRegularText className="text-md3-on-primary">Race</RobotoRegularText>
             </TouchableRipple>
           </View>
-        </Fragment>
+        </>
       )}
       <Snackbar
         visible={visible}
