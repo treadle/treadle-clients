@@ -1,5 +1,6 @@
 import type { FC } from 'react';
-import { Image, View } from 'react-native';
+import { View } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import { RobotoRegularText } from './StyledText';
 import { TRDLBJsonTokenMetadata } from 'treadle-mockup-server';
 
@@ -11,7 +12,7 @@ const BikeCard: FC<CardProps> = ({ bikeMetadata }) => {
   return (
     <View className="bg-md3-surface flex-1 items-center rounded-[12px] overflow-hidden border border-md3-outline-variant">
       {bikeMetadata.media && (
-        <Image source={{ uri: bikeMetadata.media }} className="w-full h-[188px]" />
+        <FastImage source={{ uri: bikeMetadata.media }} className="w-full h-[188px]" />
       )}
       <View className="p-4">
         <View className="flex-row mb-[32px]">

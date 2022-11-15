@@ -1,8 +1,9 @@
 import type { TRDLBTokenMetadataExtra } from 'treadle-mockup-server';
-import { Image, View } from 'react-native';
+import { View } from 'react-native';
 import { RobotoRegularText } from '../components/StyledText';
 import { Appbar } from 'react-native-paper';
 import { RootStackScreenProps } from '../types/navigation-types';
+import FastImage from 'react-native-fast-image';
 
 interface ExtraDataIndex extends TRDLBTokenMetadataExtra {
   [key: string]: number;
@@ -10,9 +11,7 @@ interface ExtraDataIndex extends TRDLBTokenMetadataExtra {
 
 const NftDetailsScreen = ({ navigation, route }: RootStackScreenProps<'NftDetails'>) => {
   const { nft: nftDetails } = route.params;
-  const parsedNftExtraData: ExtraDataIndex = JSON.parse(
-    nftDetails?.metadata.extra || '{}'
-  );
+  const parsedNftExtraData: ExtraDataIndex = JSON.parse(nftDetails?.metadata.extra || '{}');
 
   const handleBackPress = () => {
     navigation.goBack();
@@ -25,10 +24,10 @@ const NftDetailsScreen = ({ navigation, route }: RootStackScreenProps<'NftDetail
         <Appbar.Content title={nftDetails.metadata.title} />
       </Appbar.Header>
       {nftDetails?.metadata.media && (
-        <Image
+        <FastImage
           className='w-full h-[200px] rounded-[12px] mb-4'
           source={{ uri: nftDetails.metadata.media }}
-          resizeMode='contain'
+          resizeMode={FastImage.resizeMode.cover}
         />
       )}
       <RobotoRegularText className='text-md3-on-bg text-[22px] tracking-[0.5px]'>
