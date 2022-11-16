@@ -110,7 +110,7 @@ export interface TRDLBNftMintOptions {
 
 export interface TRDLBNftTokensForOwnerOptions {
   account_id: string,
-  from_index?: string,
+  from_index?: BN,
   limit?: number,
 }
 

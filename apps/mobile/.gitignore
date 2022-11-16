@@ -19,3 +19,7 @@ web-build/
 # Yarn
 yarn-error.log
 yarn.lock
+
+# Model
+assets/model/*.bin
+assets/model/*.json

@@ -3,43 +3,57 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import type { HomeTabParamList, RootStackParamList, SignInTabParamList } from '../types';
-
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import type {
+  HomeTabParamList,
+  RootStackParamList,
+  SignInTabParamList,
+} from '../types/navigation-types';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DarkTheme as NavigationDarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-import * as React from 'react';
 
 import BottomNavigationBar from '../components/BottomNavigationBar';
 import NavigationBar from '../components/NavigationBar';
-import BikeRideScreen from '../screens/BikeRideScreen';
 import MarketplaceScreen from '../screens/MarketplaceScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import SignInScreen from '../screens/SignInScreen';
 import WalletScreen from '../screens/WalletScreen';
-import { useAccountStore } from '../store/accountStore';
+import BikeRideScreen from '../screens/BikeRideScreen';
 import LinkingConfiguration from './LinkingConfiguration';
 import TabBarIcon from '../components/TabBarIcon';
+import GarageScreen from '../screens/GarageScreen';
+import NftDetailsScreen from '../screens/NftDetailsScreen';
+import SummaryScreen from '../screens/SummaryScreen';
+import { useAccountStore } from '../store/useAccountStore';
+import { adaptNavigationTheme } from 'react-native-paper';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const SignInStack = createNativeStackNavigator<SignInTabParamList>();
+
+const { DarkTheme } = adaptNavigationTheme({ dark: NavigationDarkTheme });
 
 export default function Navigation() {
   const { account } = useAccountStore();
 
   return (
-    <NavigationContainer linking={LinkingConfiguration}>
+    <NavigationContainer theme={DarkTheme} linking={LinkingConfiguration}>
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
         }}>
-        {!!account
-          ? <Stack.Screen name='Home' component={BottomTabNavigator} />
-          : <Stack.Screen name='Login' component={SignInNavigator} />
-        }
-        <Stack.Screen name='NotFound' component={NotFoundScreen} options={{ title: 'Oops!' }} />
+        {!!account ? (
+          <Stack.Screen name="Home" component={BottomTabNavigator} />
+        ) : (
+          <Stack.Screen name="Login" component={SignInNavigator} />
+        )}
+        <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+        <Stack.Group screenOptions={{ presentation: 'modal' }}>
+          <Stack.Screen name="BikeRide" component={BikeRideScreen} />
+          <Stack.Screen name="Summary" component={SummaryScreen} />
+        </Stack.Group>
+        <Stack.Group screenOptions={{ presentation: 'modal' }}>
+          <Stack.Screen name="NftDetails" component={NftDetailsScreen} />
+        </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -51,7 +65,7 @@ function SignInNavigator() {
       screenOptions={{
         headerShown: false,
       }}>
-      <SignInStack.Screen name='SignIn' component={SignInScreen} />
+      <SignInStack.Screen name="SignIn" component={SignInScreen} />
     </SignInStack.Navigator>
   );
 }
@@ -69,36 +83,28 @@ function BottomTabNavigator() {
         header: (props) => <NavigationBar {...props} />,
       }}
       tabBar={(props) => <BottomNavigationBar {...props} />}>
-      {/*<BottomTab.Screen*/}
-      {/*  name='Garage'*/}
-      {/*  component={GarageScreen}*/}
-      {/*  options={{*/}
-      {/*    title: 'Garage',*/}
-      {/*    tabBarIcon: ({ color }) => <TabBarIcon name='link' color={color} />,*/}
-      {/*  }}*/}
-      {/*/>*/}
       <BottomTab.Screen
-        name='Wallet'
-        component={WalletScreen}
-        options={{
-          title: 'Wallet',
-          tabBarIcon: ({ color }) => <TabBarIcon name='wallet' color={color} />,
-        }}
-      />
-      <BottomTab.Screen
-        name='Ride'
-        component={BikeRideScreen}
-        options={{
-          title: 'Bike Ride',
-          tabBarIcon: ({ color }) => <TabBarIcon name='bike' color={color} />,
-        }}
-      />
-      <BottomTab.Screen
-        name='Marketplace'
+        name="Marketplace"
         component={MarketplaceScreen}
         options={{
           title: 'Marketplace',
-          tabBarIcon: ({ color }) => <TabBarIcon name='shopping' color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="shopping" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Garage"
+        component={GarageScreen}
+        options={{
+          title: 'Garage',
+          tabBarIcon: ({ color }) => <TabBarIcon name="garage" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Wallet"
+        component={WalletScreen}
+        options={{
+          title: 'Wallet',
+          tabBarIcon: ({ color }) => <TabBarIcon name="wallet" color={color} />,
         }}
       />
     </BottomTab.Navigator>

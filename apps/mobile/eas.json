@@ -8,13 +8,11 @@
       "distribution": "internal"
     },
     "preview": {
-      "distribution": "internal",
-      "developmentClient": true,
-      "ios": {
-        "enterpriseProvisioning": "universal"
-      }
+      "distribution": "internal"
     },
-    "production": {}
+    "production": {
+      "distribution": "internal"
+    }
   },
   "submit": {
     "production": {}

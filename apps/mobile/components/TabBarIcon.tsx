@@ -5,7 +5,7 @@ const TabBarIcon = (props: {
   name: ComponentProps<typeof MaterialCommunityIcons>['name'];
   color: string;
 }) => {
-  return <MaterialCommunityIcons size={16} {...props} />;
+  return <MaterialCommunityIcons size={24} {...props} />;
 };
 
 export default TabBarIcon;

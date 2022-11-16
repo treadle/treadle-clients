@@ -7,7 +7,7 @@
 import { LinkingOptions } from '@react-navigation/native';
 import * as Linking from 'expo-linking';
 
-import { RootStackParamList } from '../types';
+import { RootStackParamList } from '../types/navigation-types';
 
 const config = {
   screens: {
@@ -17,16 +17,16 @@ const config = {
         Account: 'account',
         Ride: 'ride',
         Shop: 'shop',
-      }
+      },
     },
     Login: {
       screens: {
         SignIn: 'sign-in',
-      }
+      },
     },
     NotFound: '*',
-  }
-}
+  },
+};
 
 const linking: LinkingOptions<RootStackParamList> = {
   prefixes: [Linking.createURL('/')],

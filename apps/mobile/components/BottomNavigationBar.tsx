@@ -8,15 +8,15 @@ import { RobotoMediumText } from './StyledText';
 
 const BottomNavigationBar: FC<BottomTabBarProps> = ({ state, descriptors, navigation }) => {
   return (
-    <View className='justify-center flex-row items-center bg-md3-surface py-[12px] gap-x-2'>
+    <View className="justify-center flex-row items-center bg-md3-surface py-[12px] gap-x-2">
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
           options.tabBarLabel !== undefined
             ? (options.tabBarLabel as string)
             : options.title !== undefined
-              ? options.title
-              : route.name;
+            ? options.title
+            : route.name;
 
         const isFocused = state.index === index;
 
@@ -40,18 +40,19 @@ const BottomNavigationBar: FC<BottomTabBarProps> = ({ state, descriptors, naviga
         };
 
         return (
-          <View key={route.key} className='items-center'>
-            <View className='mb-1'>
+          <View key={route.key} className="items-center">
+            <View className="mb-1">
               <TouchableRipple
-                accessibilityRole='button'
+                accessibilityRole="button"
                 accessibilityState={isFocused ? { selected: true } : {}}
                 accessibilityLabel={options.tabBarAccessibilityLabel}
                 testID={options.tabBarTestID}
                 onPress={onPress}
                 onLongPress={onLongPress}
                 borderless
-                className={`py-[10px] px-[26px] rounded-[16px] overflow-hidden ${isFocused ? 'bg-md3-secondary-container' : ''}`}
-              >
+                className={`py-[10px] px-[26px] rounded-[16px] overflow-hidden ${
+                  isFocused ? 'bg-md3-secondary-container' : ''
+                }`}>
                 {options.tabBarIcon &&
                   options.tabBarIcon({
                     focused: isFocused,
@@ -60,9 +61,7 @@ const BottomNavigationBar: FC<BottomTabBarProps> = ({ state, descriptors, naviga
                   })}
               </TouchableRipple>
             </View>
-            <RobotoMediumText className='text-[12px] text-md3-on-bg'>
-              {label}
-            </RobotoMediumText>
+            <RobotoMediumText className="text-[12px] text-md3-on-bg">{label}</RobotoMediumText>
           </View>
         );
       })}

@@ -5,9 +5,13 @@ export function RobotoRegularText(props: TextProps) {
 }
 
 export function RobotoMediumText(props: TextProps) {
-  return <Text {...props} style={[props.style, { fontFamily: 'Roboto-Medium', fontWeight: '500' }]} />;
+  return (
+    <Text {...props} style={[props.style, { fontFamily: 'Roboto-Medium', fontWeight: '500' }]} />
+  );
 }
 
 export function RobotoBoldText(props: TextProps) {
-  return <Text {...props} style={[props.style, { fontFamily: 'Roboto-Bold', fontWeight: 'bold' }]} />;
+  return (
+    <Text {...props} style={[props.style, { fontFamily: 'Roboto-Bold', fontWeight: 'bold' }]} />
+  );
 }
