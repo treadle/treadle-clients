@@ -381,7 +381,7 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
   }, [isEnded]);
 
   return (
-    <View className="flex-1 justify-center items-center px-4">
+    <View className="flex-1 justify-center items-center bg-md3-surface px-4">
       {isReady ? (
         <View className="flex-1 justify-evenly items-center">
           <View className="flex-row justify-center items-center">
