@@ -344,15 +344,15 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
     }
   }, [energy]);
 
-  useEffect(() => {
-    if (isEnded) {
-      navigation.replace<any>('Summary', {
-        distance: travelledDistance,
-        time: seconds,
-        earned: earnedTokens,
-      });
-    }
-  }, [isEnded]);
+  // useEffect(() => {
+  //   if (isEnded) {
+  //     navigation.replace<any>('Summary', {
+  //       distance: travelledDistance,
+  //       time: seconds,
+  //       earned: earnedTokens,
+  //     });
+  //   }
+  // }, [isEnded]);
 
   const handleEndRide = () => {
     navigation.replace<any>('Summary', {
@@ -363,7 +363,7 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
   };
 
   return (
-    <View className="flex-1 justify-center items-center px-4">
+    <View className="flex-1 justify-center items-center bg-md3-surface px-4">
       {isReady ? (
         <View className="flex-1 justify-evenly items-center">
           <View className="flex-row justify-center items-center">

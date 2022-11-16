@@ -19,7 +19,6 @@ import NotFoundScreen from '../screens/NotFoundScreen';
 import SignInScreen from '../screens/SignInScreen';
 import WalletScreen from '../screens/WalletScreen';
 import BikeRideScreen from '../screens/BikeRideScreen';
-import LinkingConfiguration from './LinkingConfiguration';
 import TabBarIcon from '../components/TabBarIcon';
 import GarageScreen from '../screens/GarageScreen';
 import NftDetailsScreen from '../screens/NftDetailsScreen';
@@ -36,7 +35,7 @@ export default function Navigation() {
   const { account } = useAccountStore();
 
   return (
-    <NavigationContainer theme={DarkTheme} linking={LinkingConfiguration}>
+    <NavigationContainer theme={DarkTheme}>
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
@@ -47,12 +46,12 @@ export default function Navigation() {
           <Stack.Screen name="Login" component={SignInNavigator} />
         )}
         <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-        <Stack.Group screenOptions={{ presentation: 'modal' }}>
+        <Stack.Group screenOptions={{ presentation: 'containedTransparentModal' }}>
           <Stack.Screen name="BikeRide" component={BikeRideScreen} />
           <Stack.Screen name="Summary" component={SummaryScreen} />
         </Stack.Group>
-        <Stack.Group screenOptions={{ presentation: 'modal' }}>
-          <Stack.Screen name="NftDetails" component={NftDetailsScreen} />
+        <Stack.Screen name="NftDetails" component={NftDetailsScreen} />
+        <Stack.Group screenOptions={{ presentation: 'transparentModal' }}>
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>

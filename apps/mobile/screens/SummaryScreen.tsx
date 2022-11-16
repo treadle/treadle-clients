@@ -8,7 +8,7 @@ import ConfettiCannon from 'react-native-confetti-cannon';
 
 export default function SummaryScreen({ navigation, route }: RootStackScreenProps<'Summary'>) {
   return (
-    <View className="flex-1">
+    <View className="flex-1 bg-md3-surface">
       <ConfettiCannon count={200} origin={{ x: -10, y: 0 }} fadeOut />
       <View className="flex-1 justify-center items-center">
         <RobotoBoldText className="text-md3-on-bg text-[40px] tracking-[0.5px]">
