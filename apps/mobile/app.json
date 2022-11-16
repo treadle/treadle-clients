@@ -14,24 +14,28 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.dreamqip.Treadle"
+      "bundleIdentifier": "com.sikredduez.Treadle"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png"
       },
-      "permissions": ["HIGH_SAMPLING_RATE_SENSORS"],
-      "package": "com.dreamqip.Treadle"
+      "permissions": [
+        "HIGH_SAMPLING_RATE_SENSORS"
+      ],
+      "package": "com.sikredduez.Treadle"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "19a5ef92-89b0-40ce-9798-550d5fa5a41c"
+        "projectId": "ffccbbad-605f-442e-a266-a8f9211cf66d"
       }
     }
   }

@@ -40,7 +40,7 @@ const NftDetailsScreen = ({ navigation, route }: RootStackScreenProps<'NftDetail
               {key}
             </RobotoRegularText>
             <RobotoRegularText className="text-md3-on-bg text-[16px] tracking-[0.5px]">
-              {parsedNftExtraData[key]}
+              {parsedNftExtraData[key] / 100}
             </RobotoRegularText>
           </View>
         );

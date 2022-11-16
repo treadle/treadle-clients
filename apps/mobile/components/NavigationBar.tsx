@@ -13,7 +13,7 @@ const NavigationBar: FC<BottomTabHeaderProps> = ({ route }) => {
   return (
     <Appbar.Header theme={MD3DarkTheme}>
       <Appbar.Content theme={MD3DarkTheme} title={route.name} />
-      <Pressable onPress={() => setEnergy(10)}>
+      <Pressable onPress={() => setEnergy(1)}>
         <View className="p-2 bg-yellow-500 mr-2 rounded-full">
           <RobotoRegularText className="text-black">$ENRG: {energy}</RobotoRegularText>
         </View>

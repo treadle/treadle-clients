@@ -50,7 +50,11 @@ export default function SummaryScreen({ navigation, route }: RootStackScreenProp
           </View>
         </View>
       </View>
-      <View className="flex-1 justify-center items-center"></View>
+      <View className="flex-1 justify-center items-center">
+        <RobotoRegularText className="text-md3-on-bg text-[16px] tracking-[0.5px]">{route.params.energy}</RobotoRegularText>
+        <RobotoRegularText className="text-md3-on-bg text-[16px] tracking-[0.5px]">{route.params.durability}</RobotoRegularText>
+        <RobotoRegularText className="text-md3-on-bg text-[16px] tracking-[0.5px]">{route.params.isEnded ? "ended" : "not ended"}</RobotoRegularText>
+      </View>
       <View className="w-24 h-24 mx-auto mb-16 rounded-full overflow-hidden items-center justify-center bg-md3-primary">
         <TouchableRipple
           borderless

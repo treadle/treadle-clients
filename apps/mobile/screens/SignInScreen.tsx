@@ -68,7 +68,7 @@ export default function SignInScreen() {
   return (
     <View className="flex-1 bg-md3-surface justify-center px-4">
       <RobotoBoldText className="text-md3-on-bg text-[60px] leading-[64px] text-center mb-4">
-        Treadle
+        Welcome!
       </RobotoBoldText>
       <RobotoRegularText className="text-[22px] text-md3-on-bg text-center leading-[28px] mb-4">
         Enter the private key associated with the account.

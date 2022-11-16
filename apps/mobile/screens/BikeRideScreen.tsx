@@ -1,7 +1,7 @@
 // Libraries
 import type { RootStackScreenProps } from '../types/navigation-types';
-import { useEffect, useRef, useState } from 'react';
-import { Alert, AppState, View } from 'react-native';
+import { useEffect, useRef, useState, useCallback } from 'react';
+import { Alert, AppState, View, BackHandler } from 'react-native';
 import { ActivityIndicator, MD3DarkTheme, TouchableRipple } from 'react-native-paper';
 import { RobotoMediumText, RobotoRegularText } from '../components/StyledText';
 import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
@@ -9,6 +9,7 @@ import { DeviceMotion, Gyroscope, Magnetometer } from 'expo-sensors';
 import * as Location from 'expo-location';
 import * as tf from '@tensorflow/tfjs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useFocusEffect } from '@react-navigation/native';
 
 // Logic
 import calcDist from '../utils/calcDist';
@@ -116,6 +117,17 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
     devSubListener.current && devSubListener.current.remove();
     appStateListener.current && appStateListener.current.remove();
     console.log('Ride terminated');
+  };
+
+  const handleEndRide = () => {
+    navigation.replace<any>('Summary', {
+      distance: travelledDistance,
+      time: seconds,
+      earned: earnedTokens,
+      energy: energy,
+      durability: durability,
+      isEnded: isEnded
+    });
   };
 
   // Run the model on the data from sensors every 10 seconds
@@ -264,10 +276,23 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
     };
   }, []);
 
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        handleEndRide();
+        return true;
+      };
+
+      const subscription = BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () => subscription.remove();
+    }, [handleEndRide])
+  );
+
   //Handling the 'back' android button
   useEffect(
-    () =>
-      navigation.addListener('beforeRemove', (e) => {
+    () => {
+      const unsubscribe = navigation.addListener('beforeRemove', (e) => {
         if (isEnded) {
           return;
         }
@@ -291,7 +316,10 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
             },
           },
         ]);
-      }),
+      })
+
+      return unsubscribe;
+    },
     [navigation, isEnded]
   );
 
@@ -327,40 +355,30 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
   }, [travelledKm]);
 
   useEffect(() => {
-    setTokens(tokens + earnedTokens);
+    if (isReady) {
+      setTokens(tokens + earnedTokens);
+    }
   }, [earnedTokens]);
 
   useEffect(() => {
-    if (durability < bicycle.ware / 100) {
-      setIsEnded(true);
-    }
+      if (durability < bicycle.ware / 100) {
+        setIsEnded(true);
+      }
   }, [durability]);
 
   useEffect(() => {
-    setEnergyStore(energy);
+      setEnergyStore(energy);
 
-    if (energy < bicycle.comfort / 100) {
-      setIsEnded(true);
-    }
+      if (energy < bicycle.comfort / 100) {
+        setIsEnded(true);
+      }
   }, [energy]);
 
   useEffect(() => {
     if (isEnded) {
-      navigation.replace<any>('Summary', {
-        distance: travelledDistance,
-        time: seconds,
-        earned: earnedTokens,
-      });
+      handleEndRide();
     }
   }, [isEnded]);
-
-  const handleEndRide = () => {
-    navigation.replace<any>('Summary', {
-      distance: travelledDistance,
-      time: seconds,
-      earned: earnedTokens,
-    });
-  };
 
   return (
     <View className="flex-1 justify-center items-center px-4">

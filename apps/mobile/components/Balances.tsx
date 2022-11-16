@@ -26,7 +26,7 @@ const Balances: FC<any> = () => {
     <View className="flex-1 px-4 bg-md3-surface justify-between items-center">
       <View className="flex-row justify-center items-center pt-32">
         <RobotoBoldText className="text-md3-on-surface text-[42px]">
-          ${tokens * 1.11} USD
+          ${(tokens * 1.11).toFixed(2)} USD
         </RobotoBoldText>
       </View>
       <View className="w-full p-5 rounded-[12px] border-md3-outline-variant border-2">
@@ -40,7 +40,7 @@ const Balances: FC<any> = () => {
               {tokens}
             </RobotoRegularText>
             <RobotoMediumText className="text-md3-on-surface-variant">
-              ≈ ${tokens * 1.11} USD
+              ≈ ${(tokens * 1.11).toFixed(2)} USD
             </RobotoMediumText>
           </View>
         </View>
@@ -55,7 +55,7 @@ const Balances: FC<any> = () => {
               0
             </RobotoRegularText>
             <RobotoMediumText className="text-md3-on-surface-variant">
-              ≈ ${0 * 111.11} USD
+              ≈ ${(0 * 111.11).toFixed(2)} USD
             </RobotoMediumText>
           </View>
         </View>
