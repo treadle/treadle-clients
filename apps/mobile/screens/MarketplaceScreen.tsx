@@ -17,21 +17,21 @@ const extra: TRDLBTokenMetadataExtra = {
 };
 
 const metadata: TRDLBJsonTokenMetadata[] = [
-  {
-    title: 'City Bike',
-    description: 'A simple bike for travelling across your hometown',
-    media: 'https://miro.medium.com/max/775/0*rZecOAy_WVr16810',
-    extra: JSON.stringify({
-      durability: 10000, // 100.00 units
-      ware: 100, // 1.00 unit burnt per kilometre travelled
-      efficiency: 500, // 5.00 tokens earned per energy consumed
-      comfort: 200, // 2.00 energy consumed per kilometre travelled
-    }),
-  },
+  // {
+  //   title: 'City Bike',
+  //   description: 'A simple bike for travelling across your hometown',
+  //   media: 'https://miro.medium.com/max/775/0*rZecOAy_WVr16810',
+  //   extra: JSON.stringify({
+  //     durability: 10000, // 100.00 units
+  //     ware: 100, // 1.00 unit burnt per kilometre travelled
+  //     efficiency: 500, // 5.00 tokens earned per energy consumed
+  //     comfort: 200, // 2.00 energy consumed per kilometre travelled
+  //   }),
+  // },
   {
     title: 'Mountain Bike',
     description: 'A bike for travelling across the mountains',
-    media: 'https://www.w3schools.com/w3css/img_lights.jpg',
+    media: 'https://bafkreig5mv42k3x7ukukd762zivobqrxqpj34e3rb2sx5x3o5krbgleu5i.ipfs.nftstorage.link/',
     extra: JSON.stringify({
       durability: 10000, // 100.00 units
       ware: 100, // 1.00 unit burnt per kilometre travelled
@@ -42,7 +42,7 @@ const metadata: TRDLBJsonTokenMetadata[] = [
   {
     title: 'Road Bike',
     description: 'A bike for travelling across the roads',
-    media: 'https://ipfs.io/ipfs/QmQqzMTavQgT4f4T5v6PWBp7XNKtoPmC9jvn12WPT3gkSE',
+    media: 'https://bafkreibjwkmu5duf5glcw2dvi47c4xc7fminqmlmxby7gtsptx5ziitrpy.ipfs.nftstorage.link/',
     extra: JSON.stringify({
       durability: 10000, // 100.00 units
       ware: 100, // 1.00 unit burnt per kilometre travelled

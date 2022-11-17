@@ -28,7 +28,7 @@ const MarketplaceCard: FC<CardProps> = ({ bikeMetadata, mintBike }) => {
   return (
     <View className="bg-md3-surface rounded-[12px] overflow-hidden border border-md3-outline-variant mb-4">
       {bikeMetadata.media && (
-        <FastImage source={{ uri: bikeMetadata.media }} className="w-full h-[188px]" />
+        <FastImage source={{ uri: bikeMetadata.media }} className="w-full h-[188px]"/>
       )}
       <View className="p-4">
         <View className="flex-row mb-[32px]">

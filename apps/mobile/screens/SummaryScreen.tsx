@@ -12,7 +12,7 @@ export default function SummaryScreen({ navigation, route }: RootStackScreenProp
   return (
     <View className="flex-1 bg-md3-surface h-full items-center justify-center">
       <ConfettiCannon count={200} origin={{ x: -10, y: 0 }} fadeOut />
-      <View className="flex-1 justify-center items-center">
+      <View className="flex-1 justify-end items-center">
         <RobotoBoldText className="text-md3-on-bg text-[40px] tracking-[0.5px]">
           Congratulations!
         </RobotoBoldText>
@@ -52,13 +52,15 @@ export default function SummaryScreen({ navigation, route }: RootStackScreenProp
           </View>
         </View>
       </View>
-      <View className="w-24 h-24 mx-auto mb-16 rounded-full overflow-hidden items-center justify-center bg-md3-primary">
-        <TouchableRipple
-          borderless
-          className="w-full h-full items-center justify-center"
-          onPress={() => navigation.navigate('Home')}>
-          <RobotoMediumText className="text-md3-on-primary text-[17px]">End</RobotoMediumText>
-        </TouchableRipple>
+      <View className='flex-1 justify-center items-center'>
+        <View className="w-24 h-24 mx-auto mb-16 rounded-full overflow-hidden items-center justify-center bg-md3-primary">
+          <TouchableRipple
+            borderless
+            className="w-full h-full items-center justify-center"
+            onPress={() => navigation.navigate('Home')}>
+            <RobotoMediumText className="text-md3-on-primary text-[17px]">End</RobotoMediumText>
+          </TouchableRipple>
+        </View>
       </View>
     </View>
   );
