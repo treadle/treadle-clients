@@ -3,15 +3,14 @@ import { View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { RobotoRegularText } from './StyledText';
 import { TRDLBJsonTokenMetadata } from 'treadle-mockup-server';
-import { Divider } from "react-native-paper"
+import { Divider } from 'react-native-paper';
 
 interface CardProps {
   bikeMetadata: TRDLBJsonTokenMetadata;
 }
 
 const BikeCard: FC<CardProps> = ({ bikeMetadata }) => {
-
-  const stats = JSON.parse(bikeMetadata.extra as string)
+  const stats = JSON.parse(bikeMetadata.extra as string);
   const durabilityPercentage = (stats.durability / 200).toString() + '%';
   const warePercentage = (110 - stats.ware / 10).toString() + '%';
   const efficiencyPercentage = (stats.efficiency / 10).toString() + '%';
@@ -30,21 +29,23 @@ const BikeCard: FC<CardProps> = ({ bikeMetadata }) => {
         </View>
         <View className="flex-col justify-evenly">
           <RobotoRegularText className="text-[14px] text-md3-on-surface px-[2px] leading-[16px]">
-            Durability: {stats.durability / 100} unit{stats.durability / 100 > 1 ? "s" : ""}
+            Durability: {stats.durability / 100} unit{stats.durability / 100 > 1 ? 's' : ''}
           </RobotoRegularText>
-          <Divider bold style={{width: durabilityPercentage, marginVertical: 12, height: 5}} />
+          <Divider bold style={{ width: durabilityPercentage, marginVertical: 12, height: 5 }} />
           <RobotoRegularText className="text-[14px] text-md3-on-surface px-[2px] leading-[16px]">
-            Ware: {stats.ware / 100} durability unit{stats.ware / 100 > 1 ? "s" : ""} per kilometre travelled
+            Ware: {stats.ware / 100} durability unit{stats.ware / 100 > 1 ? 's' : ''} per kilometre
+            travelled
           </RobotoRegularText>
-          <Divider bold style={{width: warePercentage, marginVertical: 12, height: 5}} />
+          <Divider bold style={{ width: warePercentage, marginVertical: 12, height: 5 }} />
           <RobotoRegularText className="text-[14px] text-md3-on-surface px-[2px] leading-[16px]">
             Efficiency: {stats.efficiency / 100} $SCRW per kilometre travelled
           </RobotoRegularText>
-          <Divider bold style={{width: efficiencyPercentage, marginVertical: 12, height: 5}} />
+          <Divider bold style={{ width: efficiencyPercentage, marginVertical: 12, height: 5 }} />
           <RobotoRegularText className="text-[14px] text-md3-on-surface px-[2px] leading-[16px]">
-            Comfort: {stats.comfort / 100} energy unit{stats.comfort / 100 > 1 ? "s" : ""} spent per kilometre travelled
+            Comfort: {stats.comfort / 100} energy unit{stats.comfort / 100 > 1 ? 's' : ''} spent per
+            kilometre travelled
           </RobotoRegularText>
-          <Divider bold style={{width: comfortPercentage, marginVertical: 12, height: 5}} />
+          <Divider bold style={{ width: comfortPercentage, marginVertical: 12, height: 5 }} />
         </View>
       </View>
     </View>

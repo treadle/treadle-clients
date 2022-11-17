@@ -50,8 +50,8 @@ export default function Navigation() {
           <Stack.Screen name="BikeRide" component={BikeRideScreen} />
           <Stack.Screen name="Summary" component={SummaryScreen} />
         </Stack.Group>
-        <Stack.Screen name="NftDetails" component={NftDetailsScreen} />
         <Stack.Group screenOptions={{ presentation: 'transparentModal' }}>
+          <Stack.Screen name="NftDetails" component={NftDetailsScreen} />
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>

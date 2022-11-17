@@ -17,6 +17,7 @@ import { connect, keyStores, utils } from 'near-api-js';
 import { useEnergyTokensStore } from './store/useEnergyTokensStore';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import { requestForegroundPermissionsAsync } from 'expo-location';
+import { Alert } from 'react-native';
 
 window.Buffer = window.Buffer || require('buffer').Buffer;
 
@@ -66,11 +67,20 @@ const App = () => {
 
     try {
       await SplashScreen.preventAutoHideAsync();
-      await requestForegroundPermissionsAsync();
     } catch (e) {
       console.warn(e);
     }
   };
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await requestForegroundPermissionsAsync();
+
+      if (status !== 'granted') {
+        Alert.alert('Permission to access location was denied');
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     prepare();
@@ -96,7 +106,7 @@ const App = () => {
     <SafeAreaProvider onLayout={onLayoutRootView}>
       <PaperProvider theme={MD3DarkTheme}>
         <Navigation />
-        <StatusBar style="light" />
+        <StatusBar style='light' />
       </PaperProvider>
     </SafeAreaProvider>
   );

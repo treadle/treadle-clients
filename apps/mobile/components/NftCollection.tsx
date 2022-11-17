@@ -11,6 +11,10 @@ import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { TRDLBContract } from 'treadle-mockup-server';
 import { BN } from 'bn.js';
 import FastImage from 'react-native-fast-image';
+import { createImageProgress } from 'react-native-image-progress';
+import Pie from 'react-native-progress/Pie';
+
+const Image = createImageProgress(FastImage);
 
 const NftCollection: FC = () => {
   const navigation = useNavigation();
@@ -36,13 +40,13 @@ const NftCollection: FC = () => {
       setLastNftsRetrievedLength(nfts.length);
       setNfts((prevState) => [...prevState, ...nfts]);
     }
-  }, [index, isFocused]);
+  }, [index, isFocused, account]);
 
   useEffect(() => {
     if (isFocused) {
       fetchAllNFTs();
     }
-  }, [counter, index, isFocused]);
+  }, [counter, index, isFocused, account]);
 
   useEffect(() => {
     if (!isFocused) {
@@ -65,7 +69,7 @@ const NftCollection: FC = () => {
         <Pressable onPress={() => NftCardHandler(item)}>
           <View>
             {item.metadata.media && (
-              <FastImage className="w-[140px] h-[140px]" source={{ uri: item.metadata.media }} />
+              <Image indicator={Pie} className="w-[140px] h-[140px]" source={{ uri: item.metadata.media }} />
             )}
           </View>
         </Pressable>

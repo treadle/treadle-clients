@@ -126,7 +126,7 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
       earned: earnedTokens,
       energy: energy,
       durability: durability,
-      isEnded: isEnded
+      isEnded: isEnded,
     });
   };
 
@@ -290,38 +290,35 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
   );
 
   //Handling the 'back' android button
-  useEffect(
-    () => {
-      const unsubscribe = navigation.addListener('beforeRemove', (e) => {
-        if (isEnded) {
-          return;
-        }
-        // Prevent default behavior of leaving the screen
-        e.preventDefault();
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', (e) => {
+      if (isEnded) {
+        return;
+      }
+      // Prevent default behavior of leaving the screen
+      e.preventDefault();
 
-        // Prompt the user before leaving the screen
-        Alert.alert('End the ride?', 'Your ride is still on. Do you want to end it?', [
-          {
-            text: "Don't leave",
-            style: 'cancel',
-            onPress: () => {},
+      // Prompt the user before leaving the screen
+      Alert.alert('End the ride?', 'Your ride is still on. Do you want to end it?', [
+        {
+          text: "Don't leave",
+          style: 'cancel',
+          onPress: () => {},
+        },
+        {
+          text: 'End',
+          style: 'destructive',
+          // If the user confirmed, then we dispatch the action we blocked earlier
+          // This will continue the action that had triggered the removal of the screen
+          onPress: () => {
+            navigation.dispatch(e.data.action);
           },
-          {
-            text: 'End',
-            style: 'destructive',
-            // If the user confirmed, then we dispatch the action we blocked earlier
-            // This will continue the action that had triggered the removal of the screen
-            onPress: () => {
-              navigation.dispatch(e.data.action);
-            },
-          },
-        ]);
-      })
+        },
+      ]);
+    });
 
-      return unsubscribe;
-    },
-    [navigation, isEnded]
-  );
+    return unsubscribe;
+  }, [navigation, isEnded]);
 
   // Calculate speed and travelled distance for each location update
   useEffect(() => {
@@ -361,17 +358,17 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
   }, [earnedTokens]);
 
   useEffect(() => {
-      if (durability < bicycle.ware / 100) {
-        setIsEnded(true);
-      }
+    if (durability < bicycle.ware / 100) {
+      setIsEnded(true);
+    }
   }, [durability]);
 
   useEffect(() => {
-      setEnergyStore(energy);
+    setEnergyStore(energy);
 
-      if (energy < bicycle.comfort / 100) {
-        setIsEnded(true);
-      }
+    if (energy < bicycle.comfort / 100) {
+      setIsEnded(true);
+    }
   }, [energy]);
 
   useEffect(() => {

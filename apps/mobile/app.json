@@ -19,7 +19,7 @@
     ],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.sikredduez.Treadle"
+      "bundleIdentifier": "com.dreamqip.Treadle"
     },
     "android": {
       "adaptiveIcon": {
@@ -28,14 +28,14 @@
       "permissions": [
         "HIGH_SAMPLING_RATE_SENSORS"
       ],
-      "package": "com.sikredduez.Treadle"
+      "package": "com.dreamqip.Treadle"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "ffccbbad-605f-442e-a266-a8f9211cf66d"
+        "projectId": "19a5ef92-89b0-40ce-9798-550d5fa5a41c"
       }
     }
   }
