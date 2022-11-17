@@ -5,7 +5,6 @@ import useCachedResources from './hooks/useCachedResources';
 import Navigation from './navigation';
 
 import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
 
 import 'expo-dev-client';
 
@@ -18,6 +17,7 @@ import { useEnergyTokensStore } from './store/useEnergyTokensStore';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import { requestForegroundPermissionsAsync } from 'expo-location';
 import { Alert } from 'react-native';
+import { hideAsync, preventAutoHideAsync } from 'expo-splash-screen';
 
 window.Buffer = window.Buffer || require('buffer').Buffer;
 
@@ -66,7 +66,7 @@ const App = () => {
     if (!tokens) setTokens(0);
 
     try {
-      await SplashScreen.preventAutoHideAsync();
+      await preventAutoHideAsync();
     } catch (e) {
       console.warn(e);
     }
@@ -94,7 +94,7 @@ const App = () => {
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
-      await SplashScreen.hideAsync();
+      await hideAsync();
     }
   }, [fontsLoaded]);
 

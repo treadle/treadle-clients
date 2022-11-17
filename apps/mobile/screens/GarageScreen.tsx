@@ -10,9 +10,9 @@ import { BN } from 'bn.js';
 import { useCounterStore } from '../store/counterStore';
 import { useAccountStore } from '../store/useAccountStore';
 import { ActivityIndicator, MD3DarkTheme, ProgressBar, Snackbar, TouchableRipple } from 'react-native-paper';
-import { RobotoMediumText } from '../components/StyledText';
 import { useEnergyTokensStore } from '../store/useEnergyTokensStore';
 import { getForegroundPermissionsAsync, hasServicesEnabledAsync } from 'expo-location';
+import { RobotoMediumText } from '../components/StyledText';
 
 const errors = [
   'You don\'t have enough energy to ride this bike!',
@@ -71,6 +71,8 @@ const GarageScreen = ({ navigation }: HomeTabScreenProps<'Garage'>) => {
     if (nextAppChange !== 'active') {
       setIndex(0);
       setBikes([]);
+      setLastBikesRetrievedLength(0);
+      setInitialLoading(true);
     }
 
     appState.current = nextAppChange;
@@ -117,10 +119,12 @@ const GarageScreen = ({ navigation }: HomeTabScreenProps<'Garage'>) => {
 
   return (
     <>
-      {loadingBikes && <ProgressBar indeterminate />}
-      <View className='bg-md3-surface flex-1 justify-center items-center'>
+      <ProgressBar indeterminate visible={loadingBikes} />
+      <View className='bg-md3-surface flex-1'>
         {initialLoading ? (
-          <ActivityIndicator animating color={MD3DarkTheme.colors.onSurface} size='large' />
+          <View className='flex-1 justify-center items-center'>
+            <ActivityIndicator animating color={MD3DarkTheme.colors.onSurface} size='large' />
+          </View>
         ) : (
           <>
             <View className='flex-1'>

@@ -1,12 +1,14 @@
 import type { FC } from 'react';
+import type { TRDLBJsonTokenMetadata } from 'treadle-mockup-server';
 import { useState } from 'react';
 import { Button } from 'react-native-paper';
 import { RobotoMediumText, RobotoRegularText } from './StyledText';
 import FastImage from 'react-native-fast-image';
 import { View } from 'react-native';
-import { TRDLBJsonTokenMetadata } from 'treadle-mockup-server';
 import { useCounterStore } from '../store/counterStore';
 import { Divider } from 'react-native-paper';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import CustomImage from './Image';
 
 interface CardProps {
   bikeMetadata: TRDLBJsonTokenMetadata;
@@ -16,6 +18,7 @@ interface CardProps {
 const MarketplaceCard: FC<CardProps> = ({ bikeMetadata, mintBike }) => {
   const { counter, increment } = useCounterStore();
   const [prevCounter, setPrevCounter] = useState<number | null>(null);
+  const [error, setError] = useState(false);
 
   const handleMintBike = async () => {
     setPrevCounter(counter);
@@ -24,11 +27,19 @@ const MarketplaceCard: FC<CardProps> = ({ bikeMetadata, mintBike }) => {
   };
 
   const stats = JSON.parse(bikeMetadata.extra as string);
+  
+  const handleImageError = () => {
+    setError(true);
+  };
 
   return (
     <View className="bg-md3-surface rounded-[12px] overflow-hidden border border-md3-outline-variant mb-4">
-      {bikeMetadata.media && (
-        <FastImage source={{ uri: bikeMetadata.media }} className="w-full h-[188px]"/>
+      {bikeMetadata.media && !error ? (
+        <CustomImage source={{ uri: bikeMetadata.media }} resizeMode={FastImage.resizeMode.contain} className="aspect-square" onError={handleImageError}/>
+      ) : (
+        <View className="aspect-square justify-center items-center bg-md3-outline-variant">
+          <MaterialCommunityIcons name="image-off-outline" size={140} color={'#fff'} />
+        </View>
       )}
       <View className="p-4">
         <View className="flex-row mb-[32px]">
@@ -41,7 +52,7 @@ const MarketplaceCard: FC<CardProps> = ({ bikeMetadata, mintBike }) => {
             {bikeMetadata.description}
           </RobotoRegularText>
         </View>
-        <View className="flex-col mb-[32px]">
+        <View className="mb-[32px]">
           <RobotoRegularText className="text-[14px] text-md3-on-surface px-[2px] leading-[16px]">
             Durability: {stats.durability / 100} unit{stats.durability / 100 > 1 ? 's' : ''}
           </RobotoRegularText>
