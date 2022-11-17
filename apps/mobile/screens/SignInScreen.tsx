@@ -1,6 +1,6 @@
 import type { Account } from 'near-api-js';
 import { useCallback, useState } from 'react';
-import { Alert, Linking, Pressable, View } from 'react-native';
+import { Alert, Linking, View } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import { useAccountStore } from '../store/useAccountStore';
 import { setupMockupServer } from 'treadle-mockup-server';
@@ -98,7 +98,7 @@ export default function SignInScreen() {
         Import Wallet
       </Button>
 
-      <View className='items-center mt-8'>
+      <View className='mt-8'>
         <RobotoRegularText className='text-[22px] text-md3-on-bg'>
           If you don't have a near wallet, you can create one {''}
           {/* <- need for space */}
@@ -107,7 +107,7 @@ export default function SignInScreen() {
           </RobotoRegularText>
         </RobotoRegularText>
         <RobotoRegularText className='text-[22px] text-md3-on-bg mt-4'>
-          You can get your private key by clicking export local private key button in Account page in the NEAR Wallet
+          You can get your private key by clicking <RobotoRegularText className='underline'>export local private key</RobotoRegularText> button in Account page in the NEAR Wallet
         </RobotoRegularText>
       </View>
     </View>
