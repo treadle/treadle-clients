@@ -1,12 +1,11 @@
 import type { FC } from 'react';
 import type { TRDLBJsonTokenMetadata } from 'treadle-mockup-server';
 import { useState } from 'react';
-import { Button } from 'react-native-paper';
+import { Button, Divider } from 'react-native-paper';
 import { RobotoMediumText, RobotoRegularText } from './StyledText';
 import FastImage from 'react-native-fast-image';
 import { View } from 'react-native';
 import { useCounterStore } from '../store/counterStore';
-import { Divider } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import CustomImage from './Image';
 
@@ -20,13 +19,13 @@ const MarketplaceCard: FC<CardProps> = ({ bikeMetadata, mintBike }) => {
   const [prevCounter, setPrevCounter] = useState<number | null>(null);
   const [error, setError] = useState(false);
 
+  const stats = JSON.parse(bikeMetadata.extra as string);
+
   const handleMintBike = async () => {
     setPrevCounter(counter);
     await mintBike();
     increment();
   };
-
-  const stats = JSON.parse(bikeMetadata.extra as string);
   
   const handleImageError = () => {
     setError(true);

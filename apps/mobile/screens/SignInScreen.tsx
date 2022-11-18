@@ -99,14 +99,14 @@ export default function SignInScreen() {
       </Button>
 
       <View className='mt-8'>
-        <RobotoRegularText className='text-[22px] text-md3-on-bg'>
+        <RobotoRegularText className='text-[18px] text-md3-on-bg'>
           If you don't have a near wallet, you can create one {''}
           {/* <- need for space */}
-          <RobotoRegularText onPress={handleOpenWalletUrl} className='text-[22px] text-md3-primary underline'>
+          <RobotoRegularText onPress={handleOpenWalletUrl} className='text-[18px] text-md3-primary underline'>
             here
           </RobotoRegularText>
         </RobotoRegularText>
-        <RobotoRegularText className='text-[22px] text-md3-on-bg mt-4'>
+        <RobotoRegularText className='text-[18px] text-md3-on-bg mt-4'>
           You can get your private key by clicking <RobotoRegularText className='underline'>export local private key</RobotoRegularText> button in Account page in the NEAR Wallet
         </RobotoRegularText>
       </View>

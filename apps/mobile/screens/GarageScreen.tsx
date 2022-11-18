@@ -20,6 +20,7 @@ import { useEnergyTokensStore } from '../store/useEnergyTokensStore';
 import { getForegroundPermissionsAsync, hasServicesEnabledAsync } from 'expo-location';
 import { RobotoMediumText } from '../components/StyledText';
 import { useIsFocused } from '@react-navigation/native';
+import EmptyCollection from '../components/EmptyCollection';
 
 const errors = [
   "You don't have enough energy to ride this bike!",
@@ -41,28 +42,31 @@ const GarageScreen = ({ navigation }: HomeTabScreenProps<'Garage'>) => {
   const [lastBikesRetrievedLength, setLastBikesRetrievedLength] = useState(0);
   const [error, setError] = useState('no error');
   const r = useRef<ICarouselInstance | null>(null);
-  const { account, masterAccount } = useAccountStore();
+  const { account } = useAccountStore();
   const { counter } = useCounterStore();
   const { energy } = useEnergyTokensStore();
   const isFocused = useIsFocused();
   const PAGE_WIDTH = Dimensions.get('window').width;
 
   const fetchAllNFTs = useCallback(async () => {
-    if (account) {
-      const contract = new TRDLBContract(account, 'dev-1668356929794-27884840521869');
+    try {
+      if (account) {
+        const contract = new TRDLBContract(account, 'dev-1668356929794-27884840521869');
 
-      const options: TRDLBNftTokensForOwnerOptions = {
-        account_id: account.accountId,
-        from_index: new BN(index).toString(),
-        limit,
-      };
+        const options: TRDLBNftTokensForOwnerOptions = {
+          account_id: account.accountId,
+          from_index: new BN(index).toString(),
+          limit,
+        };
 
-      const nfts: TRDLBJsonToken[] = await contract.nft_tokens_for_owner(options);
-      console.log(nfts);
+        const nfts: TRDLBJsonToken[] = await contract.nft_tokens_for_owner(options);
 
-      setLastBikesRetrievedLength(nfts.length);
-      setBikes((prevState) => [...prevState, ...nfts]);
-      setInitialLoading(false);
+        setLastBikesRetrievedLength(nfts.length);
+        setBikes((prevState) => [...prevState, ...nfts]);
+        setInitialLoading(false);
+      }
+    } catch (e) {
+      console.log('error', e);
     }
   }, [index, appState, account, counter]);
 
@@ -135,48 +139,60 @@ const GarageScreen = ({ navigation }: HomeTabScreenProps<'Garage'>) => {
     }
   };
 
+  const InitialLoading = () => {
+    if (initialLoading) {
+      return (
+        <View className="flex-1 justify-center items-center">
+          <ActivityIndicator animating color={MD3DarkTheme.colors.onSurface} size="large" />
+        </View>
+      );
+    }
+
+    return (
+      <>
+        <View className="flex-1">
+          <Carousel
+            defaultIndex={0}
+            ref={r}
+            width={PAGE_WIDTH}
+            data={bikes}
+            mode="parallax"
+            windowSize={3}
+            loop={false}
+            renderItem={({ item }) => <BikeCard bikeMetadata={item.metadata} />}
+            onSnapToItem={handleBikeChange}
+            onScrollEnd={() => {
+              if (lastBikesRetrievedLength === limit && appState.current === 'active') {
+                loadMoreBikes();
+              } else {
+                return null;
+              }
+            }}
+          />
+        </View>
+        <View
+          className="w-24 h-24 mx-auto mb-16 rounded-full overflow-hidden items-center justify-center bg-md3-primary">
+          <TouchableRipple
+            borderless
+            className="w-full h-full items-center justify-center"
+            onPress={handleRidePress}>
+            <RobotoMediumText className="text-md3-on-primary text-[17px]">
+              Race
+            </RobotoMediumText>
+          </TouchableRipple>
+        </View>
+      </>
+    )
+};
+
   return (
     <>
       <ProgressBar indeterminate visible={loadingBikes} />
-      <View className="bg-md3-surface flex-1">
-        {initialLoading ? (
-          <View className="flex-1 justify-center items-center">
-            <ActivityIndicator animating color={MD3DarkTheme.colors.onSurface} size="large" />
-          </View>
-        ) : (
-          <>
-            <View className="flex-1">
-              <Carousel
-                defaultIndex={0}
-                ref={r}
-                width={PAGE_WIDTH}
-                data={bikes}
-                mode="parallax"
-                windowSize={3}
-                loop={false}
-                renderItem={({ item }) => <BikeCard bikeMetadata={item.metadata} />}
-                onSnapToItem={handleBikeChange}
-                onScrollEnd={() => {
-                  if (lastBikesRetrievedLength === limit && appState.current === 'active') {
-                    loadMoreBikes();
-                  } else {
-                    return null;
-                  }
-                }}
-              />
-            </View>
-            <View className="w-24 h-24 mx-auto mb-16 rounded-full overflow-hidden items-center justify-center bg-md3-primary">
-              <TouchableRipple
-                borderless
-                className="w-full h-full items-center justify-center"
-                onPress={handleRidePress}>
-                <RobotoMediumText className="text-md3-on-primary text-[17px]">
-                  Race
-                </RobotoMediumText>
-              </TouchableRipple>
-            </View>
-          </>
-        )}
+      <View className="bg-md3-surface flex-1 px-4">
+        {bikes.length === 0
+          ? <EmptyCollection />
+          : initialLoading
+        }
         <Snackbar
           visible={visible}
           onDismiss={handleDismissSnackBar}

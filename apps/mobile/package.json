@@ -44,7 +44,6 @@
     "nativewind": "^2.0.11",
     "near-api-js": "^1.1.0",
     "react": "18.1.0",
-    "react-dom": "18.1.0",
     "react-native": "0.70.5",
     "react-native-confetti-cannon": "^1.5.2",
     "react-native-fast-image": "^8.6.3",

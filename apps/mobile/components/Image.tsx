@@ -8,7 +8,7 @@ import { MD3DarkTheme } from 'react-native-paper';
 const Image = createImageProgress(FastImage);
 
 interface Props extends FastImageProps {
-  onError: () => void | undefined;
+  onError?: () => void | undefined;
 }
 
 const CustomImage: FC<Props> = (props) => {

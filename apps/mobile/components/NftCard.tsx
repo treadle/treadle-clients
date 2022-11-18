@@ -27,8 +27,7 @@ const NftCard: FC<CardProps> = ({ nft, navigation }) => {
 
   return (
     <Pressable onPress={() => NftCardHandler(nft)}>
-      <View className='m-4 border-2 w-[140px] h-[140px] border-md3-outline-variant rounded-[12px] overflow-hidden'>
-        <View className='items-center justify-center'>
+      <View className='m-4 border-2 items-center justify-center w-[140px] h-[140px] border-md3-outline-variant rounded-[12px] overflow-hidden'>
           {!error && nft.metadata.media ? (
             <CustomImage
               onError={handleImageError}
@@ -42,7 +41,6 @@ const NftCard: FC<CardProps> = ({ nft, navigation }) => {
               color={MD3DarkTheme.colors.onSurface}
             />
           )}
-        </View>
       </View>
     </Pressable>
   );
