@@ -67,8 +67,10 @@ const GarageScreen = ({ navigation }: HomeTabScreenProps<'Garage'>) => {
   }, [index, appState, account, counter]);
 
   useEffect(() => {
-    fetchAllNFTs().then(() => setLoadingBikes(false));
-  }, [counter, index, appState, account]);
+    if (isFocused) {
+      fetchAllNFTs().then(() => setLoadingBikes(false));
+    }
+  }, [counter, index, appState, account, isFocused]);
 
   useEffect(() => {
     if (!isFocused) {
