@@ -22,9 +22,8 @@ export type RootStackParamList = {
     distance: number;
     time: number;
     earned: number;
-    energy: number;
     durability: number;
-    isEnded: boolean;
+    bike: TRDLBJsonToken;
   };
   NotFound: undefined;
   NftDetails: { nft: TRDLBJsonToken };

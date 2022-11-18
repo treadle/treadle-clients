@@ -10,6 +10,14 @@ import * as Location from 'expo-location';
 import * as tf from '@tensorflow/tfjs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
+import { useAccountStore } from '../store/useAccountStore';
+
+import {
+  TRDLBContract,
+  TRDLBNftTokenMetadataEditOptions,
+  TRDLBTokenMetadataExtra,
+  TRDLBJsonTokenMetadata,
+} from 'treadle-mockup-server';
 
 // Logic
 import calcDist from '../utils/calcDist';
@@ -21,6 +29,7 @@ import executeModel from '../utils/executeModel';
 import loadModel from '../utils/loadModel';
 import processScanData from '../utils/processScanData';
 import { useEnergyTokensStore } from '../store/useEnergyTokensStore';
+import { RotateInDownLeft } from 'react-native-reanimated';
 
 // Constants for GPS correction
 const UPDATE_DISTANCE = 10;
@@ -48,7 +57,7 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
 
   // Economy
   const [energy, setEnergy] = useState(10);
-  const [durability, setDurability] = useState(100);
+  const [durability, setDurability] = useState(10000);
   const [earnedTokens, setEarnedTokens] = useState(0);
   const [isEnded, setIsEnded] = useState(false);
 
@@ -108,6 +117,8 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
   const endRide = async () => {
     if (locationWatcher.current !== null) await locationWatcher.current.remove();
 
+    // 'dev-1668356929794-27884840521869'
+
     deactivateKeepAwake();
     clearInterval(timer.current);
     setSeconds(0);
@@ -124,9 +135,8 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
       distance: travelledDistance,
       time: seconds,
       earned: earnedTokens,
-      energy: energy,
       durability: durability,
-      isEnded: isEnded,
+      bike: route.params.selectedBike,
     });
   };
 
@@ -201,7 +211,7 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
       // Load the AI model
       model.current = await loadModel();
       setEnergy(energyStore);
-      setDurability(bicycle.durability / 100);
+      setDurability(bicycle.durability);
 
       // Subscription to geolocation updates
       locationWatcher.current = await Location.watchPositionAsync(
@@ -346,7 +356,7 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
   useEffect(() => {
     if (travelledKm !== 0) {
       setEnergy((prev) => prev - bicycle.comfort / 100);
-      setDurability((prev) => prev - bicycle.ware / 100);
+      setDurability((prev) => prev - bicycle.ware);
       setEarnedTokens((prev) => prev + bicycle.efficiency / 100);
     }
   }, [travelledKm]);
@@ -358,7 +368,7 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
   }, [earnedTokens]);
 
   useEffect(() => {
-    if (durability < bicycle.ware / 100) {
+    if (durability < bicycle.ware) {
       setIsEnded(true);
     }
   }, [durability]);

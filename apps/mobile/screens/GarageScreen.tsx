@@ -9,14 +9,21 @@ import BikeCard from '../components/BikeCard';
 import { BN } from 'bn.js';
 import { useCounterStore } from '../store/counterStore';
 import { useAccountStore } from '../store/useAccountStore';
-import { ActivityIndicator, MD3DarkTheme, ProgressBar, Snackbar, TouchableRipple } from 'react-native-paper';
+import {
+  ActivityIndicator,
+  MD3DarkTheme,
+  ProgressBar,
+  Snackbar,
+  TouchableRipple,
+} from 'react-native-paper';
 import { useEnergyTokensStore } from '../store/useEnergyTokensStore';
 import { getForegroundPermissionsAsync, hasServicesEnabledAsync } from 'expo-location';
 import { RobotoMediumText } from '../components/StyledText';
+import { useIsFocused } from '@react-navigation/native';
 
 const errors = [
-  'You don\'t have enough energy to ride this bike!',
-  'You didn\'t allow GPS-Tracking or GPS-Services are inaccessible!',
+  "You don't have enough energy to ride this bike!",
+  "You didn't allow GPS-Tracking or GPS-Services are inaccessible!",
   'GPS-Precision is too low!',
   'Not enough durability!',
 ];
@@ -34,9 +41,10 @@ const GarageScreen = ({ navigation }: HomeTabScreenProps<'Garage'>) => {
   const [lastBikesRetrievedLength, setLastBikesRetrievedLength] = useState(0);
   const [error, setError] = useState('no error');
   const r = useRef<ICarouselInstance | null>(null);
-  const { account } = useAccountStore();
+  const { account, masterAccount } = useAccountStore();
   const { counter } = useCounterStore();
   const { energy } = useEnergyTokensStore();
+  const isFocused = useIsFocused();
   const PAGE_WIDTH = Dimensions.get('window').width;
 
   const fetchAllNFTs = useCallback(async () => {
@@ -50,6 +58,7 @@ const GarageScreen = ({ navigation }: HomeTabScreenProps<'Garage'>) => {
       };
 
       const nfts: TRDLBJsonToken[] = await contract.nft_tokens_for_owner(options);
+      console.log(nfts);
 
       setLastBikesRetrievedLength(nfts.length);
       setBikes((prevState) => [...prevState, ...nfts]);
@@ -60,6 +69,13 @@ const GarageScreen = ({ navigation }: HomeTabScreenProps<'Garage'>) => {
   useEffect(() => {
     fetchAllNFTs().then(() => setLoadingBikes(false));
   }, [counter, index, appState, account]);
+
+  useEffect(() => {
+    if (!isFocused) {
+      setBikes([]);
+      setIndex(0);
+    }
+  }, [isFocused]);
 
   useEffect(() => {
     const subscription = AppState.addEventListener('change', handleAppStateChange);
@@ -91,7 +107,7 @@ const GarageScreen = ({ navigation }: HomeTabScreenProps<'Garage'>) => {
     setLoadingBikes(true);
   };
 
-  const handleBikePress = async () => {
+  const handleRidePress = async () => {
     const locationStatus = await getForegroundPermissionsAsync();
     const providerStatus = await hasServicesEnabledAsync();
 
@@ -120,20 +136,20 @@ const GarageScreen = ({ navigation }: HomeTabScreenProps<'Garage'>) => {
   return (
     <>
       <ProgressBar indeterminate visible={loadingBikes} />
-      <View className='bg-md3-surface flex-1'>
+      <View className="bg-md3-surface flex-1">
         {initialLoading ? (
-          <View className='flex-1 justify-center items-center'>
-            <ActivityIndicator animating color={MD3DarkTheme.colors.onSurface} size='large' />
+          <View className="flex-1 justify-center items-center">
+            <ActivityIndicator animating color={MD3DarkTheme.colors.onSurface} size="large" />
           </View>
         ) : (
           <>
-            <View className='flex-1'>
+            <View className="flex-1">
               <Carousel
                 defaultIndex={0}
                 ref={r}
                 width={PAGE_WIDTH}
                 data={bikes}
-                mode='parallax'
+                mode="parallax"
                 windowSize={3}
                 loop={false}
                 renderItem={({ item }) => <BikeCard bikeMetadata={item.metadata} />}
@@ -147,13 +163,14 @@ const GarageScreen = ({ navigation }: HomeTabScreenProps<'Garage'>) => {
                 }}
               />
             </View>
-            <View
-              className='w-24 h-24 mx-auto mb-16 rounded-full overflow-hidden items-center justify-center bg-md3-primary'>
+            <View className="w-24 h-24 mx-auto mb-16 rounded-full overflow-hidden items-center justify-center bg-md3-primary">
               <TouchableRipple
                 borderless
-                className='w-full h-full items-center justify-center'
-                onPress={handleBikePress}>
-                <RobotoMediumText className='text-md3-on-primary text-[17px]'>Race</RobotoMediumText>
+                className="w-full h-full items-center justify-center"
+                onPress={handleRidePress}>
+                <RobotoMediumText className="text-md3-on-primary text-[17px]">
+                  Race
+                </RobotoMediumText>
               </TouchableRipple>
             </View>
           </>
