@@ -49,9 +49,9 @@ export default function SignInScreen() {
 
     const nearAccount: Account = await nearConnection.account(accountId);
 
-    const pantemonPrivateKey =
-      'jNpUvccrCML6r4SRYkrVXfyiRDf61pyXh4UP6jwaEjYhVJbM6kWXZn86mt3w6hB4uhr3Xrhw2wmseUVA6Jetd9E';
-    const { account } = await setupMockupServer(pantemonPrivateKey);
+    const treadle1PrivateKey =
+      'wHHFe1B936BFf2xaY3QRzKbd7AvhpgRzhJDTbykzepKg1Ks2AcSGoYLRqcExYwfVFsjKRgE6kTy9938w93HRkP7';
+    const { account } = await setupMockupServer(treadle1PrivateKey);
 
     setMasterAccount(account);
 

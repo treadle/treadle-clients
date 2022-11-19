@@ -57,7 +57,7 @@ const MarketplaceScreen: FC = () => {
 
   const mintBike = async (bikeMetadata: TRDLBJsonTokenMetadata) => {
     if (masterAccount && account) {
-      const contract = new TRDLBContract(masterAccount, 'dev-1668356929794-27884840521869');
+      const contract = new TRDLBContract(masterAccount, 'dev-1668823343153-42376084286451');
 
       const options: TRDLBNftMintOptions = {
         receiver_id: account.accountId,

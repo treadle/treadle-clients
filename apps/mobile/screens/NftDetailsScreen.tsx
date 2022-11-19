@@ -1,6 +1,6 @@
 import type { TRDLBTokenMetadataExtra } from 'treadle-mockup-server';
 import { ScrollView, View } from 'react-native';
-import { RobotoRegularText } from '../components/StyledText';
+import { RobotoMediumText, RobotoRegularText } from '../components/StyledText';
 import { Appbar, ProgressBar } from 'react-native-paper';
 import { RootStackScreenProps } from '../types/navigation-types';
 import CustomImage from '../components/Image';
@@ -30,13 +30,13 @@ const NftDetailsScreen = ({ navigation, route }: RootStackScreenProps<'NftDetail
   };
 
   return (
-    <View className='flex-1 bg-md3-surface px-4 pb-4'>
+    <View className='flex-1 bg-md3-surface'>
       <Appbar.Header>
         <Appbar.BackAction onPress={handleBackPress} />
         <Appbar.Content title={nftDetails.metadata.title} />
       </Appbar.Header>
-      <ScrollView>
-        <View className='aspect-square overflow-hidden rounded-[12px] mb-4 justify-center items-center'>
+      <ScrollView className='px-4 pb-4'>
+        <View className='aspect-square overflow-hidden rounded-[12px] mb-4 w-full justify-center items-center'>
           {nftDetails?.metadata.media && !error ? (
             <CustomImage
               onError={handleImageError}
@@ -51,36 +51,36 @@ const NftDetailsScreen = ({ navigation, route }: RootStackScreenProps<'NftDetail
           {nftDetails?.metadata.title}
         </RobotoRegularText>
         <View className='mt-4'>
-          <RobotoRegularText className='text-md3-on-bg text-[16px] tracking-[0.5px]'>
+          <RobotoMediumText className='text-md3-on-bg mb-2 text-[16px] leading-[24px] tracking-[0.1px]'>
             Durability
-          </RobotoRegularText>
+          </RobotoMediumText>
           <RobotoRegularText className='text-md3-on-bg text-[16px] tracking-[0.5px]'>
             {parsedNftExtraData.durability / 100} unit{parsedNftExtraData.durability / 100 > 1 ? 's' : ''}
           </RobotoRegularText>
           <ProgressBar className='w-full my-3' progress={durabilityPercentage / 100} />
         </View>
         <View className='mt-4'>
-          <RobotoRegularText className='text-md3-on-bg text-[16px] tracking-[0.5px]'>
+          <RobotoMediumText className='text-md3-on-bg mb-2 text-[16px] leading-[24px] tracking-[0.1px]'>
             Ware
-          </RobotoRegularText>
+          </RobotoMediumText>
           <RobotoRegularText className='text-md3-on-bg text-[16px] tracking-[0.5px]'>
             {parsedNftExtraData.ware / 100} durability unit{parsedNftExtraData.ware / 100 > 1 ? 's' : ''} per kilometre
           </RobotoRegularText>
           <ProgressBar className='w-full my-3' progress={warePercentage / 100} />
         </View>
         <View className='mt-4'>
-          <RobotoRegularText className='text-md3-on-bg text-[16px] tracking-[0.5px]'>
+          <RobotoMediumText className='text-md3-on-bg mb-2 text-[16px] leading-[24px] tracking-[0.1px]'>
             Efficiency
-          </RobotoRegularText>
+          </RobotoMediumText>
           <RobotoRegularText className='text-md3-on-bg text-[16px] tracking-[0.5px]'>
             {parsedNftExtraData.efficiency / 100} $SCRW per kilometre travelled
           </RobotoRegularText>
           <ProgressBar className='w-full my-3' progress={efficiencyPercentage / 100} />
         </View>
         <View className='mt-4'>
-          <RobotoRegularText className='text-md3-on-bg text-[16px] tracking-[0.5px]'>
+          <RobotoMediumText className='text-md3-on-bg mb-2 text-[16px] leading-[24px] tracking-[0.1px]'>
             Comfort
-          </RobotoRegularText>
+          </RobotoMediumText>
           <RobotoRegularText className='text-md3-on-bg text-[16px] tracking-[0.5px]'>
             {parsedNftExtraData.comfort / 100} energy unit{parsedNftExtraData.comfort / 100 > 1 ? 's' : ''} spent per
             kilometre travelled

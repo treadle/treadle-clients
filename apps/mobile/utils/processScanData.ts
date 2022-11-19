@@ -1,4 +1,4 @@
-import { ScanData } from '../types/scan-data';
+import { MotionSensorsReading } from '../types/motion-sensors';
 
 const mean = [
   -0.011060934452428053, -0.029240070245624996, -0.031244942446271448, -0.0014656842331084823,
@@ -15,7 +15,7 @@ const std = [
   0.20222606515037866, 0.5606500022019236, 0.25795068995776294, 1.4592990616154449,
 ];
 
-export default function processScanData(scanData: ScanData[]) {
+export default function processScanData(scanData: MotionSensorsReading[]) {
   const resArr: any = [];
   for (let i = 0; i < 10; i++) {
     resArr[i] = [];

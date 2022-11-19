@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { RobotoRegularText } from './StyledText';
 import { TRDLBJsonTokenMetadata } from 'treadle-mockup-server';
-import { ProgressBar } from 'react-native-paper';
+import { MD3DarkTheme, ProgressBar } from 'react-native-paper';
 import CustomImage from './Image';
 import { useState } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -35,7 +35,7 @@ const BikeCard: FC<CardProps> = ({ bikeMetadata }) => {
         {bikeMetadata.media && !error ? (
           <CustomImage onError={handleImageError} source={{ uri: bikeMetadata.media }} className='w-full h-full' />
         ) : (
-          <MaterialCommunityIcons name='image-off-outline' size={80} color={'#fff'} />
+          <MaterialCommunityIcons name='image-off-outline' size={120} color={MD3DarkTheme.colors.onSurface} />
         )}
       </View>
       {/*  <View className='justify-evenly'>*/}

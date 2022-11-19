@@ -1,4 +1,4 @@
-export interface ScanData {
+export interface MotionSensorsReading {
   acc_z: number;
   acc_x: number;
   acc_y: number;
