@@ -17,3 +17,4 @@ In the wallet user is able to see their current $SCRW and $TRDL balance and the 
 - React Native
 - Expo
 - Tensorflow.js
+- Zustand
