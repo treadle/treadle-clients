@@ -1,4 +1,3 @@
-import BN from 'bn.js';
 import * as nearAPI from 'near-api-js';
 import * as utils from './utils';
 
@@ -74,9 +73,6 @@ export class TRDLBContract {
     });
   }
 
-  // To-Do:
-  // from_index: Option<U128>
-  // limit: Option<u64>
   async nft_tokens_for_owner(options: TRDLBNftTokensForOwnerOptions) {
     const account = this.account;
     const contractId = this.contractId;
@@ -84,6 +80,17 @@ export class TRDLBContract {
     return await account.viewFunctionV2({ 
       contractId: contractId, 
       methodName: "nft_tokens_for_owner", 
+      args: options, 
+    });
+  }
+
+  async nft_supply_for_owner(options: TRDLBNftSupplyForOwnerOptions) {
+    const account = this.account;
+    const contractId = this.contractId;
+
+    return await account.viewFunctionV2({ 
+      contractId: contractId, 
+      methodName: "nft_supply_for_owner", 
       args: options, 
     });
   }
@@ -112,6 +119,10 @@ export interface TRDLBNftTokensForOwnerOptions {
   account_id: string,
   from_index?: string,
   limit?: number,
+}
+
+export interface TRDLBNftSupplyForOwnerOptions {
+  account_id: string,
 }
 
 export interface TRDLBNftTokenOptions {

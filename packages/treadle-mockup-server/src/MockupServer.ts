@@ -1,6 +1,8 @@
 import * as nearAPI from "near-api-js";
 import BN from "bn.js";
 
+import config from "./config";
+
 export class MockupServer {
   near: nearAPI.Near;
   masterAccount: nearAPI.Account;
@@ -60,7 +62,7 @@ export async function setupMockupServer(privateKey: string) {
   const keyStore = new nearAPI.keyStores.InMemoryKeyStore();
   
   const keyPair = nearAPI.KeyPair.fromString(privateKey);
-  await keyStore.setKey('testnet', 'pantemon.testnet', keyPair);
+  await keyStore.setKey('testnet', config.ACCOUNT_ID, keyPair);
 
   const connectionConfig: nearAPI.ConnectConfig = {
     networkId: "testnet",
@@ -72,7 +74,7 @@ export async function setupMockupServer(privateKey: string) {
   
   // Initialize connection to the NEAR testnet
   const near = await nearAPI.connect(connectionConfig);
-  const account = await near.account("pantemon.testnet");
+  const account = await near.account(config.ACCOUNT_ID);
 
   const server = new MockupServer(near, account);
 

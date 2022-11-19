@@ -11,7 +11,8 @@ import {
     TRDLBNftMintOptions, 
     TRDLBJsonToken,
     TRDLBNftTokenOptions,
-    TRDLBNftTokenMetadataEditOptions
+    TRDLBNftTokenMetadataEditOptions,
+    TRDLBNftSupplyForOwnerOptions
 } from "./TRDLBContract";
 
 import config from "./config";
@@ -34,13 +35,13 @@ test('should mint a new NFT with given metadata', async () => {
     const metadata: TRDLBJsonTokenMetadata = {
         title: "City Bike",
         description: "A simple bike for travelling across your hometown",
-        media: "https://www.hubspot.com/hubfs/Smiling%20Leo%20Perfect%20GIF.gif",
+        media: "https://bafkreig5mv42k3x7ukukd762zivobqrxqpj34e3rb2sx5x3o5krbgleu5i.ipfs.nftstorage.link/",
         extra: JSON.stringify(extra),
     }; 
 
     const options: TRDLBNftMintOptions = {
         token_id: RANDOM_TOKEN_ID,
-        receiver_id: "pantemon.testnet",
+        receiver_id: config.ACCOUNT_ID,
         metadata: metadata,
     };
 
@@ -49,14 +50,52 @@ test('should mint a new NFT with given metadata', async () => {
     expect(response).toBeDefined();
 });
 
+test('should increase NFT tokens supply for owner', async () => {
+    const { account } = await setupMockupServer(config.PRIVATE_KEY);
+
+    const contract = new TRDLBContract(account, config.CONTRACT_ID);
+    
+    const nftSupplyForOwnerOptions: TRDLBNftSupplyForOwnerOptions = {
+        account_id: account.accountId
+    };
+
+    const nftSupplyForOwnerBefore = await contract.nft_supply_for_owner(nftSupplyForOwnerOptions);
+
+    const extra: TRDLBTokenMetadataExtra = {
+        durability: 10000, // 100.00 units
+        ware: 100, // 1.00 unit burnt per kilometre travelled
+        efficiency: 500, // 5.00 tokens earned per energy consumed
+        comfort: 200, // 2.00 energy consumed per kilometre travelled
+    }
+
+    const metadata: TRDLBJsonTokenMetadata = {
+        title: "City Bike",
+        description: "A simple bike for travelling across your hometown",
+        media: "https://bafkreig5mv42k3x7ukukd762zivobqrxqpj34e3rb2sx5x3o5krbgleu5i.ipfs.nftstorage.link/",
+        extra: JSON.stringify(extra),
+    }; 
+
+    const options: TRDLBNftMintOptions = {
+        token_id: RANDOM_TOKEN_ID + '1',
+        receiver_id: config.ACCOUNT_ID,
+        metadata: metadata,
+    };
+
+    await contract.nft_mint(options);
+
+    const nftSupplyForOwnerAfter = await contract.nft_supply_for_owner(nftSupplyForOwnerOptions);
+
+    expect(nftSupplyForOwnerAfter - nftSupplyForOwnerBefore).toEqual(1);
+});
+
 test('should return a list of NFTs on given account', async () => {
     const { account } = await setupMockupServer(config.PRIVATE_KEY);
 
     const contract = new TRDLBContract(account, config.CONTRACT_ID);
     
     const options: TRDLBNftTokensForOwnerOptions = {
-        account_id: "pantemon.testnet",
-        from_index: new BN(0),
+        account_id: config.ACCOUNT_ID,
+        from_index: "0",
         limit: 5,
     };
 
@@ -80,11 +119,11 @@ test('should return the token minted in the first test', async () => {
     expect(response).toEqual(
         expect.objectContaining({
             token_id: RANDOM_TOKEN_ID,
-            owner_id: "pantemon.testnet",
+            owner_id: config.ACCOUNT_ID,
             metadata: expect.objectContaining({
                 title: "City Bike",
                 description: "A simple bike for travelling across your hometown",
-                media: "https://www.hubspot.com/hubfs/Smiling%20Leo%20Perfect%20GIF.gif",
+                media: "https://bafkreig5mv42k3x7ukukd762zivobqrxqpj34e3rb2sx5x3o5krbgleu5i.ipfs.nftstorage.link/",
                 media_hash: null,
                 copies: null,
                 issued_at: null,
@@ -116,7 +155,7 @@ test('should edit given NFT\'s token metadata', async () => {
     const metadata: TRDLBJsonTokenMetadata = {
         title: "Sexy Bike",
         description: "The sexiest bike in the whole world!",
-        media: "https://media.giphy.com/media/pI2paNxecnUNW/giphy.gif",
+        media: "https://bafkreibjwkmu5duf5glcw2dvi47c4xc7fminqmlmxby7gtsptx5ziitrpy.ipfs.nftstorage.link/",
         extra: JSON.stringify(extra),
     }; 
 
@@ -138,11 +177,11 @@ test('should edit given NFT\'s token metadata', async () => {
     expect(response).toEqual(
         expect.objectContaining({
             token_id: RANDOM_TOKEN_ID,
-            owner_id: "pantemon.testnet",
+            owner_id: config.ACCOUNT_ID,
             metadata: expect.objectContaining({
                 title: "Sexy Bike",
                 description: "The sexiest bike in the whole world!",
-                media: "https://media.giphy.com/media/pI2paNxecnUNW/giphy.gif",
+                media: "https://bafkreibjwkmu5duf5glcw2dvi47c4xc7fminqmlmxby7gtsptx5ziitrpy.ipfs.nftstorage.link/",
                 media_hash: null,
                 copies: null,
                 issued_at: null,
