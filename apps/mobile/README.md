@@ -15,14 +15,14 @@ In the wallet user is able to see their current $SCRW and $TRDL balance and the 
 ## Tech stack
 
 - React Native
-Used to create the native app in javascript.
+(Used to create the native app in javascript)
 
 - Expo
-Used to ease the development process.
+(Used to ease the development process)
 
 - Tensorflow.js
-AI inference.
+(AI inference)
 
 - Zustand
-Handy library for React state management
+(Handy library for React state management)
 
