@@ -11,3 +11,9 @@ In the garage user can choose the bicycle by spinning the carousel. To use selec
 
 ### Wallet
 In the wallet user is able to see their current $SCRW and $TRDL balance and the USD equivalent ("Balances" tab), as well as available bike NFTs ("Collectibles" tab). Tapping an NFT in the wallet will navigate the user to the details screen, where the user will be able to see the NFT details.
+
+## Tech stack
+
+- React Native
+- Expo
+- Tensorflow.js
