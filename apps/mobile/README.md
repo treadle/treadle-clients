@@ -28,7 +28,7 @@ and production
 ```
 eas build --profile production --platform android
 ```
-builds
+builds.
 
 ## User manual
 
