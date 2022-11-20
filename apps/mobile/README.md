@@ -26,3 +26,6 @@ In the wallet user is able to see their current $SCRW and $TRDL balance and the 
 - Zustand
 (Handy library for React state management)
 
+- Near-api-js 
+(NEAR Protocol interaction)
+
