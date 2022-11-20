@@ -3,24 +3,24 @@ Our mobile application enables users to ride a real bike and get tokens in excha
 
 ## Tech stack
 
-- React Native
-(Used to create the native app in javascript)
+- [React Native](https://reactnative.dev/)
+(Used to create the native app in JavaScript)
 
-- Expo
+- [Expo](https://expo.dev/)
 (Used to ease the development process)
 
-- Tensorflow.js
+- [Tensorflow.js](https://www.tensorflow.org/js)
 (AI inference)
 
-- Zustand
+- [Zustand](https://github.com/pmndrs/zustand)
 (Handy library for React state management)
 
-- Near-api-js 
+- [Near-api-js](https://github.com/near/near-api-js)
 (NEAR Protocol interaction)
 
 ## Building process
 
-We used Expo Application Services to create both development
+We used [Expo Application Services](https://expo.dev/eas) to create both development
 ```
 eas build --profile development --platform android
 ```
