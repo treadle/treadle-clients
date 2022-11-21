@@ -7,17 +7,9 @@ import { RobotoMediumText, RobotoRegularText } from '../components/StyledText';
 import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 import { DeviceMotion, Gyroscope, Magnetometer } from 'expo-sensors';
 import * as Location from 'expo-location';
-import * as tf from '@tensorflow/tfjs';
+import { setBackend, ready } from '@tensorflow/tfjs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
-import { useAccountStore } from '../store/useAccountStore';
-
-import {
-  TRDLBContract,
-  TRDLBNftTokenMetadataEditOptions,
-  TRDLBTokenMetadataExtra,
-  TRDLBJsonTokenMetadata,
-} from 'treadle-mockup-server';
 
 // Logic
 import calcDist from '../utils/calcDist';
@@ -152,8 +144,6 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
         setIsBicycle(false);
       }
 
-      travelledDistanceBuffer.current = 0;
-
       console.log(res[0]);
       setScanData([]);
     };
@@ -162,6 +152,10 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
       inference();
     }
   }, [scanData]);
+
+  useEffect(() => {
+    travelledDistanceBuffer.current = 0;
+  }, [travelledDistance])
 
   // Update data on every DeviceMotion update. It is binded to DeviceMotion listener for better consistency
   useEffect(() => {
@@ -205,8 +199,8 @@ export default function BikeRideScreen({ navigation, route }: RootStackScreenPro
 
     const beginRide = async () => {
       // Load Tensorflow JS
-      await tf.setBackend('cpu');
-      await tf.ready();
+      await setBackend('cpu');
+      await ready();
 
       // Load the AI model
       model.current = await loadModel();
